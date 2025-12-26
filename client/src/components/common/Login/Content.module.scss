@@ -5,11 +5,15 @@
 
 :global(#app) {
   .cover {
-    background: url("../../../../public/fundo.svg") left / cover;
+    background-color: #000000;
+    background-image: url("../../../../public/fundo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
   .coverOverlay {
-    background: rgba(33, 33, 33, 0.1);
+    background: transparent;
     bottom: 0;
     height: 100%;
     left: 0;
