@@ -8,6 +8,15 @@ x-variaveis: &variaveis
   DEFAULT_ADMIN_USERNAME: "ericocesar"
   ALLOW_ALL_TO_CREATE_PROJECTS: "true"
 
+  # Auth
+  OIDC_ISSUER: "https://auth.webck.com.br/application/o/bolt-projects/"
+  OIDC_CLIENT_ID: "gov3uIBSx6V4UCUrMrsvkw3bbJIqyh90lilyvHFX"
+  OIDC_CLIENT_SECRET: "fLWKlnuga7FeE4yM6mA4JTCcy9s248Bs9KMKMHQs9LTPbKy12trqoMJpCvn8m5X7MtilZ2L8Weqkbb1gPQCpMmv1AFTB4jlWN7k0FgQkMKhJsqeK0mcuZFXi60pzAAtz"
+  OIDC_SCOPES: "openid profile email"
+  # Opcional (grupo do authentik que vira admin no Planka):
+  OIDC_ADMIN_ROLES: "Admins"
+  # Opcional (desabilita login local e “obriga” SSO):
+  OIDC_ENFORCED: "true"
   # TRUST_PROXY: "true"
   MAX_UPLOAD_FILE_SIZE: "10485760" # 10MB
 
