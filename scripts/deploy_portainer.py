@@ -42,6 +42,13 @@ def main():
         'X-API-Key': api_key
     }
 
+    try:
+        with open(stack_file_path, 'r') as f:
+            stack_content = f.read()
+    except FileNotFoundError:
+        print(f"Error: File '{stack_file_path}' not found.")
+        sys.exit(1)
+
     print(f"Searching for stack '{stack_name}'...")
     try:
         stacks = request(f"{base_url}/api/stacks", headers=headers)
@@ -64,31 +71,32 @@ def main():
             break
     
     if not stack_id:
-        print(f"Error: Stack '{stack_name}' not found.")
+        print(f"Stack '{stack_name}' not found. Creating a new stack...")
         print(f"Available stacks: {', '.join(stack_names)}")
-        sys.exit(1)
-    
-    print(f"Found Stack ID: {stack_id}")
-
-    try:
-        with open(stack_file_path, 'r') as f:
-            stack_content = f.read()
-    except FileNotFoundError:
-        print(f"Error: File '{stack_file_path}' not found.")
-        sys.exit(1)
-
-    print(f"Updating stack with content from {stack_file_path}...")
-    
-    update_url = f"{base_url}/api/stacks/{stack_id}?endpointId={endpoint_id}"
-    payload = {
-        "stackFileContent": stack_content,
-        "env": [],
-        "prune": True,
-        "pullImage": True
-    }
-    
-    request(update_url, method="PUT", data=payload, headers=headers)
-    print("Stack updated successfully.")
+        
+        create_url = f"{base_url}/api/stacks/create/standalone/string?endpointId={endpoint_id}"
+        payload = {
+            "name": stack_name,
+            "stackFileContent": stack_content,
+            "env": []
+        }
+        
+        request(create_url, method="POST", data=payload, headers=headers)
+        print(f"Stack '{stack_name}' created successfully.")
+    else:
+        print(f"Found Stack ID: {stack_id}")
+        print(f"Updating stack with content from {stack_file_path}...")
+        
+        update_url = f"{base_url}/api/stacks/{stack_id}?endpointId={endpoint_id}"
+        payload = {
+            "stackFileContent": stack_content,
+            "env": [],
+            "prune": True,
+            "pullImage": True
+        }
+        
+        request(update_url, method="PUT", data=payload, headers=headers)
+        print(f"Stack '{stack_name}' updated successfully.")
 
 if __name__ == "__main__":
     main()
