@@ -33,7 +33,7 @@ x-variaveis: &variaveis
 version: "3.7"
 services:
   planka_app:
-    image: ericocesar/plankaBolt:latest
+    image: ericocesar/plankabolt:latest
     environment:
       <<: *variaveis
     networks:
@@ -70,6 +70,7 @@ services:
         - traefik.http.routers.planka.tls.certresolver=letsencryptresolver
         - traefik.http.routers.planka.entrypoints=websecure
         - traefik.http.routers.planka.tls=true
+        - traefik.docker.network=interna
 
   planka_redis:
     image: redis:latest ## Versão do Redis
