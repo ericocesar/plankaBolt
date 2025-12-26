@@ -9,8 +9,8 @@ if [ ! -f "$ENV_FILE" ]; then
   exit 1
 fi
 
-# Obtém owner/repo atual
-REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+# Define o repositório alvo
+REPO="ericocesar/plankaBolt"
 
 # Garante que o ambiente exista para aceitar secrets
 if ! gh api "repos/$REPO/environments/$ENVIRONMENT" >/dev/null 2>&1; then
@@ -30,11 +30,11 @@ else
 JSON
 fi
 
-# Garante política permitindo deploy da branch 'develop'
-if ! gh api "repos/$REPO/environments/$ENVIRONMENT/deployment-branch-policies" -q '.branch_policies[].name' | grep -qx "develop"; then
+# Garante política permitindo deploy da branch 'bolt/develop'
+if ! gh api "repos/$REPO/environments/$ENVIRONMENT/deployment-branch-policies" -q '.branch_policies[].name' | grep -qx "bolt/develop"; then
   gh api -X POST "repos/$REPO/environments/$ENVIRONMENT/deployment-branch-policies" \
     -H "Accept: application/vnd.github+json" \
-    -f name="develop" -f type="branch" >/dev/null
+    -f name="bolt/develop" -f type="branch" >/dev/null
 fi
 
 while IFS= read -r line; do
@@ -44,9 +44,9 @@ while IFS= read -r line; do
   key=${line%%=*}
   value=${line#*=}
   if [ "$key" = "DOCKER_USERNAME" ] || [ "$key" = "DOCKER_TOKEN" ]; then
-    gh secret set "$key" --body "$value"
+    gh secret set "$key" --repo "$REPO" --body "$value"
   else
-    gh secret set "$key" --env "$ENVIRONMENT" --body "$value"
-    gh secret set "$key" --body "$value"
+    gh secret set "$key" --repo "$REPO" --env "$ENVIRONMENT" --body "$value"
+    gh secret set "$key" --repo "$REPO" --body "$value"
   fi
 done < "$ENV_FILE"

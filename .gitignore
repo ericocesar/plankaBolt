@@ -1,6 +1,9 @@
 docker-compose.override.yml
 .idea
 .DS_Store
+.env
+.env.github
+server/.env
 
 node_modules
 
