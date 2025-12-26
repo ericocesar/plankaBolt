@@ -19,7 +19,7 @@ import { isUsername } from '../../../utils/validator';
 import AccessTokenSteps from '../../../constants/AccessTokenSteps';
 import TermsModal from './TermsModal';
 
-import logo from '../../../assets/images/logo.png';
+import logo from '../../../../public/logo512.png';
 
 import styles from './Content.module.scss';
 
