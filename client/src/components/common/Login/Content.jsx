@@ -7,7 +7,7 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, Divider, Form, Grid, Header, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../../lib/hooks';
 import { Input } from '../../../lib/custom-ui';
@@ -264,16 +264,6 @@ const Content = React.memo(() => {
                   onClick={handleAuthenticateWithOidcClick}
                 />
               )}
-            </div>
-            <div className={styles.poweredBy}>
-              <p className={styles.poweredByText}>
-                <Trans i18nKey="common.poweredByPlanka">
-                  {'Powered by '}
-                  <a href="https://github.com/plankanban/planka" target="_blank" rel="noreferrer">
-                    PLANKA
-                  </a>
-                </Trans>
-              </p>
             </div>
           </div>
         </Grid.Column>
