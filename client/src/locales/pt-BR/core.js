@@ -267,7 +267,7 @@ export default {
       passwordIsSet: 'Senha definida',
       phone: 'Telefone',
       plankaUsesAppriseToSendNotificationsToOver100PopularServices:
-        'PLANKA usa <1><0>Apprise</0></1> para enviar notificações para mais de 100 serviços populares.',
+        'BOLTPROJECT usa <1><0>Apprise</0></1> para enviar notificações para mais de 100 serviços populares.',
       port: 'Porta',
       preferences: 'Preferências',
       pressPasteShortcutToAddAttachmentFromClipboard:
