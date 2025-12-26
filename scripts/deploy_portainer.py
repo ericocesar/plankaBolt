@@ -43,16 +43,29 @@ def main():
     }
 
     print(f"Searching for stack '{stack_name}'...")
-    stacks = request(f"{base_url}/api/stacks", headers=headers)
+    try:
+        stacks = request(f"{base_url}/api/stacks", headers=headers)
+    except Exception as e:
+        print(f"Error fetching stacks: {e}")
+        sys.exit(1)
     
+    if not isinstance(stacks, list):
+        print(f"Error: Expected a list of stacks, got: {type(stacks)}")
+        print(f"Response: {stacks}")
+        sys.exit(1)
+
     stack_id = None
+    stack_names = []
     for stack in stacks:
-        if stack.get('Name') == stack_name:
+        name = stack.get('Name')
+        stack_names.append(name)
+        if name == stack_name:
             stack_id = stack.get('Id')
             break
     
     if not stack_id:
         print(f"Error: Stack '{stack_name}' not found.")
+        print(f"Available stacks: {', '.join(stack_names)}")
         sys.exit(1)
     
     print(f"Found Stack ID: {stack_id}")
