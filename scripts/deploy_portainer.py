@@ -31,6 +31,18 @@ def request(url, method="GET", data=None, headers={}):
         print(f"URL Error: {e.reason}")
         sys.exit(1)
 
+def get_swarm_id(base_url, endpoint_id, headers):
+    swarm = request(f"{base_url}/api/endpoints/{endpoint_id}/docker/swarm", headers=headers)
+
+    if isinstance(swarm, dict):
+        swarm_id = swarm.get("ID") or swarm.get("Id")
+        if swarm_id:
+            return swarm_id
+
+    print("Error: Could not determine Swarm ID.")
+    print(f"Response: {swarm}")
+    sys.exit(1)
+
 def main():
     base_url = get_env('PORTAINER_URL').rstrip('/')
     api_key = get_env('PORTAINER_API_KEY')
@@ -74,11 +86,13 @@ def main():
         print(f"Stack '{stack_name}' not found. Creating a new stack...")
         print(f"Available stacks: {', '.join(stack_names)}")
 
+        swarm_id = get_swarm_id(base_url, endpoint_id, headers)
         create_url = f"{base_url}/api/stacks/create/swarm/string?endpointId={endpoint_id}"
         payload = {
-            "name": stack_name,
-            "stackFileContent": stack_content,
-            "env": []
+            "Name": stack_name,
+            "StackFileContent": stack_content,
+            "Env": [],
+            "SwarmID": swarm_id
         }
 
         request(create_url, method="POST", data=payload, headers=headers)
