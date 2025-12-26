@@ -10,12 +10,11 @@ on:
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
-    environment: production
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'workflow_run' && 
        github.event.workflow_run.conclusion == 'success' && 
-       (github.event.workflow_run.head_branch == 'bolt/main' || github.event.workflow_run.head_branch == 'refs/heads/bolt/main'))
+       github.event.workflow_run.head_branch == 'bolt/main')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
