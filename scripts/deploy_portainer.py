@@ -15,7 +15,7 @@ def request(url, method="GET", data=None, headers={}):
     req = urllib.request.Request(url, method=method)
     for k, v in headers.items():
         req.add_header(k, v)
-    
+
     if data:
         req.data = json.dumps(data).encode('utf-8')
         req.add_header('Content-Type', 'application/json')
@@ -55,7 +55,7 @@ def main():
     except Exception as e:
         print(f"Error fetching stacks: {e}")
         sys.exit(1)
-    
+
     if not isinstance(stacks, list):
         print(f"Error: Expected a list of stacks, got: {type(stacks)}")
         print(f"Response: {stacks}")
@@ -69,24 +69,24 @@ def main():
         if name == stack_name:
             stack_id = stack.get('Id')
             break
-    
+
     if not stack_id:
         print(f"Stack '{stack_name}' not found. Creating a new stack...")
         print(f"Available stacks: {', '.join(stack_names)}")
-        
-        create_url = f"{base_url}/api/stacks/create/standalone/string?endpointId={endpoint_id}"
+
+        create_url = f"{base_url}/api/stacks/create/swarm/string?endpointId={endpoint_id}"
         payload = {
             "name": stack_name,
             "stackFileContent": stack_content,
             "env": []
         }
-        
+
         request(create_url, method="POST", data=payload, headers=headers)
         print(f"Stack '{stack_name}' created successfully.")
     else:
         print(f"Found Stack ID: {stack_id}")
         print(f"Updating stack with content from {stack_file_path}...")
-        
+
         update_url = f"{base_url}/api/stacks/{stack_id}?endpointId={endpoint_id}"
         payload = {
             "stackFileContent": stack_content,
@@ -94,7 +94,7 @@ def main():
             "prune": True,
             "pullImage": True
         }
-        
+
         request(update_url, method="PUT", data=payload, headers=headers)
         print(f"Stack '{stack_name}' updated successfully.")
 
