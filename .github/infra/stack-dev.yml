@@ -38,6 +38,7 @@ services:
       <<: *variaveis
     networks:
       - interna ## Nome da rede interna
+      - externa
 
     volumes:
       - planka_avatars:/app/public/user-avatars
@@ -67,10 +68,10 @@ services:
         - traefik.http.routers.planka.rule=Host(`proj.swdev.webck.com.br`)
         - traefik.http.services.planka.loadbalancer.server.port=1337
         - traefik.http.routers.planka.service=planka
-        - traefik.http.routers.planka.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.planka.tls.certresolver=le
         - traefik.http.routers.planka.entrypoints=websecure
         - traefik.http.routers.planka.tls=true
-        - traefik.docker.network=interna
+        - traefik.docker.network=externa
 
   planka_redis:
     image: redis:latest ## Versão do Redis
@@ -114,4 +115,7 @@ volumes:
 networks:
   interna: ## Nome da rede interna
     name: interna ## Nome da rede interna
+    external: true
+  externa:
+    name: externa
     external: true

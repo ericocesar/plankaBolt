@@ -115,3 +115,6 @@ networks:
   interna: ## Nome da rede interna
     name: interna ## Nome da rede interna
     external: true
+  externa:
+    name: externa
+    external: true
