@@ -60,19 +60,30 @@ module.exports.http = {
       }
 
       const { baseUrlPath } = sails.config.custom;
+      const normalizedBaseUrlPath =
+        baseUrlPath && baseUrlPath !== '/' ? baseUrlPath.replace(/\/+$/, '') : baseUrlPath;
       const originalUrl = req.url;
       let { url } = req;
 
+      if (normalizedBaseUrlPath && normalizedBaseUrlPath !== '/') {
+        const [urlPath, query] = url.split('?');
+
+        if (urlPath === normalizedBaseUrlPath) {
+          return res.redirect(301, `${normalizedBaseUrlPath}/${query ? `?${query}` : ''}`);
+        }
+      }
+
       if (
-        baseUrlPath &&
-        baseUrlPath !== '/' &&
-        (url === baseUrlPath || url.startsWith(`${baseUrlPath}/`))
+        normalizedBaseUrlPath &&
+        normalizedBaseUrlPath !== '/' &&
+        (url === normalizedBaseUrlPath || url.startsWith(`${normalizedBaseUrlPath}/`))
       ) {
-        url = url.substring(baseUrlPath.length) || '/';
+        url = url.substring(normalizedBaseUrlPath.length) || '/';
       }
 
       // If the URL is just '/', let the router handle it (to serve index.html via res.view)
       if (url === '/' || url === '/index.html') {
+        res.setHeader('Cache-Control', 'no-store');
         return next();
       }
 
