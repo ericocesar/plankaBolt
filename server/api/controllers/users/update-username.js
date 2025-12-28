@@ -64,7 +64,7 @@
  *         $ref: '#/components/responses/Conflict'
  */
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const { idInput } = require('../../../utils/inputs');
 

@@ -70,7 +70,7 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const { isPassword } = require('../../../utils/validators');
 const { idInput } = require('../../../utils/inputs');

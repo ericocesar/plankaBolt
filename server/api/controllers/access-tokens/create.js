@@ -105,7 +105,7 @@
  *     security: []
  */
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const { isEmailOrUsername } = require('../../../utils/validators');
 const { getRemoteAddress } = require('../../../utils/remote-address');
