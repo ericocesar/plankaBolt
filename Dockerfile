@@ -1,35 +1,47 @@
 # Stage 1: Server build
-FROM node:22-alpine AS server
+FROM node:22.12-alpine AS server
 
-RUN apk -U upgrade \
-  && apk add build-base python3 --no-cache
+RUN apk add --no-cache build-base python3 \
+  && apk upgrade --no-cache
 
 WORKDIR /app
 
+COPY server/package*.json ./
+
+RUN npm ci --ignore-scripts
+
 COPY server .
 
-RUN npm install npm --global \
-  && npm install \
+RUN npx patch-package \
+  && npm run setup-python \
   && npm run build \
   && npm prune --production
 
 # Stage 2: Client build
-FROM node:22 AS client
+FROM node:22.12-alpine AS client
 
 WORKDIR /app
 
+COPY client/package*.json ./
+
+RUN npm ci --ignore-scripts
+
 COPY client .
 
-RUN npm install npm --global \
-  && npm install --omit=dev \
+RUN npx patch-package \
   && DISABLE_ESLINT_PLUGIN=true npm run build
 
 # Stage 3: Final image
-FROM node:22-alpine
+FROM node:22.12-alpine
 
-RUN apk -U upgrade \
-  && apk add bash python3 --no-cache \
-  && npm install npm --global
+LABEL org.opencontainers.image.title="Planka" \
+      org.opencontainers.image.description="The kanban-style project mastering tool for everyone" \
+      org.opencontainers.image.licenses="Apache-2.0"
+
+ENV NODE_ENV=production
+
+RUN apk add --no-cache bash python3 \
+  && apk upgrade --no-cache
 
 USER node
 WORKDIR /app
