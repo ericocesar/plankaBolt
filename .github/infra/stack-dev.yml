@@ -1,5 +1,5 @@
 x-variaveis: &variaveis
-  BASE_URL: "https://proj.swdev.webck.com.br"
+  BASE_URL: "https://task.swdev.webck.com.br"
   DATABASE_URL: "postgresql://postgres:D57A4D868ECCABF423F1F3D142F41BoltDev@postgres:5432/boltproj"
   SECRET_KEY: "F0HKhjWJrrTzVbiI2TdyigDvmUPg8kgn"
   DEFAULT_ADMIN_EMAIL: "ericocesar@webck.com.br"
@@ -65,7 +65,7 @@ services:
           memory: 1024M
       labels:
         - traefik.enable=true
-        - traefik.http.routers.planka.rule=Host(`proj.swdev.webck.com.br`)
+        - traefik.http.routers.planka.rule=Host(`task.swdev.webck.com.br`)
         - traefik.http.services.planka.loadbalancer.server.port=1337
         - traefik.http.routers.planka.service=planka
         - traefik.http.routers.planka.tls.certresolver=le

@@ -9,8 +9,11 @@
  * https://sailsjs.com/config/http
  */
 
+const path = require('path');
 const serveStatic = require('serve-static');
-const sails = require('sails');
+
+let wwwMiddleware;
+let assetsMiddleware;
 
 module.exports.http = {
   /**
@@ -29,38 +32,58 @@ module.exports.http = {
      * (This Sails app's routes are handled by the "router" middleware below.)
      *
      */
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
-    /**
-     *
-     * The body parser that will handle incoming multipart HTTP requests.
-     *
-     * https://sailsjs.com/config/http#?customizing-the-body-parser
-     *
-     */
-    // bodyParser: (function _configureBodyParser(){
-    //   var skipper = require('skipper');
-    //   var middlewareFn = skipper({ strict: true });
-    //   return middlewareFn;
-    // })(),
+    order: [
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'www',
+      'router',
+      'favicon',
+    ],
 
     poweredBy: false,
 
     www(req, res, next) {
-      const middleware = serveStatic(sails.config.paths.public, {
-        maxAge: sails.config.http.cache,
-        immutable: req.url.startsWith('/assets/'),
-      });
+      if (!wwwMiddleware) {
+        const publicPath = path.resolve(sails.config.paths.public);
+        wwwMiddleware = serveStatic(publicPath, {
+          index: false,
+          maxAge: sails.config.http.cache,
+        });
+        assetsMiddleware = serveStatic(publicPath, {
+          index: false,
+          maxAge: sails.config.http.cache,
+          immutable: true,
+        });
+      }
 
-      return middleware(req, res, next);
+      const { baseUrlPath } = sails.config.custom;
+      const originalUrl = req.url;
+      let { url } = req;
+
+      if (
+        baseUrlPath &&
+        baseUrlPath !== '/' &&
+        (url === baseUrlPath || url.startsWith(`${baseUrlPath}/`))
+      ) {
+        url = url.substring(baseUrlPath.length) || '/';
+      }
+
+      // If the URL is just '/', let the router handle it (to serve index.html via res.view)
+      if (url === '/' || url === '/index.html') {
+        return next();
+      }
+
+      req.url = url;
+
+      const middleware = url.startsWith('/assets/') ? assetsMiddleware : wwwMiddleware;
+
+      return middleware(req, res, (err) => {
+        req.url = originalUrl;
+        next(err);
+      });
     },
   },
 };
