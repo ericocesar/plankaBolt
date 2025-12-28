@@ -63,6 +63,9 @@ module.exports.http = {
       const originalUrl = req.url;
       let { url } = req;
 
+      // Log for debugging (remove in production if not needed)
+      // sails.log.debug(`[Static] Original URL: ${originalUrl}, BasePath: ${baseUrlPath}`);
+
       if (
         baseUrlPath &&
         baseUrlPath !== '/' &&
@@ -72,17 +75,22 @@ module.exports.http = {
       }
 
       // If the URL is just '/', let the router handle it (to serve index.html via res.view)
-      if (url === '/' || url === '/index.html') {
+      if (url === '/' || url === '/index.html' || url.endsWith('.html')) {
         return next();
       }
 
       req.url = url;
 
-      const middleware = url.startsWith('/assets/') ? assetsMiddleware : wwwMiddleware;
+      const isAsset = url.startsWith('/assets/') || url.includes('/assets/');
+      const middleware = isAsset ? assetsMiddleware : wwwMiddleware;
 
       return middleware(req, res, (err) => {
+        // Restore original URL before proceeding
         req.url = originalUrl;
-        next(err);
+        if (err) {
+          return next(err);
+        }
+        return next();
       });
     },
   },
