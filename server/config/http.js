@@ -60,37 +60,38 @@ module.exports.http = {
       }
 
       const { baseUrlPath } = sails.config.custom;
+      const normalizedBaseUrlPath =
+        baseUrlPath && baseUrlPath !== '/' ? baseUrlPath.replace(/\/+$/, '') : baseUrlPath;
       const originalUrl = req.url;
       let { url } = req;
 
-      // Log for debugging (remove in production if not needed)
-      // sails.log.debug(`[Static] Original URL: ${originalUrl}, BasePath: ${baseUrlPath}`);
+      if (normalizedBaseUrlPath && normalizedBaseUrlPath !== '/') {
+        const [urlPath, query] = url.split('?');
 
+        if (urlPath === normalizedBaseUrlPath) {
+          return res.redirect(301, `${normalizedBaseUrlPath}/${query ? `?${query}` : ''}`);
+        }
+      }
       if (
-        baseUrlPath &&
-        baseUrlPath !== '/' &&
-        (url === baseUrlPath || url.startsWith(`${baseUrlPath}/`))
+        normalizedBaseUrlPath &&
+        normalizedBaseUrlPath !== '/' &&
+        (url === normalizedBaseUrlPath || url.startsWith(`${normalizedBaseUrlPath}/`))
       ) {
-        url = url.substring(baseUrlPath.length) || '/';
+        url = url.substring(normalizedBaseUrlPath.length) || '/';
       }
 
-      // If the URL is just '/', let the router handle it (to serve index.html via res.view)
-      if (url === '/' || url === '/index.html' || url.endsWith('.html')) {
+      if (url === '/' || url === '/index.html') {
+        res.setHeader('Cache-Control', 'no-store');
         return next();
       }
 
       req.url = url;
 
-      const isAsset = url.startsWith('/assets/') || url.includes('/assets/');
-      const middleware = isAsset ? assetsMiddleware : wwwMiddleware;
+      const middleware = url.startsWith('/assets/') ? assetsMiddleware : wwwMiddleware;
 
       return middleware(req, res, (err) => {
-        // Restore original URL before proceeding
         req.url = originalUrl;
-        if (err) {
-          return next(err);
-        }
-        return next();
+        next(err);
       });
     },
   },
