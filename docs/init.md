@@ -8,3 +8,4 @@ cp server/.env.sample server/.env
 npm run server:db:init
 
 .
+.
