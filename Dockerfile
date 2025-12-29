@@ -8,13 +8,6 @@ WORKDIR /app
 
 COPY server/package*.json ./
 
-<<<<<<< HEAD
-RUN npm ci
-
-COPY server .
-
-RUN npm run build \
-=======
 RUN npm ci --ignore-scripts
 
 COPY server .
@@ -22,7 +15,6 @@ COPY server .
 RUN npx patch-package \
   && npm run setup-python \
   && npm run build \
->>>>>>> bolt/develop
   && npm prune --production
 
 # Stage 2: Client build
@@ -32,20 +24,12 @@ WORKDIR /app
 
 COPY client/package*.json ./
 
-<<<<<<< HEAD
-RUN npm ci
-
-COPY client .
-
-RUN DISABLE_ESLINT_PLUGIN=true npm run build
-=======
 RUN npm ci --ignore-scripts
 
 COPY client .
 
 RUN npx patch-package \
   && DISABLE_ESLINT_PLUGIN=true npm run build
->>>>>>> bolt/develop
 
 # Stage 3: Final image
 FROM node:22.12-alpine
