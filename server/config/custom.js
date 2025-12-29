@@ -28,6 +28,7 @@ const envToBytes = (value) => bytes(value);
 const envToArray = (value) => (value ? value.split(',') : []);
 
 const baseUrl = envToArray(process.env.BASE_URL)[0];
+const normalizedBaseUrl = baseUrl.replace(/\/+$/, '');
 const parsedBasedUrl = new URL(baseUrl);
 
 module.exports.custom = {
@@ -94,10 +95,7 @@ module.exports.custom = {
   oidcIgnoreRoles: process.env.OIDC_IGNORE_ROLES === 'true',
   oidcEnforced: process.env.OIDC_ENFORCED === 'true',
 
-  // TODO: move client base url to environment variable?
-  oidcRedirectUri: `${
-    sails.config.environment === 'production' ? baseUrl : 'http://localhost:3000'
-  }/oidc-callback`,
+  oidcRedirectUri: `${normalizedBaseUrl}/oidc-callback`,
 
   smtpHost: process.env.SMTP_HOST,
   smtpPort: process.env.SMTP_PORT || 587,
