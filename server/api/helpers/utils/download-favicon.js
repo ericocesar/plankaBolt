@@ -4,7 +4,6 @@
  */
 
 const { URL } = require('url');
-const icoToPng = require('ico-to-png');
 const sharp = require('sharp');
 
 const FETCH_TIMEOUT = 4000;
@@ -149,14 +148,7 @@ module.exports = {
     }
 
     if (!metadata || metadata.format === 'magick') {
-      try {
-        const buffer = await icoToPng(readedResponse.buffer, 32);
-
-        image = sharp(buffer);
-        metadata = await image.metadata();
-      } catch (error) {
-        return;
-      }
+      return;
     }
 
     const fileManager = sails.hooks['file-manager'].getInstance();
