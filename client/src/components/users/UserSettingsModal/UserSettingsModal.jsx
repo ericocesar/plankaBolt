@@ -13,6 +13,7 @@ import { useClosableModal } from '../../../hooks';
 import AccountPane from './AccountPane';
 import PreferencesPane from './PreferencesPane';
 import NotificationsPane from './NotificationsPane';
+import ApiPane from './ApiPane';
 
 const UserSettingsModal = React.memo(() => {
   const dispatch = useDispatch();
@@ -42,6 +43,12 @@ const UserSettingsModal = React.memo(() => {
         context: 'title',
       }),
       render: () => <NotificationsPane />,
+    },
+    {
+      menuItem: t('common.apiKey', {
+        context: 'title',
+      }),
+      render: () => <ApiPane />,
     },
   ];
 
