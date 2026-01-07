@@ -117,29 +117,57 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to accommodate tips */
   text-align: center;
-  height: 100%;
+  height: auto; /* Allow auto height */
   min-height: 400px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   border: 1px solid #f3f4f6;
+  position: sticky;
+  top: 2rem;
 
-  img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 1.5rem;
+  /* SVG styling handled by component, but wrapper ensures max width */
+  & > svg {
+    margin-bottom: 2rem;
+    width: 100%;
   }
 
-  h4 {
-    color: #111827;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+  /* Tips inside illustration column */
+  .tipsContainer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+    text-align: left;
+    width: 100%;
   }
 
-  p {
-    color: #6b7280;
-    font-size: 0.9rem;
-    line-height: 1.5;
+  .tipsIcon {
+    color: #15803d;
+    font-size: 1.25rem;
+    margin-top: 0.1rem;
+  }
+
+  .tipsContent {
+    flex: 1;
+
+    h4 {
+      margin: 0 0 0.5rem 0;
+      color: #166534;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: #166534;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
   }
 
   @media (max-width: 900px) {
@@ -235,41 +263,7 @@
   }
 }
 
-/* Tips Section (Small inside form) */
-.tipsContainer {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  display: flex;
-  gap: 0.75rem;
-  align-items: start;
-}
-
-.tipsIcon {
-  color: #64748b;
-  font-size: 1.1rem;
-  margin-top: 0.1rem;
-}
-
-.tipsContent {
-  flex: 1;
-
-  h4 {
-    margin: 0 0 0.25rem 0;
-    color: #334155;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  p {
-    margin: 0;
-    color: #64748b;
-    font-size: 0.85rem;
-    line-height: 1.4;
-  }
-}
+/* Tips Section handled inside illustrationColumn */
 
 /* Success State */
 .successMessage {

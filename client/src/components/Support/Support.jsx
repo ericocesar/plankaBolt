@@ -34,20 +34,10 @@ const STEPS = [
     id: 3,
     label: 'Detalhes',
     title: 'Descreva o Ocorrido',
-    fields: ['subject', 'description'],
+    fields: ['subject', 'description', 'files', 'consent'],
     tip: {
       title: 'Seja específico',
       text: 'Quanto mais detalhes você fornecer, mais rápido poderemos diagnosticar e resolver o problema.',
-    },
-  },
-  {
-    id: 4,
-    label: 'Finalização',
-    title: 'Anexos e Envio',
-    fields: ['files', 'consent'],
-    tip: {
-      title: 'Uma imagem vale mais que mil palavras',
-      text: 'Se possível, anexe capturas de tela do erro. Isso acelera muito o nosso entendimento.',
     },
   },
 ];
@@ -123,43 +113,14 @@ function StepIllustration({ step }) {
             strokeWidth="8"
             strokeLinecap="round"
           />
-          <line
-            x1="120"
-            y1="180"
-            x2="280"
-            y2="180"
-            stroke="#d1fae5"
-            strokeWidth="8"
-            strokeLinecap="round"
-          />
-          <circle cx="280" cy="220" r="30" fill="#10b981" />
-          <path d="M270 220 L276 226 L290 212" stroke="white" strokeWidth="3" fill="none" />
-        </svg>
-      );
-    case 4: // Finalização
-      return (
-        <svg viewBox={commonProps.viewBox} xmlns={commonProps.xmlns} style={commonProps.style}>
-          <circle cx="200" cy="150" r="140" fill="#ecfdf5" />
           <path
-            d="M150 150 L180 180 L250 110"
+            d="M150 200 L170 220 L220 170"
             stroke="#10b981"
-            strokeWidth="15"
+            strokeWidth="8"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <rect x="140" y="220" width="120" height="40" rx="20" fill="#34d399" />
-          <text
-            x="200"
-            y="247"
-            textAnchor="middle"
-            fill="white"
-            fontSize="16"
-            fontFamily="sans-serif"
-            fontWeight="bold"
-          >
-            ENVIAR
-          </text>
         </svg>
       );
     default:
@@ -392,12 +353,7 @@ function Support() {
               placeholder="Descreva o que aconteceu, passos para reproduzir, etc."
               style={{ minHeight: 200 }}
             />
-          </>
-        );
-      case 4:
-        return (
-          <>
-            <div style={{ marginBottom: '1.5rem' }}>
+            <div style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label className={styles.label}>Anexos (Opcional)</label>
               <StackedCardsUpload files={files} onFilesChange={handleFilesChange} />
@@ -499,17 +455,6 @@ function Support() {
             <Form loading={loading} size="large">
               {renderStepContent()}
             </Form>
-
-            {/* Tips Section */}
-            {currentStepData.tip && (
-              <div className={styles.tipsContainer}>
-                <Icon name="lightbulb outline" className={styles.tipsIcon} />
-                <div className={styles.tipsContent}>
-                  <h4>{currentStepData.tip.title}</h4>
-                  <p>{currentStepData.tip.text}</p>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Navigation Actions */}
@@ -545,8 +490,16 @@ function Support() {
 
         <div className={styles.illustrationColumn}>
           <StepIllustration step={currentStep} />
-          <h4>Estamos aqui para ajudar</h4>
-          <p>Preencha os dados com atenção para agilizarmos seu atendimento.</p>
+          {/* Tips Section */}
+          {currentStepData.tip && (
+            <div className={styles.tipsContainer}>
+              <Icon name="lightbulb outline" className={styles.tipsIcon} />
+              <div className={styles.tipsContent}>
+                <h4>{currentStepData.tip.title}</h4>
+                <p>{currentStepData.tip.text}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Container>
