@@ -12,12 +12,18 @@ const deleteForm = (id, headers) => socket.delete(`/forms/${id}`, undefined, hea
 const handleResponse = (response) => {
   if (!response.ok) {
     return response.text().then((text) => {
+      // Log do erro detalhado para debug
+      console.error('API Error Response:', text);
       try {
         const json = JSON.parse(text);
         if (json.message) throw new Error(json.message);
         if (json.code) throw new Error(`Error: ${json.code}`);
+        // Se for um erro do Sails Action2, pode vir como { code: '...', details: ... }
+        if (json.problems) throw new Error(`Validation Error: ${json.problems.join(', ')}`);
       } catch (e) {
-        // ignore
+        if (e.message !== 'Unexpected token < in JSON at position 0') {
+          throw e; // Rethrow parsed error
+        }
       }
       throw new Error(text || 'Server Error');
     });
