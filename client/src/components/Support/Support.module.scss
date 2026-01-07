@@ -2,7 +2,7 @@
 
 .container {
   padding-top: 40px;
-  max-width: 1000px !important; /* Aumentei para caber a imagem lateral */
+  max-width: 1200px !important; /* Aumentei um pouco mais para acomodar o grid interno */
   font-family: 'Inter', sans-serif;
   color: #1f2937;
 }
@@ -10,7 +10,7 @@
 .title {
   font-size: 2rem !important;
   font-weight: 700 !important;
-  color: #ffffff !important; /* Texto branco para contraste com fundo escuro */
+  color: #ffffff !important;
   margin-bottom: 0.5rem !important;
   text-align: center;
   letter-spacing: -0.025em;
@@ -19,7 +19,7 @@
 
 .subtitle {
   text-align: center;
-  color: #d1d5db; /* Cinza claro para subtítulo */
+  color: #d1d5db;
   margin-bottom: 3rem !important;
   font-size: 1rem;
 }
@@ -29,7 +29,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem; /* Reduzi um pouco para ganhar espaço vertical */
   position: relative;
   padding: 0 1rem;
   max-width: 700px;
@@ -43,7 +43,7 @@
     left: 2rem;
     right: 2rem;
     height: 2px;
-    background: rgba(255, 255, 255, 0.2); /* Linha mais sutil em fundo escuro */
+    background: rgba(255, 255, 255, 0.2);
     z-index: 0;
   }
 }
@@ -61,7 +61,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #1f2937; /* Fundo escuro */
+  background: #1f2937;
   border: 2px solid #4b5563;
   color: #9ca3af;
   display: flex;
@@ -104,7 +104,7 @@
   gap: 2rem;
   align-items: start;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     grid-template-columns: 1fr;
   }
 }
@@ -117,22 +117,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Changed from center to accommodate tips */
+  justify-content: flex-start;
   text-align: center;
-  height: auto; /* Allow auto height */
+  height: auto;
   min-height: 400px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   border: 1px solid #f3f4f6;
   position: sticky;
   top: 2rem;
 
-  /* SVG styling handled by component, but wrapper ensures max width */
   & > svg {
     margin-bottom: 2rem;
     width: 100%;
   }
 
-  /* Tips inside illustration column */
   .tipsContainer {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -170,7 +168,7 @@
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 }
@@ -188,7 +186,7 @@
 }
 
 .formContent {
-  padding: 2.5rem;
+  padding: 2rem; /* Reduzi um pouco o padding interno */
   flex: 1;
 }
 
@@ -231,6 +229,45 @@
   }
 }
 
+/* Details Step Layout */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Esquerda maior, Direita menor */
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.rightColumn {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.attachmentsWrapper {
+  flex: 1;
+  /* Estilizar o container de upload para preencher altura se necessário */
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+  }
+}
+
 /* Colored Options in Select */
 .optionLow { color: #166534 !important; background-color: #dcfce7 !important; }
 .optionMedium { color: #854d0e !important; background-color: #fef9c3 !important; }
@@ -263,8 +300,6 @@
   }
 }
 
-/* Tips Section handled inside illustrationColumn */
-
 /* Success State */
 .successMessage {
   text-align: center;
@@ -295,15 +330,14 @@
   border: 1px solid #e5e7eb;
 }
 
-.checkbox {
-  /* Default style */
-}
-
 .checkboxError {
   :global {
+    .box:before, .label:before {
+       border-color: #dc2626 !important;
+       background: #fef2f2 !important;
+    }
     label {
       color: #dc2626 !important;
-      font-weight: 600 !important;
     }
   }
   animation: shake 0.5s;

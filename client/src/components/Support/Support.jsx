@@ -152,6 +152,7 @@ function Support() {
   const [formConfig, setFormConfig] = useState(null);
   const [categories, setCategories] = useState([]);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showConsentError, setShowConsentError] = useState(false);
 
   useEffect(() => {
     // Fetch form config (public)
@@ -333,40 +334,51 @@ function Support() {
         );
       case 3:
         return (
-          <>
-            <Form.Input
-              label="Assunto"
-              className={styles.input}
-              name="subject"
-              value={data.subject}
-              onChange={handleChange}
-              required
-              placeholder="Resumo do problema"
-            />
-            <Form.TextArea
-              label="Descrição Detalhada"
-              className={styles.textArea}
-              name="description"
-              value={data.description}
-              onChange={handleChange}
-              required
-              placeholder="Descreva o que aconteceu, passos para reproduzir, etc."
-              style={{ minHeight: 200 }}
-            />
-            <div style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className={styles.label}>Anexos (Opcional)</label>
-              <StackedCardsUpload files={files} onFilesChange={handleFilesChange} />
+          <div className={styles.detailsGrid}>
+            <div className={styles.leftColumn}>
+              <Form.Input
+                label="Assunto"
+                className={styles.input}
+                name="subject"
+                value={data.subject}
+                onChange={handleChange}
+                required
+                placeholder="Resumo do problema"
+              />
+              <Form.TextArea
+                label="Descrição Detalhada"
+                className={styles.textArea}
+                name="description"
+                value={data.description}
+                onChange={handleChange}
+                required
+                placeholder="Descreva o que aconteceu, passos para reproduzir, etc."
+                style={{ flex: 1, minHeight: 200 }}
+              />
+              <Form.Checkbox
+                label="Concordo com o processamento dos meus dados pessoais para fins de suporte."
+                name="consent"
+                checked={data.consent}
+                onChange={(e, { checked }) => {
+                  handleChange(e, { name: 'consent', checked });
+                  if (checked) setShowConsentError(false);
+                }}
+                required
+                className={classNames(styles.checkbox, {
+                  [styles.checkboxError]: showConsentError,
+                })}
+                style={{ marginTop: 'auto' }}
+              />
             </div>
-            <Form.Checkbox
-              label="Concordo com o processamento dos meus dados pessoais para fins de suporte."
-              name="consent"
-              checked={data.consent}
-              onChange={handleChange}
-              required
-              className={styles.checkbox}
-            />
-          </>
+
+            <div className={styles.rightColumn}>
+              <div className={styles.attachmentsWrapper}>
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label className={styles.label}>Anexos (Opcional)</label>
+                <StackedCardsUpload files={files} onFilesChange={handleFilesChange} />
+              </div>
+            </div>
+          </div>
         );
       default:
         return null;
