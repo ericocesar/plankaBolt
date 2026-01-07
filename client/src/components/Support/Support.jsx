@@ -259,8 +259,14 @@ function Support() {
 
     try {
       const cleanData = { ...data };
+      // Remove fields not expected by the backend
+      delete cleanData.consent; // Consent is frontend-only validation
+
+      // Remove empty optional strings
       if (!cleanData.company) delete cleanData.company;
       if (!cleanData.phone) delete cleanData.phone;
+      if (!cleanData.category) delete cleanData.category;
+      if (!cleanData.priority) delete cleanData.priority;
 
       const payload = { ...cleanData, files }; // files is array of File objects
       const response = await api.createPublicTicket(formId, payload);
