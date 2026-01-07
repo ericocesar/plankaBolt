@@ -300,3 +300,23 @@
   letter-spacing: 0.05em;
   border: 1px solid #e5e7eb;
 }
+
+.checkbox {
+  /* Default style */
+}
+
+.checkboxError {
+  :global {
+    label {
+      color: #dc2626 !important;
+      font-weight: 600 !important;
+    }
+  }
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

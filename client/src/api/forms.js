@@ -9,30 +9,50 @@ const updateForm = (id, data, headers) => socket.patch(`/forms/${id}`, data, hea
 
 const deleteForm = (id, headers) => socket.delete(`/forms/${id}`, undefined, headers);
 
+const handleResponse = (response) => {
+  if (!response.ok) {
+    return response.text().then((text) => {
+      try {
+        const json = JSON.parse(text);
+        if (json.message) throw new Error(json.message);
+        if (json.code) throw new Error(`Error: ${json.code}`);
+      } catch (e) {
+        // ignore
+      }
+      throw new Error(text || 'Server Error');
+    });
+  }
+  return response.json();
+};
+
 const createPublicTicket = (formId, data) => {
-  const formData = new FormData();
-  Object.keys(data).forEach((key) => {
-    if (key === 'files') {
-      Array.from(data[key]).forEach((file) => {
-        formData.append('files', file);
-      });
-    } else {
-      formData.append(key, data[key]);
-    }
-  });
+  const hasFiles = data.files && data.files.length > 0;
+
+  if (hasFiles) {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key === 'files') {
+        Array.from(data[key]).forEach((file) => {
+          formData.append('files', file);
+        });
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
+
+    return fetch(`${Config.SERVER_BASE_URL}/api/public-tickets/${formId}`, {
+      method: 'POST',
+      body: formData,
+    }).then(handleResponse);
+  }
 
   return fetch(`${Config.SERVER_BASE_URL}/api/public-tickets/${formId}`, {
     method: 'POST',
-    body: formData,
-    // Content-Type header skipped to let browser set boundary
-  }).then((response) => {
-    if (!response.ok) {
-      return response.text().then((text) => {
-        throw new Error(text || 'Server Error');
-      });
-    }
-    return response.json();
-  });
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(handleResponse);
 };
 
 export default {
