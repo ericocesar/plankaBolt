@@ -235,6 +235,21 @@ module.exports.routes = {
     skipAssets: false,
   },
 
+  'GET /assets/*': {
+    fn: staticDirServer('/assets', () => path.join(sails.config.paths.public, 'assets')),
+    skipAssets: false,
+  },
+
+  'GET /manifest.json': {
+    fn: staticDirServer('/', () => sails.config.paths.public),
+    skipAssets: false,
+  },
+
+  'GET /favicon.ico': {
+    fn: staticDirServer('/', () => sails.config.paths.public),
+    skipAssets: false,
+  },
+
   'GET /attachments/:id/download/:filename': {
     action: 'file-attachments/download',
     skipAssets: false,
