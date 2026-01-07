@@ -4,6 +4,12 @@ on:
   pull_request:
     branches:
       - master
+      - 'bolt/develop'
+      - 'bolt/main'
+  push:
+    branches:
+      - 'bolt/develop'
+      - 'bolt/main'
 
 jobs:
   lint:

@@ -4,9 +4,13 @@ on:
   pull_request:
     branches:
       - master
+      - 'bolt/develop'
+      - 'bolt/main'
   push:
     branches:
       - master
+      - 'bolt/develop'
+      - 'bolt/main'
 
 jobs:
   build-and-test:
