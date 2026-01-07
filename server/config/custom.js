@@ -107,4 +107,6 @@ module.exports.custom = {
   smtpFrom: process.env.SMTP_FROM,
 
   gravatarBaseUrl: process.env.GRAVATAR_BASE_URL,
+
+  embedAllowedOrigins: process.env.EMBED_ALLOWED_ORIGINS || 'https://bolt360.com.br',
 };

@@ -16,7 +16,7 @@ import Paths from '../../constants/Paths';
 import Login from './Login';
 import Core from './Core';
 import GhostError from './GhostError';
-import Support from '../Support';
+import Support, { Embed, EmbedCode } from '../Support';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'photoswipe/dist/photoswipe.css';
@@ -38,6 +38,8 @@ function Root({ store, history }) {
               <Route path={Paths.PROJECTS} element={<Core />} />
               <Route path={Paths.BOARDS} element={<Core />} />
               <Route path={Paths.CARDS} element={<Core />} />
+              <Route path={Paths.SUPPORT_EMBED} element={<Embed />} />
+              <Route path={Paths.SUPPORT_EMBED_CODE} element={<EmbedCode />} />
               <Route path={Paths.SUPPORT} element={<Support />} />
               <Route path="*" element={<GhostError />} />
             </Routes>

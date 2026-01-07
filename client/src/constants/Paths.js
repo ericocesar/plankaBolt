@@ -10,6 +10,8 @@ const PROJECTS = '/projects/:id';
 const BOARDS = '/boards/:id';
 const CARDS = '/cards/:id';
 const SUPPORT = '/support/:formId';
+const SUPPORT_EMBED = '/support/:formId/embed';
+const SUPPORT_EMBED_CODE = '/support/:formId/embed-code';
 
 export default {
   ROOT,
@@ -19,4 +21,6 @@ export default {
   BOARDS,
   CARDS,
   SUPPORT,
+  SUPPORT_EMBED,
+  SUPPORT_EMBED_CODE,
 };

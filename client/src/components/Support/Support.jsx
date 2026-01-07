@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { Form, Message, Header, Button, Container, Icon } from 'semantic-ui-react';
@@ -132,17 +132,18 @@ StepIllustration.propTypes = {
   step: PropTypes.number.isRequired,
 };
 
-function Support() {
+function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
   const { formId } = useParams();
+  const containerRef = useRef(null);
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    category: '',
-    priority: '',
-    subject: '',
-    description: '',
+    name: prefillData.name || '',
+    email: prefillData.email || '',
+    phone: prefillData.phone || '',
+    company: prefillData.company || '',
+    category: prefillData.category || '',
+    priority: prefillData.priority || '',
+    subject: prefillData.subject || '',
+    description: prefillData.description || '',
     consent: false,
   });
   const [files, setFiles] = useState([]);
@@ -176,6 +177,22 @@ function Support() {
     };
     fetchConfig();
   }, [formId]);
+
+  useEffect(() => {
+    if (isEmbed && containerRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+          const height = entry.contentRect.height + 50; // Add some buffer
+          window.parent.postMessage({ type: 'planka-embed-resize', height }, '*');
+        });
+      });
+
+      resizeObserver.observe(containerRef.current);
+      return () => resizeObserver.disconnect();
+    }
+
+    return undefined;
+  }, [isEmbed, currentStep, success, error]);
 
   const handleChange = (e, { name, value, checked }) => {
     setData((prev) => ({ ...prev, [name]: value !== undefined ? value : checked }));
@@ -397,7 +414,7 @@ function Support() {
 
   if (success) {
     return (
-      <Container className={styles.container}>
+      <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
         <div className={styles.formCard}>
           <div className={styles.successMessage}>
             <Icon name="check circle outline" className={styles.successIcon} />
@@ -424,7 +441,7 @@ function Support() {
 
   if (error && !formConfig) {
     return (
-      <Container className={styles.container}>
+      <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
         <Message error content={error} />
       </Container>
     );
@@ -436,11 +453,15 @@ function Support() {
   const isStepValid = validateStep();
 
   return (
-    <Container className={styles.container}>
-      <Header as="h1" className={styles.title}>
-        {formConfig ? formConfig.name : 'Suporte'}
-      </Header>
-      <p className={styles.subtitle}>Preencha as informações abaixo para abrir seu chamado.</p>
+    <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
+      {!hideHeader && !isEmbed && (
+        <>
+          <Header as="h1" className={styles.title}>
+            {formConfig ? formConfig.name : 'Suporte'}
+          </Header>
+          <p className={styles.subtitle}>Preencha as informações abaixo para abrir seu chamado.</p>
+        </>
+      )}
 
       {/* Stepper */}
       <div className={styles.stepperContainer}>
@@ -465,7 +486,7 @@ function Support() {
         ))}
       </div>
 
-      <div className={styles.mainWrapper}>
+      <div className={isEmbed ? styles.embedWrapper : styles.mainWrapper}>
         <div className={styles.formCard}>
           {error && <Message error content={error} style={{ margin: '1rem' }} />}
 
@@ -510,22 +531,37 @@ function Support() {
           </div>
         </div>
 
-        <div className={styles.illustrationColumn}>
-          <StepIllustration step={currentStep} />
-          {/* Tips Section */}
-          {currentStepData.tip && (
-            <div className={styles.tipsContainer}>
-              <Icon name="lightbulb outline" className={styles.tipsIcon} />
-              <div className={styles.tipsContent}>
-                <h4>{currentStepData.tip.title}</h4>
-                <p>{currentStepData.tip.text}</p>
+        {!isEmbed && (
+          <div className={styles.illustrationColumn}>
+            <StepIllustration step={currentStep} />
+            {/* Tips Section */}
+            {currentStepData.tip && (
+              <div className={styles.tipsContainer}>
+                <Icon name="lightbulb outline" className={styles.tipsIcon} />
+                <div className={styles.tipsContent}>
+                  <h4>{currentStepData.tip.title}</h4>
+                  <p>{currentStepData.tip.text}</p>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </Container>
   );
 }
+
+Support.propTypes = {
+  isEmbed: PropTypes.bool,
+  hideHeader: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  prefillData: PropTypes.object,
+};
+
+Support.defaultProps = {
+  isEmbed: false,
+  hideHeader: false,
+  prefillData: {},
+};
 
 export default Support;

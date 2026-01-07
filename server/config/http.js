@@ -80,6 +80,12 @@ module.exports.http = {
         url = url.substring(normalizedBaseUrlPath.length) || '/';
       }
 
+      if (url.includes('/embed')) {
+        const allowedOrigins = sails.config.custom.embedAllowedOrigins || 'https://bolt360.com.br';
+        res.setHeader('Content-Security-Policy', `frame-ancestors ${allowedOrigins}`);
+        res.removeHeader('X-Frame-Options');
+      }
+
       if (
         url === '/' ||
         url === '/index.html' ||

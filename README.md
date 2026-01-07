@@ -55,3 +55,30 @@ For setting up the project locally, see the [development section](https://docs.p
 **Thanks to all our contributors!**
 
 [![Contributors](https://contrib.rocks/image?repo=plankanban/planka)](https://github.com/plankanban/planka/graphs/contributors)
+
+## Embedding Support Form
+
+You can embed the support form in external websites using an iframe.
+
+### Usage
+
+1. Go to `/support/:formId/embed-code` to generate the embed code.
+2. Or use the following URL pattern:
+   `/support/:formId/embed?hideHeader=1&theme=light&autoResize=1`
+
+### Configuration
+
+- **EMBED_ALLOWED_ORIGINS**: Environment variable to control the `Content-Security-Policy: frame-ancestors` header.
+  - Default: `https://bolt360.com.br`
+  - Example: `https://mysite.com https://othersite.com`
+
+### Parameters
+
+- `hideHeader`: Set to `1` to hide the form title and subtitle.
+- `theme`: `light` or `dark`.
+- `autoResize`: Set to `1` to enable automatic height adjustment (requires script on parent page).
+- `prefill`: Base64 encoded JSON object to prefill form fields (e.g., name, email).
+
+### Security
+
+The embed route sets `Content-Security-Policy: frame-ancestors` based on `EMBED_ALLOWED_ORIGINS` to prevent clickjacking and unauthorized embedding.

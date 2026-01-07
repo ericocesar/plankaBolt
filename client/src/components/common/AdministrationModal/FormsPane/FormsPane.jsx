@@ -100,6 +100,15 @@ function FormsPane() {
           {forms.map((form) => (
             <List.Item key={form.id}>
               <List.Content floated="right">
+                <Button
+                  icon
+                  as="a"
+                  href={`/support/${form.id}/embed-code`}
+                  target="_blank"
+                  title="Gerar código de incorporação"
+                >
+                  <Icon name="code" />
+                </Button>
                 <Button icon onClick={() => setEditingForm(form)}>
                   <Icon name="pencil" />
                 </Button>

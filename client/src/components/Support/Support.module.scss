@@ -7,6 +7,17 @@
   color: #1f2937;
 }
 
+.embedContainer {
+  padding-top: 0;
+  max-width: 100% !important;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0.5rem !important;
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+  background-color: transparent;
+}
+
 .title {
   font-size: 2rem !important;
   font-weight: 700 !important;
@@ -107,6 +118,11 @@
   @media (max-width: 1000px) {
     grid-template-columns: 1fr;
   }
+}
+
+.embedWrapper {
+  display: block;
+  width: 100%;
 }
 
 /* Illustration Column */
