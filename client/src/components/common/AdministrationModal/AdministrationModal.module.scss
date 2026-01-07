@@ -6,9 +6,12 @@
 :global(#app) {
   .wrapperUsers {
     margin: 2rem auto;
+    /* Move dialog higher up as requested */
+    margin-top: 5vh;
 
     @media (width < 926px) {
       margin: 1rem auto;
+      margin-top: 2vh;
     }
 
     @media (768px <= width < 1160px) {

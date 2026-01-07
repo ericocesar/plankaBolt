@@ -48,4 +48,13 @@ module.exports.policies = {
   'access-tokens/exchange-with-oidc': true,
   'access-tokens/accept-terms': true,
   'access-tokens/revoke-pending-token': true,
+
+  'forms/index': ['is-authenticated', 'is-admin'],
+  'forms/create': ['is-authenticated', 'is-admin'],
+  'forms/show': ['is-authenticated', 'is-admin'],
+  'forms/update': ['is-authenticated', 'is-admin'],
+  'forms/delete': ['is-authenticated', 'is-admin'],
+
+  'public-tickets/create': true,
+  'public-tickets/show': true,
 };

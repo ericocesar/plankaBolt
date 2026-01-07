@@ -245,6 +245,15 @@ module.exports.routes = {
     skipAssets: false,
   },
 
+  'GET /api/forms': 'forms/index',
+  'POST /api/forms': 'forms/create',
+  'GET /api/forms/:id': 'forms/show',
+  'PATCH /api/forms/:id': 'forms/update',
+  'DELETE /api/forms/:id': 'forms/delete',
+
+  'POST /api/public-tickets/:formId': 'public-tickets/create',
+  'GET /api/public-tickets/:formId': 'public-tickets/show',
+
   'GET /*': {
     view: 'index',
     skipAssets: true,
