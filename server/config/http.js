@@ -80,9 +80,21 @@ module.exports.http = {
         url = url.substring(normalizedBaseUrlPath.length) || '/';
       }
 
-      if (url === '/' || url === '/index.html') {
+      if (
+        url === '/' ||
+        url === '/index.html' ||
+        (!url.startsWith('/api/') &&
+          !url.startsWith('/assets/') &&
+          !url.startsWith('/attachments/') &&
+          !url.startsWith('/background-images/') &&
+          !url.startsWith('/favicons/') &&
+          !url.startsWith('/user-avatars/') &&
+          !url.startsWith('/preloaded-favicons/'))
+      ) {
         res.setHeader('Cache-Control', 'no-store');
-        return next();
+        if (url === '/' || url === '/index.html') {
+          return next();
+        }
       }
 
       req.url = url;
