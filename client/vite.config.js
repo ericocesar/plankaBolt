@@ -8,7 +8,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [
     commonjs(),
     nodePolyfills({
