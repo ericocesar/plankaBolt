@@ -235,7 +235,7 @@ module.exports.routes = {
     skipAssets: false,
   },
 
-  'GET /assets/*': {
+  'GET r|^/assets/.*|': {
     fn: staticDirServer('/assets', () => path.join(sails.config.paths.public, 'assets')),
     skipAssets: false,
   },
