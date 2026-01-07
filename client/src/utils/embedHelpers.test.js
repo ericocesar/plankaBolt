@@ -38,12 +38,12 @@ describe('embedHelpers', () => {
 
   describe('getEmbedCSP', () => {
     it('should return default allowed origin if not provided', () => {
-      expect(getEmbedCSP(undefined)).toBe('frame-ancestors https://bolt360.com.br');
+      expect(getEmbedCSP(undefined)).toBe("frame-ancestors 'self' https://bolt360.com.br");
     });
 
     it('should return provided allowed origins', () => {
       const origins = 'https://example.com https://another.com';
-      expect(getEmbedCSP(origins)).toBe(`frame-ancestors ${origins}`);
+      expect(getEmbedCSP(origins)).toBe(`frame-ancestors 'self' ${origins}`);
     });
   });
 });

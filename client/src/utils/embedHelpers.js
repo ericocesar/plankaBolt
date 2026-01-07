@@ -10,5 +10,5 @@ export const parsePrefill = (prefillParam) => {
 };
 
 export const getEmbedCSP = (allowedOrigins) => {
-  return `frame-ancestors ${allowedOrigins || 'https://bolt360.com.br'}`;
+  return `frame-ancestors 'self' ${allowedOrigins || 'https://bolt360.com.br'}`;
 };

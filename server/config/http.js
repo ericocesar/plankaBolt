@@ -82,7 +82,7 @@ module.exports.http = {
 
       if (url.includes('/embed')) {
         const allowedOrigins = sails.config.custom.embedAllowedOrigins || 'https://bolt360.com.br';
-        res.setHeader('Content-Security-Policy', `frame-ancestors ${allowedOrigins}`);
+        res.setHeader('Content-Security-Policy', `frame-ancestors 'self' ${allowedOrigins}`);
         res.removeHeader('X-Frame-Options');
       }
 
