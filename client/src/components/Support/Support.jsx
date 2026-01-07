@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { Form, Message, Header, Button, Container, Icon } from 'semantic-ui-react';
 import classNames from 'classnames';
@@ -50,6 +51,125 @@ const STEPS = [
     },
   },
 ];
+
+function StepIllustration({ step }) {
+  const commonProps = {
+    viewBox: '0 0 400 300',
+    xmlns: 'http://www.w3.org/2000/svg',
+    style: { maxWidth: '100%', height: 'auto', maxHeight: '300px' },
+  };
+
+  switch (step) {
+    case 1: // Contato
+      return (
+        <svg viewBox={commonProps.viewBox} xmlns={commonProps.xmlns} style={commonProps.style}>
+          <circle cx="200" cy="150" r="140" fill="#ecfdf5" />
+          <circle cx="200" cy="110" r="40" fill="#10b981" />
+          <path d="M120 230 C 120 180, 280 180, 280 230" fill="#34d399" />
+          <rect x="100" y="250" width="200" height="15" rx="7.5" fill="#a7f3d0" />
+          <rect x="130" y="275" width="140" height="10" rx="5" fill="#d1fae5" />
+        </svg>
+      );
+    case 2: // Classificação
+      return (
+        <svg viewBox={commonProps.viewBox} xmlns={commonProps.xmlns} style={commonProps.style}>
+          <circle cx="200" cy="150" r="140" fill="#ecfdf5" />
+          <rect x="120" y="80" width="160" height="40" rx="8" fill="#10b981" />
+          <rect x="120" y="140" width="160" height="40" rx="8" fill="#34d399" />
+          <rect x="120" y="200" width="160" height="40" rx="8" fill="#6ee7b7" />
+          <circle cx="260" cy="100" r="10" fill="#ffffff" opacity="0.5" />
+          <circle cx="260" cy="160" r="10" fill="#ffffff" opacity="0.5" />
+          <circle cx="260" cy="220" r="10" fill="#ffffff" opacity="0.5" />
+        </svg>
+      );
+    case 3: // Detalhes
+      return (
+        <svg viewBox={commonProps.viewBox} xmlns={commonProps.xmlns} style={commonProps.style}>
+          <circle cx="200" cy="150" r="140" fill="#ecfdf5" />
+          <rect
+            x="100"
+            y="60"
+            width="200"
+            height="180"
+            rx="10"
+            fill="#ffffff"
+            stroke="#10b981"
+            strokeWidth="2"
+          />
+          <line
+            x1="120"
+            y1="90"
+            x2="280"
+            y2="90"
+            stroke="#34d399"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <line
+            x1="120"
+            y1="120"
+            x2="280"
+            y2="120"
+            stroke="#d1fae5"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <line
+            x1="120"
+            y1="150"
+            x2="250"
+            y2="150"
+            stroke="#d1fae5"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <line
+            x1="120"
+            y1="180"
+            x2="280"
+            y2="180"
+            stroke="#d1fae5"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <circle cx="280" cy="220" r="30" fill="#10b981" />
+          <path d="M270 220 L276 226 L290 212" stroke="white" strokeWidth="3" fill="none" />
+        </svg>
+      );
+    case 4: // Finalização
+      return (
+        <svg viewBox={commonProps.viewBox} xmlns={commonProps.xmlns} style={commonProps.style}>
+          <circle cx="200" cy="150" r="140" fill="#ecfdf5" />
+          <path
+            d="M150 150 L180 180 L250 110"
+            stroke="#10b981"
+            strokeWidth="15"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <rect x="140" y="220" width="120" height="40" rx="20" fill="#34d399" />
+          <text
+            x="200"
+            y="247"
+            textAnchor="middle"
+            fill="white"
+            fontSize="16"
+            fontFamily="sans-serif"
+            fontWeight="bold"
+          >
+            ENVIAR
+          </text>
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+StepIllustration.propTypes = {
+  step: PropTypes.number.isRequired,
+};
 
 function Support() {
   const { formId } = useParams();
@@ -138,7 +258,11 @@ function Support() {
     setError(null);
 
     try {
-      const payload = { ...data, files }; // files is array of File objects
+      const cleanData = { ...data };
+      if (!cleanData.company) delete cleanData.company;
+      if (!cleanData.phone) delete cleanData.phone;
+
+      const payload = { ...cleanData, files }; // files is array of File objects
       const response = await api.createPublicTicket(formId, payload);
       setSuccess(response);
     } catch (err) {
@@ -409,10 +533,7 @@ function Support() {
         </div>
 
         <div className={styles.illustrationColumn}>
-          <img
-            src="https://raw.githubusercontent.com/undraw/undraw-illustrations/master/svg/undraw_fill_forms_re_e876.svg"
-            alt="Preenchimento de formulário"
-          />
+          <StepIllustration step={currentStep} />
           <h4>Estamos aqui para ajudar</h4>
           <p>Preencha os dados com atenção para agilizarmos seu atendimento.</p>
         </div>
