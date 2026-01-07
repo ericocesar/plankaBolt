@@ -210,9 +210,19 @@ function Support() {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = async () => {
     if (!data.consent) {
       setError('Você deve concordar com a política de processamento de dados.');
+      setShowConsentError(true);
+      return;
+    }
+
+    if (!validateEmail(data.email)) {
+      setError('Por favor, insira um endereço de e-mail válido (ex: nome@exemplo.com).');
       return;
     }
 
