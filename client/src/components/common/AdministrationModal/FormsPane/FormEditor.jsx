@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Message, Segment, Header } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from 'redux-orm';
 import orm from '../../../../orm';
 import api from '../../../../api/forms';
 import { getAccessToken } from '../../../../utils/access-token-storage';
+import boardActions from '../../../../actions/boards';
 
 const selectProjects = createSelector(orm, (session) => session.Project.all().toRefArray());
 const selectBoards = createSelector(orm, (session) => session.Board.all().toRefArray());
@@ -26,6 +27,8 @@ function FormEditor({ form, onSave, onCancel }) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
 
   const projects = useSelector(selectProjects);
   const allBoards = useSelector(selectBoards);
@@ -70,10 +73,17 @@ function FormEditor({ form, onSave, onCancel }) {
     setListId(null);
   }, []);
 
-  const handleBoardIdChange = useCallback((e, { value }) => {
-    setBoardId(value);
-    setListId(null);
-  }, []);
+  const handleBoardIdChange = useCallback(
+    (e, { value }) => {
+      setBoardId(value);
+      setListId(null);
+
+      if (value) {
+        dispatch(boardActions.fetchBoard(value));
+      }
+    },
+    [dispatch],
+  );
 
   const handleListIdChange = useCallback((e, { value }) => {
     setListId(value);

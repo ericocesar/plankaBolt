@@ -32,7 +32,7 @@ function Support() {
     const fetchConfig = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_BASE_URL || 'http://localhost:1337'}/api/public-tickets/${formId}`,
+          `${import.meta.env.VITE_SERVER_BASE_URL || ''}/api/public-tickets/${formId}`,
         );
         if (response.ok) {
           const config = await response.json();
