@@ -1,11 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Message, Header, Button, Container, Icon } from 'semantic-ui-react';
+import classNames from 'classnames';
 import api from '../../api/forms';
 import styles from './Support.module.scss';
 import StackedCardsUpload from './StackedCardsUpload';
 
 const PRIORITIES = ['Baixa', 'Média', 'Alta'];
+
+const STEPS = [
+  {
+    id: 1,
+    label: 'Contato',
+    title: 'Seus Dados de Contato',
+    fields: ['name', 'email', 'phone', 'company'],
+    tip: {
+      title: 'Por que precisamos desses dados?',
+      text: 'Essas informações são essenciais para que possamos entrar em contato com você sobre o andamento do seu chamado.',
+    },
+  },
+  {
+    id: 2,
+    label: 'Classificação',
+    title: 'Classifique o Problema',
+    fields: ['category', 'priority'],
+    tip: {
+      title: 'Ajude-nos a priorizar',
+      text: 'A classificação correta ajuda nossa equipe técnica a identificar a urgência e direcionar para o especialista certo.',
+    },
+  },
+  {
+    id: 3,
+    label: 'Detalhes',
+    title: 'Descreva o Ocorrido',
+    fields: ['subject', 'description'],
+    tip: {
+      title: 'Seja específico',
+      text: 'Quanto mais detalhes você fornecer, mais rápido poderemos diagnosticar e resolver o problema.',
+    },
+  },
+  {
+    id: 4,
+    label: 'Finalização',
+    title: 'Anexos e Envio',
+    fields: ['files', 'consent'],
+    tip: {
+      title: 'Uma imagem vale mais que mil palavras',
+      text: 'Se possível, anexe capturas de tela do erro. Isso acelera muito o nosso entendimento.',
+    },
+  },
+];
 
 function Support() {
   const { formId } = useParams();
@@ -26,6 +70,7 @@ function Support() {
   const [error, setError] = useState(null);
   const [formConfig, setFormConfig] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
     // Fetch form config (public)
@@ -58,6 +103,31 @@ function Support() {
     setFiles(newFiles);
   };
 
+  const validateStep = () => {
+    const currentFields = STEPS[currentStep - 1].fields;
+    return currentFields.every((field) => {
+      if (field === 'files') return true;
+      if (field === 'consent') return data.consent;
+      if (field === 'category' && categories.length === 0) return true;
+      if (!data[field] && field !== 'company' && field !== 'phone') {
+        return false;
+      }
+      return true;
+    });
+  };
+
+  const handleNext = () => {
+    if (validateStep()) {
+      setCurrentStep((prev) => Math.min(prev + 1, STEPS.length));
+    } else {
+      // Could show a toast or highlight fields
+    }
+  };
+
+  const handlePrev = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
   const handleSubmit = async () => {
     if (!data.consent) {
       setError('Você deve concordar com a política de processamento de dados.');
@@ -78,25 +148,162 @@ function Support() {
     }
   };
 
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <>
+            <Form.Group widths="equal">
+              <Form.Input
+                label="Nome Completo"
+                className={styles.input}
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                required
+                placeholder="Seu nome"
+              />
+              <Form.Input
+                label="E-mail"
+                className={styles.input}
+                name="email"
+                type="email"
+                value={data.email}
+                onChange={handleChange}
+                required
+                placeholder="seu@email.com"
+              />
+            </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Input
+                label="Telefone / WhatsApp"
+                className={styles.input}
+                name="phone"
+                value={data.phone}
+                onChange={handleChange}
+                placeholder="(00) 00000-0000"
+              />
+              <Form.Input
+                label="Empresa"
+                className={styles.input}
+                name="company"
+                value={data.company}
+                onChange={handleChange}
+                placeholder="Nome da sua empresa"
+              />
+            </Form.Group>
+          </>
+        );
+      case 2:
+        return (
+          <Form.Group widths="equal">
+            <Form.Select
+              label="Categoria"
+              className={styles.select}
+              name="category"
+              options={categories.map((c) => ({ key: c, text: c, value: c }))}
+              value={data.category}
+              onChange={handleChange}
+              required
+              placeholder="Selecione..."
+              disabled={categories.length === 0}
+            />
+            <Form.Select
+              label="Prioridade"
+              className={styles.select}
+              name="priority"
+              options={PRIORITIES.map((p) => {
+                let color = 'green';
+                if (p === 'Alta') color = 'red';
+                else if (p === 'Média') color = 'yellow';
+
+                return {
+                  key: p,
+                  text: p,
+                  value: p,
+                  label: {
+                    color,
+                    empty: true,
+                    circular: true,
+                  },
+                };
+              })}
+              value={data.priority}
+              onChange={handleChange}
+              required
+              placeholder="Selecione..."
+            />
+          </Form.Group>
+        );
+      case 3:
+        return (
+          <>
+            <Form.Input
+              label="Assunto"
+              className={styles.input}
+              name="subject"
+              value={data.subject}
+              onChange={handleChange}
+              required
+              placeholder="Resumo do problema"
+            />
+            <Form.TextArea
+              label="Descrição Detalhada"
+              className={styles.textArea}
+              name="description"
+              value={data.description}
+              onChange={handleChange}
+              required
+              placeholder="Descreva o que aconteceu, passos para reproduzir, etc."
+              style={{ minHeight: 200 }}
+            />
+          </>
+        );
+      case 4:
+        return (
+          <>
+            <div style={{ marginBottom: '1.5rem' }}>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label className={styles.label}>Anexos (Opcional)</label>
+              <StackedCardsUpload files={files} onFilesChange={handleFilesChange} />
+            </div>
+            <Form.Checkbox
+              label="Concordo com o processamento dos meus dados pessoais para fins de suporte."
+              name="consent"
+              checked={data.consent}
+              onChange={handleChange}
+              required
+              className={styles.checkbox}
+            />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
   if (success) {
     return (
       <Container className={styles.container}>
-        <div className={styles.successMessage}>
-          <Header icon className={styles.successTitle}>
-            <Icon name="check circle" color="green" />
-            Ticket Enviado com Sucesso!
-          </Header>
-          <p style={{ fontSize: '1.1rem', color: '#4b5563' }}>Seu número de protocolo é:</p>
-          <p>
-            <strong className={styles.protocol}>{success.protocol}</strong>
-          </p>
-          <Button
-            className={styles.submitButton}
-            onClick={() => window.location.reload()}
-            style={{ marginTop: '2rem' }}
-          >
-            Enviar Outro
-          </Button>
+        <div className={styles.formCard}>
+          <div className={styles.successMessage}>
+            <Icon name="check circle outline" className={styles.successIcon} />
+            <Header as="h2" className={styles.successTitle}>
+              Ticket Enviado!
+            </Header>
+            <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '1.5rem' }}>
+              Seu número de protocolo é:
+            </p>
+            <p style={{ marginBottom: '2rem' }}>
+              <strong className={styles.protocol}>{success.protocol}</strong>
+            </p>
+            <Button
+              className={classNames(styles.navButton, styles.nextButton)}
+              onClick={() => window.location.reload()}
+            >
+              Enviar Outro
+            </Button>
+          </div>
         </div>
       </Container>
     );
@@ -110,120 +317,105 @@ function Support() {
     );
   }
 
+  const currentStepData = STEPS[currentStep - 1];
+  const isFirstStep = currentStep === 1;
+  const isLastStep = currentStep === STEPS.length;
+  const isStepValid = validateStep();
+
   return (
     <Container className={styles.container}>
       <Header as="h1" className={styles.title}>
-        {formConfig ? formConfig.name : 'Abrir um Chamado de Suporte'}
+        {formConfig ? formConfig.name : 'Suporte'}
       </Header>
+      <p className={styles.subtitle}>Preencha as informações abaixo para abrir seu chamado.</p>
 
-      <div className={styles.formCard}>
-        {error && <Message error content={error} style={{ borderRadius: '8px' }} />}
+      {/* Stepper */}
+      <div className={styles.stepperContainer}>
+        {STEPS.map((step) => (
+          <div key={step.id} className={styles.stepWrapper}>
+            <div
+              className={classNames(styles.stepCircle, {
+                [styles.active]: step.id === currentStep,
+                [styles.completed]: step.id < currentStep,
+              })}
+            >
+              {step.id < currentStep ? <Icon name="check" /> : step.id}
+            </div>
+            <span
+              className={classNames(styles.stepLabel, {
+                [styles.active]: step.id === currentStep,
+              })}
+            >
+              {step.label}
+            </span>
+          </div>
+        ))}
+      </div>
 
-        <Form loading={loading} onSubmit={handleSubmit} size="large">
-          <Form.Group widths="equal">
-            <Form.Input
-              label="Nome"
-              className={styles.input}
-              name="name"
-              value={data.name}
-              onChange={handleChange}
-              required
-              placeholder="Nome Completo"
-            />
-            <Form.Input
-              label="E-mail"
-              className={styles.input}
-              name="email"
-              type="email"
-              value={data.email}
-              onChange={handleChange}
-              required
-              placeholder="contato@exemplo.com"
-            />
-            <Form.Input
-              label="Telefone / WhatsApp"
-              className={styles.input}
-              name="phone"
-              value={data.phone}
-              onChange={handleChange}
-              placeholder="+55 11 99999-9999"
-            />
-          </Form.Group>
+      <div className={styles.mainWrapper}>
+        <div className={styles.formCard}>
+          {error && <Message error content={error} style={{ margin: '1rem' }} />}
 
-          <Form.Group widths="equal">
-            <Form.Input
-              label="Empresa"
-              className={styles.input}
-              name="company"
-              value={data.company}
-              onChange={handleChange}
-              placeholder="Nome da Empresa"
-            />
-            <Form.Select
-              label="Categoria"
-              className={styles.select}
-              name="category"
-              options={categories.map((c) => ({ key: c, text: c, value: c }))}
-              value={data.category}
-              onChange={handleChange}
-              required
-              placeholder="Selecione a Categoria"
-              disabled={categories.length === 0}
-            />
-            <Form.Select
-              label="Prioridade"
-              className={styles.select}
-              name="priority"
-              options={PRIORITIES.map((p) => ({ key: p, text: p, value: p }))}
-              value={data.priority}
-              onChange={handleChange}
-              required
-              placeholder="Selecione a Prioridade"
-            />
-          </Form.Group>
+          <div className={styles.formContent}>
+            <Header as="h3" className={styles.sectionTitle}>
+              {currentStepData.title}
+            </Header>
 
-          <Form.Input
-            label="Assunto"
-            className={styles.input}
-            name="subject"
-            value={data.subject}
-            onChange={handleChange}
-            required
-            placeholder="Breve resumo do problema"
-          />
+            <Form loading={loading} size="large">
+              {renderStepContent()}
+            </Form>
 
-          <Form.TextArea
-            label="Descrição"
-            className={styles.textArea}
-            name="description"
-            value={data.description}
-            onChange={handleChange}
-            required
-            placeholder="Descreva detalhadamente o que está acontecendo..."
-            style={{ minHeight: 150 }}
-          />
-
-          <div style={{ marginBottom: '1.5rem' }}>
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className={styles.label} style={{ display: 'block', marginBottom: '0.5rem' }}>
-              Anexos (Máx 10MB)
-            </label>
-            <StackedCardsUpload files={files} onFilesChange={handleFilesChange} />
+            {/* Tips Section */}
+            {currentStepData.tip && (
+              <div className={styles.tipsContainer}>
+                <Icon name="lightbulb outline" className={styles.tipsIcon} />
+                <div className={styles.tipsContent}>
+                  <h4>{currentStepData.tip.title}</h4>
+                  <p>{currentStepData.tip.text}</p>
+                </div>
+              </div>
+            )}
           </div>
 
-          <Form.Checkbox
-            label="Concordo com o processamento dos meus dados pessoais para fins de suporte."
-            name="consent"
-            checked={data.consent}
-            onChange={handleChange}
-            required
-            style={{ marginTop: '1rem', marginBottom: '1.5rem' }}
-          />
+          {/* Navigation Actions */}
+          <div className={styles.formActions}>
+            <Button
+              className={classNames(styles.navButton, styles.prevButton)}
+              onClick={handlePrev}
+              disabled={isFirstStep || loading}
+            >
+              Voltar
+            </Button>
 
-          <Button className={styles.submitButton} fluid size="large" type="submit">
-            Enviar Ticket
-          </Button>
-        </Form>
+            {isLastStep ? (
+              <Button
+                className={classNames(styles.navButton, styles.nextButton)}
+                onClick={handleSubmit}
+                disabled={!isStepValid || loading}
+                loading={loading}
+              >
+                Enviar Ticket
+              </Button>
+            ) : (
+              <Button
+                className={classNames(styles.navButton, styles.nextButton)}
+                onClick={handleNext}
+                disabled={!isStepValid}
+              >
+                Próximo
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.illustrationColumn}>
+          <img
+            src="https://raw.githubusercontent.com/undraw/undraw-illustrations/master/svg/undraw_fill_forms_re_e876.svg"
+            alt="Preenchimento de formulário"
+          />
+          <h4>Estamos aqui para ajudar</h4>
+          <p>Preencha os dados com atenção para agilizarmos seu atendimento.</p>
+        </div>
       </div>
     </Container>
   );
