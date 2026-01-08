@@ -19,7 +19,13 @@ module.exports = {
     assigneeIds: {
       type: 'json',
     },
+    labelIds: {
+      type: 'json',
+    },
     categoryMapping: {
+      type: 'json',
+    },
+    draftSchema: {
       type: 'json',
     },
     isActive: {

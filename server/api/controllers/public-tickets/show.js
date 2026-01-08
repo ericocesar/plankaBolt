@@ -13,6 +13,24 @@ module.exports = {
       throw 'notFound';
     }
 
+    let publishedSchema = null;
+    let publishedSchemaVersion = null;
+
+    if (form.publishedSchemaVersionId) {
+      const schemaVersion = await FormSchemaVersion.findOne({
+        id: form.publishedSchemaVersionId,
+      });
+
+      if (schemaVersion) {
+        publishedSchema = schemaVersion.schema;
+        publishedSchemaVersion = schemaVersion.version;
+      }
+    }
+
+    if (!publishedSchema && form.draftSchema) {
+      publishedSchema = form.draftSchema;
+    }
+
     // We only expose necessary fields for the public form
     // For categories, if we are using the new system (auto-label), we should just return the keys of categoryMapping
     // OR, if we migrated, just return the list.
@@ -21,6 +39,8 @@ module.exports = {
       name: form.name,
       isActive: form.isActive,
       categoryMapping: form.categoryMapping || {}, // { "Category Name": "ignored" } - we just need keys
+      schema: publishedSchema,
+      schemaVersion: publishedSchemaVersion,
     };
   },
 };

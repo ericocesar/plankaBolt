@@ -9,24 +9,31 @@ const updateForm = (id, data, headers) => socket.patch(`/forms/${id}`, data, hea
 
 const deleteForm = (id, headers) => socket.delete(`/forms/${id}`, undefined, headers);
 
-const handleResponse = (response) => {
+const getForm = (id, headers) => socket.get(`/forms/${id}`, undefined, headers);
+
+const publishForm = (id, headers) => socket.post(`/forms/${id}/publish`, undefined, headers);
+
+const safeJsonParse = (text) => {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    return null;
+  }
+};
+
+const handleResponse = async (response) => {
   if (!response.ok) {
-    return response.text().then((text) => {
-      // Log do erro detalhado para debug
-      console.error('API Error Response:', text);
-      try {
-        const json = JSON.parse(text);
+    const text = await response.text();
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const json = safeJsonParse(text);
+      if (json) {
         if (json.message) throw new Error(json.message);
         if (json.code) throw new Error(`Error: ${json.code}`);
-        // Se for um erro do Sails Action2, pode vir como { code: '...', details: ... }
         if (json.problems) throw new Error(`Validation Error: ${json.problems.join(', ')}`);
-      } catch (e) {
-        if (e.message !== 'Unexpected token < in JSON at position 0') {
-          throw e; // Rethrow parsed error
-        }
       }
-      throw new Error(text || 'Server Error');
-    });
+    }
+    throw new Error(text || 'Server Error');
   }
   return response.json();
 };
@@ -41,6 +48,8 @@ const createPublicTicket = (formId, data) => {
         Array.from(data[key]).forEach((file) => {
           formData.append('files', file);
         });
+      } else if (key === 'values' && typeof data[key] === 'object') {
+        formData.append('values', JSON.stringify(data[key]));
       } else {
         formData.append(key, data[key]);
       }
@@ -63,8 +72,10 @@ const createPublicTicket = (formId, data) => {
 
 export default {
   getForms,
+  getForm,
   createForm,
   updateForm,
   deleteForm,
+  publishForm,
   createPublicTicket,
 };

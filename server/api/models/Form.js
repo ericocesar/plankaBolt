@@ -41,10 +41,23 @@ module.exports = {
       defaultsTo: [],
       columnName: 'assignee_ids',
     },
+    labelIds: {
+      type: 'json',
+      defaultsTo: [],
+      columnName: 'label_ids',
+    },
     categoryMapping: {
       type: 'json',
       defaultsTo: {}, // { "Category Name": "labelId" }
       columnName: 'category_mapping',
+    },
+    draftSchema: {
+      type: 'json',
+      columnName: 'draft_schema',
+    },
+    publishedSchemaVersionId: {
+      model: 'FormSchemaVersion',
+      columnName: 'published_schema_version_id',
     },
   },
 };

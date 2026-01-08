@@ -265,6 +265,8 @@ module.exports.routes = {
   'GET /api/forms/:id': 'forms/show',
   'PATCH /api/forms/:id': 'forms/update',
   'DELETE /api/forms/:id': 'forms/delete',
+  'POST /api/forms/:id/publish': 'forms/publish',
+  'GET /api/forms/:id/responses': 'forms/responses',
 
   'POST /api/public-tickets/:formId': 'public-tickets/create',
   'GET /api/public-tickets/:formId': 'public-tickets/show',

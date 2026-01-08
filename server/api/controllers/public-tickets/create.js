@@ -1,5 +1,134 @@
 const moment = require('moment');
 const nodemailer = require('nodemailer');
+const validator = require('validator');
+
+const collectFields = (schema) => {
+  if (schema && Array.isArray(schema.steps)) {
+    return schema.steps.flatMap((step) => step.fields || []);
+  }
+  return [];
+};
+
+const formatValue = (value) => {
+  if (Array.isArray(value)) {
+    return value.join(', ');
+  }
+  if (typeof value === 'boolean') {
+    return value ? 'Sim' : 'Não';
+  }
+  if (value === null || value === undefined) {
+    return '';
+  }
+  return String(value);
+};
+
+const buildValuesFromLegacy = (schema, legacy) => {
+  if (!schema) {
+    return {};
+  }
+
+  const roleMap = {
+    name: legacy.name,
+    email: legacy.email,
+    phone: legacy.phone,
+    company: legacy.company,
+    product: legacy.product,
+    category: legacy.category,
+    priority: legacy.priority,
+    subject: legacy.subject,
+    description: legacy.description,
+  };
+
+  const values = {};
+  collectFields(schema).forEach((field) => {
+    if (field.role && roleMap[field.role] !== undefined) {
+      values[field.id] = roleMap[field.role];
+      return;
+    }
+    if (legacy[field.id] !== undefined) {
+      values[field.id] = legacy[field.id];
+    }
+  });
+
+  return values;
+};
+
+const buildTicketDataFromSchema = (schema, values, fallbackSubject) => {
+  const derived = {
+    name: null,
+    email: null,
+    phone: null,
+    company: null,
+    product: null,
+    category: null,
+    priority: null,
+    subject: null,
+    description: null,
+  };
+
+  const extraLines = [];
+
+  collectFields(schema).forEach((field) => {
+    const value = values[field.id];
+    if (value === undefined || value === null || value === '') {
+      return;
+    }
+
+    if (field.role && field.role in derived) {
+      derived[field.role] = value;
+    } else {
+      extraLines.push(`**${field.label}:** ${formatValue(value)}`);
+    }
+  });
+
+  const infoLines = [];
+  if (derived.name) infoLines.push(`**Name:** ${derived.name}`);
+  if (derived.email) infoLines.push(`**Email:** ${derived.email}`);
+  if (derived.phone) infoLines.push(`**Phone:** ${derived.phone}`);
+  if (derived.company) infoLines.push(`**Company:** ${derived.company}`);
+  if (derived.product) infoLines.push(`**Product:** ${derived.product}`);
+  if (derived.category) infoLines.push(`**Category:** ${derived.category}`);
+  if (derived.priority) infoLines.push(`**Priority:** ${derived.priority}`);
+
+  const descriptionLines = [...infoLines, ...extraLines];
+  let description = descriptionLines.join('\n');
+
+  if (derived.description) {
+    description = description
+      ? `${description}\n\n---\n\n${derived.description}`
+      : derived.description;
+  }
+
+  return {
+    subject: derived.subject || fallbackSubject,
+    description: description || '',
+    category: derived.category,
+    priority: derived.priority,
+    name: derived.name,
+    email: derived.email,
+  };
+};
+
+const Errors = {
+  FORM_NOT_FOUND: {
+    notFound: 'Formulário não encontrado',
+  },
+  INVALID_SUBMISSION: {
+    invalidSubmission: {
+      message: 'Dados inválidos.',
+    },
+  },
+  MISSING_REQUIRED: {
+    invalidSubmission: {
+      message: 'Campos obrigatórios não informados.',
+    },
+  },
+  INVALID_EMAIL: {
+    invalidSubmission: {
+      message: 'E-mail inválido.',
+    },
+  },
+};
 
 module.exports = {
   inputs: {
@@ -9,12 +138,9 @@ module.exports = {
     },
     name: {
       type: 'string',
-      required: true,
     },
     email: {
       type: 'string',
-      required: true,
-      isEmail: true,
     },
     phone: {
       type: 'string',
@@ -33,11 +159,20 @@ module.exports = {
     },
     subject: {
       type: 'string',
-      required: true,
     },
     description: {
       type: 'string',
-      required: true,
+    },
+    values: {
+      type: 'json',
+    },
+  },
+  exits: {
+    notFound: {
+      responseType: 'notFound',
+    },
+    invalidSubmission: {
+      responseType: 'badRequest',
     },
   },
 
@@ -45,17 +180,136 @@ module.exports = {
     // 1. Fetch Form Configuration
     const form = await Form.findOne({ id: inputs.formId });
     if (!form || !form.isActive) {
-      throw 'notFound'; // Or a specific error
+      throw Errors.FORM_NOT_FOUND;
     }
 
-    // 2. Prepare Card Data
-    let description = `**Name:** ${inputs.name}\n**Email:** ${inputs.email}`;
-    if (inputs.phone) description += `\n**Phone:** ${inputs.phone}`;
-    if (inputs.company) description += `\n**Company:** ${inputs.company}`;
-    if (inputs.product) description += `\n**Product:** ${inputs.product}`;
-    if (inputs.category) description += `\n**Category:** ${inputs.category}`;
-    if (inputs.priority) description += `\n**Priority:** ${inputs.priority}`;
-    description += `\n\n---\n\n${inputs.description}`;
+    const legacyValues = {
+      name: inputs.name,
+      email: inputs.email,
+      phone: inputs.phone,
+      company: inputs.company,
+      product: inputs.product,
+      category: inputs.category,
+      priority: inputs.priority,
+      subject: inputs.subject,
+      description: inputs.description,
+    };
+
+    let publishedSchemaVersion = null;
+    let publishedSchema = null;
+
+    if (form.publishedSchemaVersionId) {
+      publishedSchemaVersion = await FormSchemaVersion.findOne({
+        id: form.publishedSchemaVersionId,
+      });
+      if (publishedSchemaVersion) {
+        publishedSchema = publishedSchemaVersion.schema;
+      }
+    }
+
+    if (!publishedSchema && form.draftSchema) {
+      publishedSchema = form.draftSchema;
+    }
+
+    let { values } = inputs;
+
+    if (!values && this.req && this.req.body && this.req.body.values) {
+      values = this.req.body.values;
+    }
+
+    if (typeof values === 'string') {
+      try {
+        values = JSON.parse(values);
+      } catch (e) {
+        values = null;
+      }
+    }
+
+    if (!values && publishedSchema) {
+      values = buildValuesFromLegacy(publishedSchema, legacyValues);
+    }
+
+    if (!values) {
+      values = {};
+    }
+
+    let sanitizedValues = values;
+
+    if (publishedSchema) {
+      /* eslint-disable no-underscore-dangle */
+      const { _fileparser: fileParser } = this.req || {};
+      const parserFiles = fileParser && Array.isArray(fileParser._files) ? fileParser._files : null;
+      /* eslint-enable no-underscore-dangle */
+      const filesCount = parserFiles ? parserFiles.length : undefined;
+
+      const submissionValidation = await sails.helpers.forms.validateSubmission.with({
+        schema: publishedSchema,
+        values,
+        ...(Number.isInteger(filesCount) ? { filesCount } : {}),
+      });
+
+      if (!submissionValidation.isValid) {
+        throw {
+          invalidSubmission: {
+            ...Errors.INVALID_SUBMISSION.invalidSubmission,
+            details: submissionValidation.errors,
+          },
+        };
+      }
+
+      sanitizedValues = submissionValidation.sanitized;
+    } else {
+      if (
+        !legacyValues.name ||
+        !legacyValues.email ||
+        !legacyValues.subject ||
+        !legacyValues.description
+      ) {
+        throw Errors.MISSING_REQUIRED;
+      }
+
+      if (!validator.isEmail(legacyValues.email)) {
+        throw Errors.INVALID_EMAIL;
+      }
+    }
+
+    let subject = legacyValues.subject || form.name;
+    let description = '';
+    let categoryValue = legacyValues.category;
+    let requesterName = legacyValues.name;
+    let requesterEmail = legacyValues.email;
+
+    if (publishedSchema) {
+      const ticketData = buildTicketDataFromSchema(
+        publishedSchema,
+        sanitizedValues,
+        legacyValues.subject || form.name,
+      );
+
+      subject = ticketData.subject || form.name;
+      description = ticketData.description;
+      categoryValue = ticketData.category || legacyValues.category;
+      requesterName = ticketData.name || legacyValues.name;
+      requesterEmail = ticketData.email || legacyValues.email;
+
+      await FormResponse.create({
+        formId: form.id,
+        formSchemaVersionId: publishedSchemaVersion ? publishedSchemaVersion.id : null,
+        data: sanitizedValues,
+        metadata: {
+          ip: this.req.ip,
+          userAgent: this.req.headers['user-agent'] || null,
+        },
+      });
+    } else {
+      description = `**Name:** ${legacyValues.name}\n**Email:** ${legacyValues.email}`;
+      if (legacyValues.phone) description += `\n**Phone:** ${legacyValues.phone}`;
+      if (legacyValues.company) description += `\n**Company:** ${legacyValues.company}`;
+      if (legacyValues.product) description += `\n**Product:** ${legacyValues.product}`;
+      if (legacyValues.category) description += `\n**Category:** ${legacyValues.category}`;
+      if (legacyValues.priority) description += `\n**Priority:** ${legacyValues.priority}`;
+      description += `\n\n---\n\n${legacyValues.description}`;
+    }
 
     // Calculate position (append to bottom)
     const lastCard = await Card.find({ listId: form.listId }).sort('position DESC').limit(1);
@@ -65,7 +319,7 @@ module.exports = {
     const card = await Card.create({
       boardId: form.boardId,
       listId: form.listId,
-      name: inputs.subject,
+      name: subject,
       description,
       type: 'story', // Default type (was 'card' which is invalid)
       position,
@@ -96,45 +350,72 @@ module.exports = {
       );
     }
 
-    // 5. Add Labels (Category Mapping)
-    // We expect 'inputs.category' to be a string name.
-    // Logic: Search for a label with this name in the board. If found, link it.
-    // If not found, create it (with a default color) and link it.
-    if (inputs.category) {
-      // Search for existing label by name (case-insensitive search would be better but let's stick to exact for now or assume simple strings)
-      // Sails waterline case-sensitivity depends on DB adapter.
-      let label = await Label.findOne({
+    // 5. Add Labels (Default + Category Mapping)
+    const labelIdsToApply = new Set();
+
+    if (Array.isArray(form.labelIds) && form.labelIds.length > 0) {
+      const validLabels = await Label.find({
+        id: { in: form.labelIds },
         boardId: form.boardId,
-        name: inputs.category,
       });
+      validLabels.forEach((label) => labelIdsToApply.add(label.id));
+    }
 
-      if (!label) {
-        // Create new label
-        try {
-          // Get last label position
-          const lastLabel = await Label.find({ boardId: form.boardId })
-            .sort('position DESC')
-            .limit(1);
-          const labelPosition = lastLabel.length > 0 ? lastLabel[0].position + 65536 : 65536;
+    // Category Mapping
+    // Logic:
+    // 1. Check if the category is mapped in form.categoryMapping.
+    // 2. If mapped to a specific label ID, use it.
+    // 3. If mapped to 'auto-create' or not mapped, search/create label by name.
+    if (categoryValue) {
+      let labelIdToUse = null;
+      const mapping = form.categoryMapping || {};
 
-          label = await Label.create({
-            boardId: form.boardId,
-            name: inputs.category,
-            color: 'lagoon-blue', // Use a valid color from whitelist
-            position: labelPosition, // Position is required
-          }).fetch();
-        } catch (e) {
-          // Handle race condition or error
-          sails.log.error('Error creating label for category:', e);
+      if (mapping[categoryValue] && mapping[categoryValue] !== 'auto-create') {
+        // Use mapped label ID
+        labelIdToUse = mapping[categoryValue];
+      } else {
+        // Search for existing label by name
+        let label = await Label.findOne({
+          boardId: form.boardId,
+          name: categoryValue,
+        });
+
+        if (!label) {
+          // Create new label
+          try {
+            const lastLabel = await Label.find({ boardId: form.boardId })
+              .sort('position DESC')
+              .limit(1);
+            const labelPosition = lastLabel.length > 0 ? lastLabel[0].position + 65536 : 65536;
+
+            label = await Label.create({
+              boardId: form.boardId,
+              name: categoryValue,
+              color: 'lagoon-blue',
+              position: labelPosition,
+            }).fetch();
+          } catch (e) {
+            sails.log.error('Error creating label for category:', e);
+          }
+        }
+
+        if (label) {
+          labelIdToUse = label.id;
         }
       }
 
-      if (label) {
-        await CardLabel.create({
-          cardId: card.id,
-          labelId: label.id,
-        });
+      if (labelIdToUse) {
+        labelIdsToApply.add(labelIdToUse);
       }
+    }
+
+    if (labelIdsToApply.size > 0) {
+      await CardLabel.createEach(
+        Array.from(labelIdsToApply).map((labelId) => ({
+          cardId: card.id,
+          labelId,
+        })),
+      );
     }
 
     // 6. Handle Attachments
@@ -189,7 +470,7 @@ module.exports = {
 
       // Check if SMTP is configured
       const smtpConfig = sails.config.custom.smtp;
-      if (smtpConfig && smtpConfig.host) {
+      if (smtpConfig && smtpConfig.host && requesterEmail) {
         const transporter = nodemailer.createTransport({
           host: smtpConfig.host,
           port: smtpConfig.port,
@@ -204,10 +485,10 @@ module.exports = {
         });
 
         const html = `
-           <p>Hello ${inputs.name},</p>
+           <p>Hello ${requesterName || 'there'},</p>
            <p>We have received your support request.</p>
            <p><strong>Ticket ID:</strong> ${card.id}</p>
-           <p><strong>Subject:</strong> ${inputs.subject}</p>
+           <p><strong>Subject:</strong> ${subject}</p>
            <p>We will get back to you soon.</p>
            <br>
            <p>Best regards,</p>
@@ -216,11 +497,11 @@ module.exports = {
 
         await sails.helpers.utils.sendEmail.with({
           transporter,
-          to: inputs.email,
+          to: requesterEmail,
           subject: `Ticket Received: ${card.name}`,
           html,
         });
-      } else {
+      } else if (!smtpConfig || !smtpConfig.host) {
         sails.log.info('SMTP not configured, skipping email confirmation.');
       }
     } catch (err) {

@@ -1,15 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { Form, Message, Header, Button, Container, Icon } from 'semantic-ui-react';
+import { Form, Message, Header, Button, Container, Icon, Popup } from 'semantic-ui-react';
 import classNames from 'classnames';
 import api from '../../api/forms';
 import styles from './Support.module.scss';
 import StackedCardsUpload from './StackedCardsUpload';
+import DynamicFormFields from '../forms/DynamicFormFields';
+import { buildInitialValues, normalizeSchema, validateSubmission } from '../../utils/formSchema';
 
 const PRIORITIES = ['Baixa', 'Média', 'Alta'];
+const LEGACY_FIELD_LABELS = {
+  name: 'Nome Completo',
+  email: 'E-mail',
+  phone: 'Telefone',
+  company: 'Empresa',
+  category: 'Categoria',
+  priority: 'Prioridade',
+  subject: 'Assunto',
+  description: 'Descrição',
+  consent: 'Concordo com o processamento dos meus dados pessoais.',
+};
 
-const STEPS = [
+const LEGACY_STEPS = [
   {
     id: 1,
     label: 'Contato',
@@ -146,6 +159,8 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     description: prefillData.description || '',
     consent: false,
   });
+  const [schema, setSchema] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -168,6 +183,11 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
           if (config.categoryMapping) {
             setCategories(Object.keys(config.categoryMapping));
           }
+          if (config.schema) {
+            setSchema(normalizeSchema(config.schema, config.name));
+          } else {
+            setSchema(null);
+          }
         } else {
           setError('Formulário não encontrado ou inativo.');
         }
@@ -177,6 +197,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     };
     fetchConfig();
   }, [formId]);
+
+  useEffect(() => {
+    if (schema) {
+      setData(buildInitialValues(schema, prefillData));
+      setFieldErrors({});
+      setCurrentStep(1);
+    }
+  }, [schema, prefillData]);
 
   useEffect(() => {
     if (isEmbed && containerRef.current) {
@@ -196,28 +224,69 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
 
   const handleChange = (e, { name, value, checked }) => {
     setData((prev) => ({ ...prev, [name]: value !== undefined ? value : checked }));
+    if (name) {
+      setFieldErrors((prev) => {
+        if (!prev[name]) return prev;
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const handleFilesChange = (newFiles) => {
     setFiles(newFiles);
   };
 
-  const validateStep = () => {
-    const currentFields = STEPS[currentStep - 1].fields;
-    return currentFields.every((field) => {
-      if (field === 'files') return true;
-      if (field === 'consent') return data.consent;
-      if (field === 'category' && categories.length === 0) return true;
-      if (!data[field] && field !== 'company' && field !== 'phone') {
-        return false;
-      }
-      return true;
-    });
+  const isDynamic = Boolean(schema);
+  const steps = isDynamic ? schema.steps : LEGACY_STEPS;
+  const successTitle =
+    isDynamic && schema?.settings?.successTitle ? schema.settings.successTitle : 'Ticket Enviado!';
+  const successMessage =
+    isDynamic && schema?.settings?.successMessage
+      ? schema.settings.successMessage
+      : 'Seu número de protocolo é:';
+  const submitLabel =
+    isDynamic && schema?.settings?.submitLabel ? schema.settings.submitLabel : 'Enviar Ticket';
+
+  const getStepValidation = () => {
+    const currentStepData = steps[currentStep - 1];
+    if (!currentStepData) {
+      return { isValid: false, fieldErrors: {} };
+    }
+
+    if (!isDynamic) {
+      const currentFields = currentStepData.fields;
+      const isValid = currentFields.every((field) => {
+        if (field === 'files') return true;
+        if (field === 'consent') return data.consent;
+        if (field === 'category' && categories.length === 0) return true;
+        if (!data[field] && field !== 'company' && field !== 'phone') {
+          return false;
+        }
+        return true;
+      });
+      return { isValid, fieldErrors: {} };
+    }
+
+    const stepSchema = {
+      steps: [currentStepData],
+      settings: schema.settings,
+    };
+    return validateSubmission(stepSchema, data, files.length);
+  };
+
+  const runStepValidation = () => {
+    const validation = getStepValidation();
+    if (!validation.isValid) {
+      setFieldErrors((prev) => ({ ...prev, ...validation.fieldErrors }));
+    }
+    return validation.isValid;
   };
 
   const handleNext = () => {
-    if (validateStep()) {
-      setCurrentStep((prev) => Math.min(prev + 1, STEPS.length));
+    if (runStepValidation()) {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length));
     } else {
       // Could show a toast or highlight fields
     }
@@ -231,48 +300,171 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleSubmit = async () => {
-    if (!data.consent) {
-      setError('Você deve concordar com a política de processamento de dados.');
-      setShowConsentError(true);
-      return;
+  const getMinLengthHint = (step) => {
+    if (!step || !Array.isArray(step.fields)) {
+      return null;
     }
 
-    if (!validateEmail(data.email)) {
-      setError('Por favor, insira um endereço de e-mail válido (ex: nome@exemplo.com).');
-      return;
+    const deficits = step.fields
+      .filter(
+        (field) =>
+          field.validation &&
+          typeof field.validation.minLength === 'number' &&
+          field.validation.minLength > 0,
+      )
+      .map((field) => {
+        const value = data[field.id];
+        const { length } = String(value || '');
+        const missing = field.validation.minLength - length;
+        if (missing > 0) {
+          return {
+            label: field.label,
+            missing,
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
+
+    if (deficits.length === 0) {
+      return null;
+    }
+
+    const first = deficits[0];
+    const suffix = deficits.length > 1 ? ' (e outros campos)' : '';
+    const plural = first.missing > 1 ? 'caracteres' : 'caractere';
+    return `Adicione mais ${first.missing} ${plural} em "${first.label}".${suffix}`;
+  };
+
+  const handleSubmit = async () => {
+    if (isDynamic && schema) {
+      const validation = validateSubmission(schema, data, files.length);
+      if (!validation.isValid) {
+        setFieldErrors(validation.fieldErrors);
+        setError('Verifique os campos obrigatórios antes de enviar.');
+        return;
+      }
+    } else {
+      if (!data.consent) {
+        setError('Você deve concordar com a política de processamento de dados.');
+        setShowConsentError(true);
+        return;
+      }
+
+      if (!validateEmail(data.email)) {
+        setError('Por favor, insira um endereço de e-mail válido (ex: nome@exemplo.com).');
+        return;
+      }
     }
 
     setLoading(true);
     setError(null);
 
     try {
-      const cleanData = { ...data, formId }; // Ensure formId is in payload
-      // Remove fields not expected by the backend
-      delete cleanData.consent;
+      let payload;
 
-      // Remove empty optional strings
-      if (!cleanData.company) delete cleanData.company;
-      if (!cleanData.phone) delete cleanData.phone;
-      if (!cleanData.category) delete cleanData.category;
-      if (!cleanData.priority) delete cleanData.priority;
+      if (isDynamic && schema) {
+        payload = {
+          values: data,
+        };
 
-      const payload = { ...cleanData };
-      if (files.length > 0) {
-        payload.files = files;
+        if (files.length > 0) {
+          payload.files = files;
+        }
+      } else {
+        const cleanData = { ...data, formId }; // Ensure formId is in payload
+        // Remove fields not expected by the backend
+        delete cleanData.consent;
+
+        // Remove empty optional strings
+        if (!cleanData.company) delete cleanData.company;
+        if (!cleanData.phone) delete cleanData.phone;
+        if (!cleanData.category) delete cleanData.category;
+        if (!cleanData.priority) delete cleanData.priority;
+
+        payload = { ...cleanData };
+        if (files.length > 0) {
+          payload.files = files;
+        }
       }
 
       const response = await api.createPublicTicket(formId, payload);
       setSuccess(response);
     } catch (err) {
-      console.error(err); // Log error to console
       setError(err.message || 'Falha ao enviar o ticket. Por favor, tente novamente.');
     } finally {
       setLoading(false);
     }
   };
 
+  const currentStepData = steps[currentStep - 1];
+  const isFirstStep = currentStep === 1;
+  const isLastStep = currentStep === steps.length;
+  const stepValidation = getStepValidation();
+  const isStepValid = stepValidation.isValid;
+  const displayFieldErrors =
+    isDynamic && !isStepValid ? { ...fieldErrors, ...stepValidation.fieldErrors } : fieldErrors;
+  const submitHint = isDynamic && !isStepValid ? getMinLengthHint(currentStepData) : null;
+  const submitDisabledHint = (() => {
+    if (!isLastStep || isStepValid || loading) {
+      return null;
+    }
+
+    if (isDynamic) {
+      if (submitHint) return submitHint;
+      const errors = stepValidation.fieldErrors || {};
+      const firstFieldId = Object.keys(errors)[0];
+      if (!firstFieldId) return 'Verifique os campos obrigatórios.';
+      const field = (currentStepData.fields || []).find((item) => item.id === firstFieldId);
+      const message = errors[firstFieldId];
+      if (field) {
+        if (field.type === 'checkbox') {
+          return `Marque "${field.label}".`;
+        }
+        if (message === 'Campo obrigatório.') {
+          return `Preencha "${field.label}".`;
+        }
+        return `${field.label}: ${message}`;
+      }
+      return 'Verifique os campos obrigatórios.';
+    }
+
+    if (currentStepData.fields.includes('consent') && data.consent !== true) {
+      return 'Marque o aceite de processamento de dados.';
+    }
+    if (currentStepData.fields.includes('category') && categories.length === 0) {
+      return 'Selecione uma categoria antes de enviar.';
+    }
+
+    const missingField = currentStepData.fields.find(
+      (field) => !['files', 'consent', 'company', 'phone'].includes(field) && !data[field],
+    );
+    if (missingField) {
+      return `Preencha "${LEGACY_FIELD_LABELS[missingField] || missingField}".`;
+    }
+
+    return 'Verifique os campos obrigatórios.';
+  })();
+
   const renderStepContent = () => {
+    if (isDynamic && schema) {
+      const step = steps[currentStep - 1];
+      if (!step) return null;
+
+      return (
+        <DynamicFormFields
+          step={step}
+          values={data}
+          errors={displayFieldErrors}
+          onChange={(fieldId, value) => handleChange(null, { name: fieldId, value })}
+          categories={categories}
+          files={files}
+          onFilesChange={handleFilesChange}
+          readOnly={loading}
+        />
+      );
+    }
+
     switch (currentStep) {
       case 1:
         return (
@@ -414,25 +606,27 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
 
   if (success) {
     return (
-      <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
-        <div className={styles.formCard}>
-          <div className={styles.successMessage}>
-            <Icon name="check circle outline" className={styles.successIcon} />
-            <Header as="h2" className={styles.successTitle}>
-              Ticket Enviado!
-            </Header>
-            <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '1.5rem' }}>
-              Seu número de protocolo é:
-            </p>
-            <p style={{ marginBottom: '2rem' }}>
-              <strong className={styles.protocol}>{success.protocol}</strong>
-            </p>
-            <Button
-              className={classNames(styles.navButton, styles.nextButton)}
-              onClick={() => window.location.reload()}
-            >
-              Enviar Outro
-            </Button>
+      <Container className={isEmbed ? styles.embedContainer : styles.container}>
+        <div ref={containerRef}>
+          <div className={styles.formCard}>
+            <div className={styles.successMessage}>
+              <Icon name="check circle outline" className={styles.successIcon} />
+              <Header as="h2" className={styles.successTitle}>
+                {successTitle}
+              </Header>
+              <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '1.5rem' }}>
+                {successMessage}
+              </p>
+              <p style={{ marginBottom: '2rem' }}>
+                <strong className={styles.protocol}>{success.protocol}</strong>
+              </p>
+              <Button
+                className={classNames(styles.navButton, styles.nextButton)}
+                onClick={() => window.location.reload()}
+              >
+                Enviar Outro
+              </Button>
+            </div>
           </div>
         </div>
       </Container>
@@ -441,111 +635,130 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
 
   if (error && !formConfig) {
     return (
-      <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
-        <Message error content={error} />
+      <Container className={isEmbed ? styles.embedContainer : styles.container}>
+        <div ref={containerRef}>
+          <Message error content={error} />
+        </div>
       </Container>
     );
   }
 
-  const currentStepData = STEPS[currentStep - 1];
-  const isFirstStep = currentStep === 1;
-  const isLastStep = currentStep === STEPS.length;
-  const isStepValid = validateStep();
+  const submitButton = (
+    <Button
+      className={classNames(styles.navButton, styles.nextButton)}
+      onClick={handleSubmit}
+      disabled={!isStepValid || loading}
+      loading={loading}
+    >
+      {submitLabel}
+    </Button>
+  );
+  let primaryAction = (
+    <Button
+      className={classNames(styles.navButton, styles.nextButton)}
+      onClick={handleNext}
+      disabled={!isStepValid}
+    >
+      Próximo
+    </Button>
+  );
+
+  if (isLastStep) {
+    primaryAction = submitDisabledHint ? (
+      <Popup
+        content={submitDisabledHint}
+        position="top right"
+        inverted
+        trigger={<span style={{ display: 'inline-block' }}>{submitButton}</span>}
+      />
+    ) : (
+      submitButton
+    );
+  }
 
   return (
-    <Container className={isEmbed ? styles.embedContainer : styles.container} ref={containerRef}>
-      {!hideHeader && !isEmbed && (
-        <>
-          <Header as="h1" className={styles.title}>
-            {formConfig ? formConfig.name : 'Suporte'}
-          </Header>
-          <p className={styles.subtitle}>Preencha as informações abaixo para abrir seu chamado.</p>
-        </>
-      )}
-
-      {/* Stepper */}
-      <div className={styles.stepperContainer}>
-        {STEPS.map((step) => (
-          <div key={step.id} className={styles.stepWrapper}>
-            <div
-              className={classNames(styles.stepCircle, {
-                [styles.active]: step.id === currentStep,
-                [styles.completed]: step.id < currentStep,
-              })}
-            >
-              {step.id < currentStep ? <Icon name="check" /> : step.id}
-            </div>
-            <span
-              className={classNames(styles.stepLabel, {
-                [styles.active]: step.id === currentStep,
-              })}
-            >
-              {step.label}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className={isEmbed ? styles.embedWrapper : styles.mainWrapper}>
-        <div className={styles.formCard}>
-          {error && <Message error content={error} style={{ margin: '1rem' }} />}
-
-          <div className={styles.formContent}>
-            <Header as="h3" className={styles.sectionTitle}>
-              {currentStepData.title}
+    <Container className={isEmbed ? styles.embedContainer : styles.container}>
+      <div ref={containerRef}>
+        {!hideHeader && !isEmbed && (
+          <>
+            <Header as="h1" className={styles.title}>
+              {formConfig ? formConfig.name : 'Suporte'}
             </Header>
+            <p className={styles.subtitle}>
+              Preencha as informações abaixo para abrir seu chamado.
+            </p>
+          </>
+        )}
 
-            <Form loading={loading} size="large">
-              {renderStepContent()}
-            </Form>
-          </div>
-
-          {/* Navigation Actions */}
-          <div className={styles.formActions}>
-            <Button
-              className={classNames(styles.navButton, styles.prevButton)}
-              onClick={handlePrev}
-              disabled={isFirstStep || loading}
-            >
-              Voltar
-            </Button>
-
-            {isLastStep ? (
-              <Button
-                className={classNames(styles.navButton, styles.nextButton)}
-                onClick={handleSubmit}
-                disabled={!isStepValid || loading}
-                loading={loading}
-              >
-                Enviar Ticket
-              </Button>
-            ) : (
-              <Button
-                className={classNames(styles.navButton, styles.nextButton)}
-                onClick={handleNext}
-                disabled={!isStepValid}
-              >
-                Próximo
-              </Button>
-            )}
-          </div>
+        {/* Stepper */}
+        <div className={styles.stepperContainer}>
+          {steps.map((step, index) => {
+            const stepNumber = index + 1;
+            return (
+              <div key={step.id || stepNumber} className={styles.stepWrapper}>
+                <div
+                  className={classNames(styles.stepCircle, {
+                    [styles.active]: stepNumber === currentStep,
+                    [styles.completed]: stepNumber < currentStep,
+                  })}
+                >
+                  {stepNumber < currentStep ? <Icon name="check" /> : stepNumber}
+                </div>
+                <span
+                  className={classNames(styles.stepLabel, {
+                    [styles.active]: stepNumber === currentStep,
+                  })}
+                >
+                  {step.label || step.title || `Step ${stepNumber}`}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
-        {!isEmbed && (
-          <div className={styles.illustrationColumn}>
-            <StepIllustration step={currentStep} />
-            {/* Tips Section */}
-            {currentStepData.tip && (
-              <div className={styles.tipsContainer}>
-                <Icon name="lightbulb outline" className={styles.tipsIcon} />
-                <div className={styles.tipsContent}>
-                  <h4>{currentStepData.tip.title}</h4>
-                  <p>{currentStepData.tip.text}</p>
-                </div>
-              </div>
-            )}
+        <div className={isEmbed || isDynamic ? styles.embedWrapper : styles.mainWrapper}>
+          <div className={styles.formCard}>
+            {error && <Message error content={error} style={{ margin: '1rem' }} />}
+
+            <div className={styles.formContent}>
+              <Header as="h3" className={styles.sectionTitle}>
+                {currentStepData.title}
+              </Header>
+
+              <Form loading={loading} size="large">
+                {renderStepContent()}
+              </Form>
+            </div>
+
+            {/* Navigation Actions */}
+            <div className={styles.formActions}>
+              <Button
+                className={classNames(styles.navButton, styles.prevButton)}
+                onClick={handlePrev}
+                disabled={isFirstStep || loading}
+              >
+                Voltar
+              </Button>
+              {primaryAction}
+            </div>
           </div>
-        )}
+
+          {!isEmbed && !isDynamic && (
+            <div className={styles.illustrationColumn}>
+              <StepIllustration step={currentStep} />
+              {/* Tips Section */}
+              {currentStepData.tip && (
+                <div className={styles.tipsContainer}>
+                  <Icon name="lightbulb outline" className={styles.tipsIcon} />
+                  <div className={styles.tipsContent}>
+                    <h4>{currentStepData.tip.title}</h4>
+                    <p>{currentStepData.tip.text}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </Container>
   );

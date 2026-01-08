@@ -59,18 +59,23 @@ const AdministrationModal = React.memo(() => {
     render: () => <WebhooksPane />,
   });
   panes.push({
-    menuItem: 'Forms',
+    menuItem: 'Formulários',
     render: () => <FormsPane />,
   });
 
+  const formsTabIndex = panes.length - 1;
   const isUsersPaneActive = activeTabIndex === 0;
+  const isFormsPaneActive = activeTabIndex === formsTabIndex;
 
   return (
     <ClosableModal
       closeIcon
-      size={isUsersPaneActive ? 'large' : 'small'}
+      size={isUsersPaneActive || isFormsPaneActive ? 'large' : 'small'}
       centered={false}
-      className={classNames(isUsersPaneActive && styles.wrapperUsers)}
+      className={classNames(
+        isUsersPaneActive && styles.wrapperUsers,
+        isFormsPaneActive && styles.wrapperForms,
+      )}
       onClose={handleClose}
     >
       <Modal.Content>

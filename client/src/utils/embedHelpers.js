@@ -4,7 +4,6 @@ export const parsePrefill = (prefillParam) => {
     const json = atob(prefillParam);
     return JSON.parse(json);
   } catch (e) {
-    console.error('Failed to parse prefill data', e);
     return {};
   }
 };

@@ -54,6 +54,8 @@ module.exports.policies = {
   'forms/show': ['is-authenticated', 'is-admin'],
   'forms/update': ['is-authenticated', 'is-admin'],
   'forms/delete': ['is-authenticated', 'is-admin'],
+  'forms/publish': ['is-authenticated', 'is-admin'],
+  'forms/responses': ['is-authenticated', 'is-admin'],
 
   'public-tickets/create': true,
   'public-tickets/show': true,

@@ -15,8 +15,19 @@ module.exports = {
       throw 'notFound';
     }
 
+    let publishedSchemaVersion = null;
+    if (form.publishedSchemaVersionId) {
+      publishedSchemaVersion = await FormSchemaVersion.findOne({
+        id: form.publishedSchemaVersionId,
+      });
+    }
+
     return {
-      item: form,
+      item: {
+        ...form,
+        publishedSchema: publishedSchemaVersion ? publishedSchemaVersion.schema : null,
+        publishedSchemaVersion: publishedSchemaVersion ? publishedSchemaVersion.version : null,
+      },
     };
   },
 };

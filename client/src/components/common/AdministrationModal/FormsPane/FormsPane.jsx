@@ -112,16 +112,16 @@ function FormsPane() {
         }}
       >
         <Header as="h3" style={{ margin: 0 }}>
-          Public Support Forms
+          Formulários de Suporte Público
         </Header>
         <Button primary onClick={() => setEditingForm('new')}>
-          <Icon name="plus" /> New Form
+          <Icon name="plus" /> Novo Formulário
         </Button>
       </div>
 
       <Segment loading={loading}>
         <List divided relaxed>
-          {forms.length === 0 && <List.Item>No forms found.</List.Item>}
+          {forms.length === 0 && <List.Item>Nenhum formulário encontrado.</List.Item>}
           {forms.map((form) => (
             <List.Item key={form.id}>
               <List.Content floated="right">
@@ -137,17 +137,22 @@ function FormsPane() {
                 >
                   <Icon name="code" />
                 </Button>
-                <Button icon onClick={() => setEditingForm(form)}>
+                <Button icon onClick={() => setEditingForm(form)} title="Editar Formulário">
                   <Icon name="pencil" />
                 </Button>
-                <Button icon color="red" onClick={() => setConfirmDeleteId(form.id)}>
+                <Button
+                  icon
+                  color="red"
+                  onClick={() => setConfirmDeleteId(form.id)}
+                  title="Excluir Formulário"
+                >
                   <Icon name="trash" />
                 </Button>
               </List.Content>
               <List.Content>
                 <List.Header>{form.name}</List.Header>
                 <List.Description>
-                  ID: {form.id} | Active: {form.isActive ? 'Yes' : 'No'} | Public Link:{' '}
+                  ID: {form.id} | Ativo: {form.isActive ? 'Sim' : 'Não'} | Link Público:{' '}
                   <a
                     href={`${window.location.origin}/support/${form.id}`}
                     target="_blank"
@@ -161,7 +166,7 @@ function FormsPane() {
                     compact
                     onClick={() => handleCopyLink(form.id)}
                     style={{ marginLeft: '0.5em' }}
-                    title={copiedId === form.id ? 'Copied!' : 'Copy Link'}
+                    title={copiedId === form.id ? 'Copiado!' : 'Copiar Link'}
                     color={copiedId === form.id ? 'green' : undefined}
                   >
                     <Icon name={copiedId === form.id ? 'check' : 'copy'} />
@@ -175,7 +180,9 @@ function FormsPane() {
 
       <Confirm
         open={!!confirmDeleteId}
-        content="Are you sure you want to delete this form?"
+        content="Tem certeza que deseja excluir este formulário?"
+        cancelButton="Cancelar"
+        confirmButton="Excluir"
         onCancel={() => setConfirmDeleteId(null)}
         onConfirm={handleDelete}
       />

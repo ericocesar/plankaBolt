@@ -1,5 +1,5 @@
 {
-  "name": "planka-client",
+  "name": "task-client",
   "private": true,
   "type": "module",
   "scripts": {
