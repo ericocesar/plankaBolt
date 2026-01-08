@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button, List, Icon, Segment, Header, Confirm } from 'semantic-ui-react';
+import QRCode from 'qrcode';
 import api from '../../../../api/forms';
 import FormEditor from './FormEditor';
 import { getAccessToken } from '../../../../utils/access-token-storage';
@@ -56,6 +57,30 @@ function FormsPane() {
     }
   };
 
+  const handleDownloadQRCode = async (form) => {
+    try {
+      const url = `${window.location.origin}/support/${form.id}`;
+      const dataUrl = await QRCode.toDataURL(url, {
+        width: 1024,
+        margin: 4,
+        color: {
+          dark: '#000000',
+          light: '#ffffff',
+        },
+        errorCorrectionLevel: 'M',
+      });
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = `qrcode-${form.name}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Error generating QR code', err); // eslint-disable-line no-console
+    }
+  };
+
   const handleCopyLink = (formId) => {
     const link = `${window.location.origin}/support/${formId}`;
     navigator.clipboard.writeText(link);
@@ -100,6 +125,9 @@ function FormsPane() {
           {forms.map((form) => (
             <List.Item key={form.id}>
               <List.Content floated="right">
+                <Button icon onClick={() => handleDownloadQRCode(form)} title="Baixar QR Code">
+                  <Icon name="qrcode" />
+                </Button>
                 <Button
                   icon
                   as="a"

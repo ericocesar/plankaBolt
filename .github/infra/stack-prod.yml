@@ -19,6 +19,7 @@ x-variaveis: &variaveis
   OIDC_ENFORCED: "true"
   # TRUST_PROXY: "true"
   MAX_UPLOAD_FILE_SIZE: "10485760" # 10MB
+  OIDC_IGNORE_ROLES: "true"
 
   # Configurações do Minio S3 (usado para armazenar mídias enviadas)
   S3_ENDPOINT: "https://s3dev.webck.com.br"

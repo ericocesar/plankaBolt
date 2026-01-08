@@ -29,6 +29,7 @@ x-variaveis: &variaveis
   SMTP_USER: "bchat@bolt360.com.br"
   SMTP_PASSWORD: "Bolt36023@"
   SMTP_FROM: "Bolt Projects <bchat@bolt360.com.br>"
+  EMBED_ALLOWED_ORIGINS: "https://bolt360.com.br https://bolt.swdev.webck.com.br"
 
 version: "3.7"
 services:
