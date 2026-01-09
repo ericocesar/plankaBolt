@@ -9,6 +9,7 @@ const PATH_SEGMENT_BY_TYPE = {
   [Types.USER_AVATAR]: sails.config.custom.userAvatarsPathSegment,
   [Types.BACKGROUND_IMAGE]: sails.config.custom.backgroundImagesPathSegment,
   [Types.ATTACHMENT]: sails.config.custom.attachmentsPathSegment,
+  [Types.PROJECT_COVER_IMAGE]: sails.config.custom.coverImagesPathSegment,
 };
 
 module.exports = {

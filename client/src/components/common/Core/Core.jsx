@@ -16,7 +16,6 @@ import Toaster from '../Toaster';
 import Fixed from '../Fixed';
 import Static from '../Static';
 import AdministrationModal from '../AdministrationModal';
-import AboutModal from '../AboutModal';
 import UserSettingsModal from '../../users/UserSettingsModal';
 import ProjectBackground from '../../projects/ProjectBackground';
 import AddProjectModal from '../../projects/AddProjectModal';
@@ -61,10 +60,6 @@ const Core = React.memo(() => {
     switch (modal.type) {
       case ModalTypes.ADMINISTRATION:
         modalNode = <AdministrationModal />;
-
-        break;
-      case ModalTypes.ABOUT:
-        modalNode = <AboutModal />;
 
         break;
       case ModalTypes.USER_SETTINGS:

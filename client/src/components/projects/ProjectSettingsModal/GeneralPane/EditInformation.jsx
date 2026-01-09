@@ -4,7 +4,7 @@
  */
 
 import { dequal } from 'dequal';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -47,6 +47,7 @@ const EditInformation = React.memo(() => {
   );
 
   const [nameFieldRef, handleNameFieldRef] = useNestedRef('inputRef');
+  const coverInputRef = useRef(null);
 
   const submit = useCallback(() => {
     if (!cleanData.name) {
@@ -68,6 +69,25 @@ const EditInformation = React.memo(() => {
       }
     },
     [submit],
+  );
+
+  const handleCoverUploadClick = useCallback(() => {
+    coverInputRef.current?.click();
+  }, []);
+
+  const handleCoverUploadChange = useCallback(
+    (event) => {
+      const { target } = event;
+      const { files } = target;
+      const file = files && files[0];
+
+      if (file) {
+        dispatch(entryActions.createCoverImageInCurrentProject({ file }));
+      }
+
+      target.value = '';
+    },
+    [dispatch],
   );
 
   return (
@@ -93,6 +113,45 @@ const EditInformation = React.memo(() => {
         onKeyDown={handleDescriptionKeyDown}
         onChange={handleFieldChange}
       />
+      <div className={styles.text}>
+        {t('common.coverImage', {
+          context: 'title',
+          defaultValue: 'Imagem de capa',
+        })}
+      </div>
+      <div className={styles.coverSection}>
+        <div className={styles.coverPreview}>
+          {project.coverImageThumbnailUrl ? (
+            <img
+              src={project.coverImageThumbnailUrl}
+              alt={t('common.coverImage', {
+                defaultValue: 'Imagem de capa',
+              })}
+              className={styles.coverPreviewImage}
+            />
+          ) : (
+            <span className={styles.coverPlaceholder}>
+              {t('common.noCoverAssigned', {
+                defaultValue: 'Nenhuma imagem de capa definida',
+              })}
+            </span>
+          )}
+        </div>
+        <div className={styles.coverActions}>
+          <Button type="button" onClick={handleCoverUploadClick}>
+            {t('action.uploadCoverImage', {
+              defaultValue: 'Enviar imagem de capa',
+            })}
+          </Button>
+          <input
+            ref={coverInputRef}
+            type="file"
+            accept="image/*"
+            className={styles.coverInput}
+            onChange={handleCoverUploadChange}
+          />
+        </div>
+      </div>
       <Button positive disabled={dequal(cleanData, defaultData)} content={t('action.save')} />
     </Form>
   );

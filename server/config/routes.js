@@ -106,6 +106,10 @@ module.exports.routes = {
   'DELETE /api/project-managers/:id': 'project-managers/delete',
 
   'POST /api/projects/:projectId/background-images': 'background-images/create',
+  'OPTIONS /api/projects/:projectId/cover-images': {
+    fn: (req, res) => res.ok(),
+  },
+  'POST /api/projects/:projectId/cover-images': 'cover-images/create',
   'DELETE /api/background-images/:id': 'background-images/delete',
 
   'POST /api/projects/:projectId/base-custom-field-groups': 'base-custom-field-groups/create',
@@ -230,6 +234,16 @@ module.exports.routes = {
       path.join(
         path.resolve(sails.config.custom.uploadsBasePath),
         sails.config.custom.backgroundImagesPathSegment,
+      ),
+    ),
+    skipAssets: false,
+  },
+
+  'GET /cover-images/*': {
+    fn: staticDirServer('/cover-images', () =>
+      path.join(
+        path.resolve(sails.config.custom.uploadsBasePath),
+        sails.config.custom.coverImagesPathSegment,
       ),
     ),
     skipAssets: false,

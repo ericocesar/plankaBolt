@@ -151,6 +151,20 @@ module.exports = {
       allowNull: true,
       columnName: 'background_gradient',
     },
+    coverImageUrl: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'cover_image_url',
+    },
+    coverImageThumbnailUrl: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'cover_image_thumbnail_url',
+    },
+    coverImageUploadedFileId: {
+      model: 'UploadedFile',
+      columnName: 'cover_image_uploaded_file_id',
+    },
     isHidden: {
       type: 'boolean',
       defaultsTo: false, // TODO: implement via normalizeValues?

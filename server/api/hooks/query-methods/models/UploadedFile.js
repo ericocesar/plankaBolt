@@ -9,6 +9,7 @@ const COLUMN_NAME_BY_TYPE = {
   [UploadedFile.Types.USER_AVATAR]: 'user_avatars',
   [UploadedFile.Types.BACKGROUND_IMAGE]: 'background_images',
   [UploadedFile.Types.ATTACHMENT]: 'attachments',
+  [UploadedFile.Types.PROJECT_COVER_IMAGE]: 'cover_images',
 };
 
 const transformRowToModel = makeRowToModelTransformer(UploadedFile);

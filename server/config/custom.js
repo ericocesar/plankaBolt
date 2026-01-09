@@ -55,6 +55,7 @@ module.exports.custom = {
   faviconsPathSegment: 'public/favicons',
   userAvatarsPathSegment: 'public/user-avatars',
   backgroundImagesPathSegment: 'public/background-images',
+  coverImagesPathSegment: 'public/cover-images',
   attachmentsPathSegment: 'private/attachments',
 
   defaultAdminEmail:
