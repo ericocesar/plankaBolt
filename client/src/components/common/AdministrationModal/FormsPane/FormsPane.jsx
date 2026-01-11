@@ -14,6 +14,8 @@ function FormsPane() {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   const loadForms = useCallback(async () => {
     setLoading(true);
     try {
@@ -90,6 +92,21 @@ function FormsPane() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Filter forms
+  const filteredForms = forms.filter((form) => {
+    const search = searchTerm
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+    const name = (form.name || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+    const id = (form.id || '').toLowerCase();
+
+    return name.includes(search) || id.includes(search);
+  });
+
   if (editingForm) {
     return (
       <FormEditor
@@ -106,15 +123,30 @@ function FormsPane() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.headerContainer}>
-        <Header as="h2" className={styles.headerTitle}>
-          Formulários de Suporte
-        </Header>
-        <Button
-          className={styles.addButton}
-          icon="plus"
-          content="Novo Formulário"
-          onClick={() => setEditingForm('new')}
-        />
+        <div className={styles.titleSection}>
+          <Header as="h2" className={styles.headerTitle}>
+            Formulários
+          </Header>
+        </div>
+        <div className={styles.actionsSection}>
+          <div className={`ui input icon ${styles.searchInputWrapper}`}>
+            <input
+              type="text"
+              placeholder="Pesquisar formulário..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={styles.searchInput}
+            />
+            <i aria-hidden="true" className="search icon" onClick={() => {}} />
+          </div>
+
+          <Button
+            className={styles.addButton}
+            icon="plus"
+            content="Novo Formulário"
+            onClick={() => setEditingForm('new')}
+          />
+        </div>
       </div>
 
       {forms.length === 0 && !loading ? (
@@ -124,7 +156,7 @@ function FormsPane() {
         </div>
       ) : (
         <List className={styles.formList}>
-          {forms.map((form) => (
+          {filteredForms.map((form) => (
             <List.Item key={form.id} className={styles.formItem}>
               <div className={styles.formContent}>
                 <span className={styles.formName}>{form.name}</span>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { Form, Message, Header, Button, Container, Icon, Popup } from 'semantic-ui-react';
+import { Container, Header, Form, Button, Icon, Message } from 'semantic-ui-react';
 import classNames from 'classnames';
+import toast from 'react-hot-toast'; // Moved up
 import api from '../../api/forms';
 import styles from './Support.module.scss';
 import StackedCardsUpload from './StackedCardsUpload';
@@ -10,17 +11,6 @@ import DynamicFormFields from '../forms/DynamicFormFields';
 import { buildInitialValues, normalizeSchema, validateSubmission } from '../../utils/formSchema';
 
 const PRIORITIES = ['Baixa', 'Média', 'Alta'];
-const LEGACY_FIELD_LABELS = {
-  name: 'Nome Completo',
-  email: 'E-mail',
-  phone: 'Telefone',
-  company: 'Empresa',
-  category: 'Categoria',
-  priority: 'Prioridade',
-  subject: 'Assunto',
-  description: 'Descrição',
-  consent: 'Concordo com o processamento dos meus dados pessoais.',
-};
 
 const LEGACY_STEPS = [
   {
@@ -28,30 +18,18 @@ const LEGACY_STEPS = [
     label: 'Contato',
     title: 'Seus Dados de Contato',
     fields: ['name', 'email', 'phone', 'company'],
-    tip: {
-      title: 'Por que precisamos desses dados?',
-      text: 'Essas informações são essenciais para que possamos entrar em contato com você sobre o andamento do seu chamado.',
-    },
   },
   {
     id: 2,
     label: 'Classificação',
     title: 'Classifique o Problema',
     fields: ['category', 'priority'],
-    tip: {
-      title: 'Ajude-nos a priorizar',
-      text: 'A classificação correta ajuda nossa equipe técnica a identificar a urgência e direcionar para o especialista certo.',
-    },
   },
   {
     id: 3,
     label: 'Detalhes',
     title: 'Descreva o Ocorrido',
     fields: ['subject', 'description', 'files', 'consent'],
-    tip: {
-      title: 'Seja específico',
-      text: 'Quanto mais detalhes você fornecer, mais rápido poderemos diagnosticar e resolver o problema.',
-    },
   },
 ];
 
@@ -239,7 +217,9 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
   };
 
   const isDynamic = Boolean(schema);
+  // Ensure we have 'steps' defined even if using legacy steps, and ensure legacy steps structure matches
   const steps = isDynamic ? schema.steps : LEGACY_STEPS;
+
   const successTitle =
     isDynamic && schema?.settings?.successTitle ? schema.settings.successTitle : 'Ticket Enviado!';
   const successMessage =
@@ -256,17 +236,26 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     }
 
     if (!isDynamic) {
+      // Simple manual validation for legacy
       const currentFields = currentStepData.fields;
-      const isValid = currentFields.every((field) => {
-        if (field === 'files') return true;
-        if (field === 'consent') return data.consent;
-        if (field === 'category' && categories.length === 0) return true;
-        if (!data[field] && field !== 'company' && field !== 'phone') {
-          return false;
+      let isValid = true;
+      const errors = {};
+
+      currentFields.forEach((field) => {
+        if (field === 'files') return;
+        if (field === 'consent' && !data.consent) {
+          isValid = false;
+          errors.consent = 'Campo obrigatório.';
+          return;
         }
-        return true;
+        if (field === 'category' && categories.length === 0) return;
+        if (!data[field] && field !== 'company' && field !== 'phone') {
+          isValid = false;
+          errors[field] = 'Campo obrigatório.';
+        }
       });
-      return { isValid, fieldErrors: {} };
+
+      return { isValid, fieldErrors: errors };
     }
 
     const stepSchema = {
@@ -280,6 +269,12 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     const validation = getStepValidation();
     if (!validation.isValid) {
       setFieldErrors((prev) => ({ ...prev, ...validation.fieldErrors }));
+      toast.error('Preencha os campos obrigatórios.', {
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
+      });
     }
     return validation.isValid;
   };
@@ -287,8 +282,6 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
   const handleNext = () => {
     if (runStepValidation()) {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length));
-    } else {
-      // Could show a toast or highlight fields
     }
   };
 
@@ -300,59 +293,28 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const getMinLengthHint = (step) => {
-    if (!step || !Array.isArray(step.fields)) {
-      return null;
-    }
-
-    const deficits = step.fields
-      .filter(
-        (field) =>
-          field.validation &&
-          typeof field.validation.minLength === 'number' &&
-          field.validation.minLength > 0,
-      )
-      .map((field) => {
-        const value = data[field.id];
-        const { length } = String(value || '');
-        const missing = field.validation.minLength - length;
-        if (missing > 0) {
-          return {
-            label: field.label,
-            missing,
-          };
-        }
-        return null;
-      })
-      .filter(Boolean);
-
-    if (deficits.length === 0) {
-      return null;
-    }
-
-    const first = deficits[0];
-    const suffix = deficits.length > 1 ? ' (e outros campos)' : '';
-    const plural = first.missing > 1 ? 'caracteres' : 'caractere';
-    return `Adicione mais ${first.missing} ${plural} em "${first.label}".${suffix}`;
-  };
-
   const handleSubmit = async () => {
     if (isDynamic && schema) {
       const validation = validateSubmission(schema, data, files.length);
       if (!validation.isValid) {
         setFieldErrors(validation.fieldErrors);
-        setError('Verifique os campos obrigatórios antes de enviar.');
+        toast.error('Verifique os campos obrigatórios.', {
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        });
         return;
       }
     } else {
       if (!data.consent) {
-        setError('Você deve concordar com a política de processamento de dados.');
+        toast.error('Você deve concordar com a política de processamento de dados.');
         setShowConsentError(true);
         return;
       }
 
       if (!validateEmail(data.email)) {
-        setError('Por favor, insira um endereço de e-mail válido (ex: nome@exemplo.com).');
+        toast.error('Por favor, insira um endereço de e-mail válido.');
         return;
       }
     }
@@ -392,6 +354,7 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
       setSuccess(response);
     } catch (err) {
       setError(err.message || 'Falha ao enviar o ticket. Por favor, tente novamente.');
+      toast.error('Falha ao enviar o ticket.');
     } finally {
       setLoading(false);
     }
@@ -400,51 +363,8 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
   const currentStepData = steps[currentStep - 1];
   const isFirstStep = currentStep === 1;
   const isLastStep = currentStep === steps.length;
-  const stepValidation = getStepValidation();
-  const isStepValid = stepValidation.isValid;
-  const displayFieldErrors =
-    isDynamic && !isStepValid ? { ...fieldErrors, ...stepValidation.fieldErrors } : fieldErrors;
-  const submitHint = isDynamic && !isStepValid ? getMinLengthHint(currentStepData) : null;
-  const submitDisabledHint = (() => {
-    if (!isLastStep || isStepValid || loading) {
-      return null;
-    }
-
-    if (isDynamic) {
-      if (submitHint) return submitHint;
-      const errors = stepValidation.fieldErrors || {};
-      const firstFieldId = Object.keys(errors)[0];
-      if (!firstFieldId) return 'Verifique os campos obrigatórios.';
-      const field = (currentStepData.fields || []).find((item) => item.id === firstFieldId);
-      const message = errors[firstFieldId];
-      if (field) {
-        if (field.type === 'checkbox') {
-          return `Marque "${field.label}".`;
-        }
-        if (message === 'Campo obrigatório.') {
-          return `Preencha "${field.label}".`;
-        }
-        return `${field.label}: ${message}`;
-      }
-      return 'Verifique os campos obrigatórios.';
-    }
-
-    if (currentStepData.fields.includes('consent') && data.consent !== true) {
-      return 'Marque o aceite de processamento de dados.';
-    }
-    if (currentStepData.fields.includes('category') && categories.length === 0) {
-      return 'Selecione uma categoria antes de enviar.';
-    }
-
-    const missingField = currentStepData.fields.find(
-      (field) => !['files', 'consent', 'company', 'phone'].includes(field) && !data[field],
-    );
-    if (missingField) {
-      return `Preencha "${LEGACY_FIELD_LABELS[missingField] || missingField}".`;
-    }
-
-    return 'Verifique os campos obrigatórios.';
-  })();
+  // Merged errors for display
+  const displayFieldErrors = fieldErrors;
 
   const renderStepContent = () => {
     if (isDynamic && schema) {
@@ -461,6 +381,7 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
           files={files}
           onFilesChange={handleFilesChange}
           readOnly={loading}
+          hideErrorLabel
         />
       );
     }
@@ -471,8 +392,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
           <>
             <Form.Group widths="equal">
               <Form.Input
-                label="Nome Completo"
-                className={styles.input}
+                label={
+                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                  <label>
+                    Nome Completo<span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                  </label>
+                }
+                className={`${styles.input} ${fieldErrors.name ? 'blink-error' : ''}`}
+                error={!!fieldErrors.name}
                 name="name"
                 value={data.name}
                 onChange={handleChange}
@@ -480,8 +407,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
                 placeholder="Seu nome"
               />
               <Form.Input
-                label="E-mail"
-                className={styles.input}
+                label={
+                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                  <label>
+                    E-mail<span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                  </label>
+                }
+                className={`${styles.input} ${fieldErrors.email ? 'blink-error' : ''}`}
+                error={!!fieldErrors.email}
                 name="email"
                 type="email"
                 value={data.email}
@@ -514,8 +447,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
         return (
           <Form.Group widths="equal">
             <Form.Select
-              label="Categoria"
-              className={styles.select}
+              label={
+                // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                <label>
+                  Categoria<span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                </label>
+              }
+              className={`${styles.select} ${fieldErrors.category ? 'blink-error' : ''}`}
+              error={!!fieldErrors.category}
               name="category"
               options={categories.map((c) => ({ key: c, text: c, value: c }))}
               value={data.category}
@@ -525,8 +464,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
               disabled={categories.length === 0}
             />
             <Form.Select
-              label="Prioridade"
-              className={styles.select}
+              label={
+                // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                <label>
+                  Prioridade<span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                </label>
+              }
+              className={`${styles.select} ${fieldErrors.priority ? 'blink-error' : ''}`}
+              error={!!fieldErrors.priority}
               name="priority"
               options={PRIORITIES.map((p) => {
                 let color = 'green';
@@ -556,8 +501,14 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
           <div className={styles.detailsGrid}>
             <div className={styles.leftColumn}>
               <Form.Input
-                label="Assunto"
-                className={styles.input}
+                label={
+                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                  <label>
+                    Assunto<span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                  </label>
+                }
+                className={`${styles.input} ${fieldErrors.subject ? 'blink-error' : ''}`}
+                error={!!fieldErrors.subject}
                 name="subject"
                 value={data.subject}
                 onChange={handleChange}
@@ -565,8 +516,15 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
                 placeholder="Resumo do problema"
               />
               <Form.TextArea
-                label="Descrição Detalhada"
-                className={styles.textArea}
+                label={
+                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                  <label>
+                    Descrição Detalhada
+                    <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                  </label>
+                }
+                className={`${styles.textArea} ${fieldErrors.description ? 'blink-error' : ''}`}
+                error={!!fieldErrors.description}
                 name="description"
                 value={data.description}
                 onChange={handleChange}
@@ -575,7 +533,13 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
                 style={{ flex: 1, minHeight: 200 }}
               />
               <Form.Checkbox
-                label="Concordo com o processamento dos meus dados pessoais para fins de suporte."
+                label={
+                  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                  <label>
+                    Concordo com o processamento dos meus dados pessoais.
+                    <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>
+                  </label>
+                }
                 name="consent"
                 checked={data.consent}
                 onChange={(e, { checked }) => {
@@ -584,7 +548,8 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
                 }}
                 required
                 className={classNames(styles.checkbox, {
-                  [styles.checkboxError]: showConsentError,
+                  [styles.checkboxError]: showConsentError || !!fieldErrors.consent,
+                  'blink-error': !!fieldErrors.consent,
                 })}
                 style={{ marginTop: 'auto' }}
               />
@@ -643,121 +608,101 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
     );
   }
 
+  // Buttons Logic moved here
   const submitButton = (
     <Button
       className={classNames(styles.navButton, styles.nextButton)}
       onClick={handleSubmit}
-      disabled={!isStepValid || loading}
       loading={loading}
     >
       {submitLabel}
     </Button>
   );
-  let primaryAction = (
-    <Button
-      className={classNames(styles.navButton, styles.nextButton)}
-      onClick={handleNext}
-      disabled={!isStepValid}
-    >
+
+  const primaryAction = isLastStep ? (
+    submitButton
+  ) : (
+    <Button className={classNames(styles.navButton, styles.nextButton)} onClick={handleNext}>
       Próximo
     </Button>
   );
-
-  if (isLastStep) {
-    primaryAction = submitDisabledHint ? (
-      <Popup
-        content={submitDisabledHint}
-        position="top right"
-        inverted
-        trigger={<span style={{ display: 'inline-block' }}>{submitButton}</span>}
-      />
-    ) : (
-      submitButton
-    );
-  }
 
   return (
     <Container className={isEmbed ? styles.embedContainer : styles.container}>
       <div ref={containerRef}>
         {!hideHeader && !isEmbed && (
           <>
+            <div className={styles.watermark}>{formConfig ? formConfig.name : ''}</div>
             <Header as="h1" className={styles.title}>
               {formConfig ? formConfig.name : 'Suporte'}
             </Header>
-            <p className={styles.subtitle}>
-              Preencha as informações abaixo para abrir seu chamado.
-            </p>
+            {/* Subtitle Removed */}
           </>
         )}
 
-        {/* Stepper */}
-        <div className={styles.stepperContainer}>
-          {steps.map((step, index) => {
-            const stepNumber = index + 1;
-            return (
-              <div key={step.id || stepNumber} className={styles.stepWrapper}>
-                <div
-                  className={classNames(styles.stepCircle, {
-                    [styles.active]: stepNumber === currentStep,
-                    [styles.completed]: stepNumber < currentStep,
-                  })}
-                >
-                  {stepNumber < currentStep ? <Icon name="check" /> : stepNumber}
+        <div className={styles.mainWrapper}>
+          {/* Left: Stepper */}
+          <div className={styles.stepperContainer}>
+            {steps.map((step, index) => {
+              const stepNumber = index + 1;
+              return (
+                <div key={step.id || stepNumber} className={styles.stepWrapper}>
+                  <div className={styles.stepLine} /> {/* Vertical Line */}
+                  <div
+                    className={classNames(styles.stepCircle, {
+                      [styles.active]: stepNumber === currentStep,
+                      [styles.completed]: stepNumber < currentStep,
+                    })}
+                  >
+                    {stepNumber < currentStep ? <Icon name="check" /> : stepNumber}
+                  </div>
+                  <div className={styles.stepContent}>
+                    <span
+                      className={classNames(styles.stepSubLabel, {
+                        [styles.active]: stepNumber === currentStep,
+                      })}
+                    >
+                      STEP {stepNumber}
+                    </span>
+                    <span
+                      className={classNames(styles.stepLabel, {
+                        [styles.active]: stepNumber === currentStep,
+                      })}
+                    >
+                      {step.label || step.title || `Step ${stepNumber}`}
+                    </span>
+                  </div>
                 </div>
-                <span
-                  className={classNames(styles.stepLabel, {
-                    [styles.active]: stepNumber === currentStep,
-                  })}
-                >
-                  {step.label || step.title || `Step ${stepNumber}`}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
 
-        <div className={isEmbed || isDynamic ? styles.embedWrapper : styles.mainWrapper}>
+          {/* Right: Form Card */}
           <div className={styles.formCard}>
-            {error && <Message error content={error} style={{ margin: '1rem' }} />}
-
-            <div className={styles.formContent}>
+            <div className={styles.cardHeader}>
               <Header as="h3" className={styles.sectionTitle}>
                 {currentStepData.title}
               </Header>
+              <div className={styles.headerActions}>
+                <Button
+                  className={classNames(styles.navButton, styles.prevButton)}
+                  onClick={handlePrev}
+                  disabled={isFirstStep || loading}
+                >
+                  Voltar
+                </Button>
+                {primaryAction}
+              </div>
+            </div>
 
+            <div className={styles.formContent}>
+              {error && <Message error content={error} style={{ margin: '1rem' }} />}
               <Form loading={loading} size="large">
                 {renderStepContent()}
               </Form>
             </div>
-
-            {/* Navigation Actions */}
-            <div className={styles.formActions}>
-              <Button
-                className={classNames(styles.navButton, styles.prevButton)}
-                onClick={handlePrev}
-                disabled={isFirstStep || loading}
-              >
-                Voltar
-              </Button>
-              {primaryAction}
-            </div>
+            {/* Note: Footer actions removed as buttons are now in header */}
           </div>
-
-          {!isEmbed && !isDynamic && (
-            <div className={styles.illustrationColumn}>
-              <StepIllustration step={currentStep} />
-              {/* Tips Section */}
-              {currentStepData.tip && (
-                <div className={styles.tipsContainer}>
-                  <Icon name="lightbulb outline" className={styles.tipsIcon} />
-                  <div className={styles.tipsContent}>
-                    <h4>{currentStepData.tip.title}</h4>
-                    <p>{currentStepData.tip.text}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </Container>

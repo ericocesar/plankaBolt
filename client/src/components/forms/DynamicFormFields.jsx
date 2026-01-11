@@ -71,12 +71,24 @@ function DynamicFormFields({
   files,
   onFilesChange,
   readOnly,
+  hideErrorLabel,
 }) {
   const rows = buildRows(step.fields || [], step.columns || 1);
 
   const handleValueChange = (fieldId, value) => {
     if (readOnly) return;
     onChange(fieldId, value);
+  };
+
+  const renderLabel = (field) => {
+    const isRequired = field.validation && field.validation.required;
+
+    return (
+      <>
+        {field.label}
+        {isRequired && <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>}
+      </>
+    );
   };
 
   return (
@@ -88,16 +100,19 @@ function DynamicFormFields({
           const fieldValue = values[field.id];
           const fieldDomId = `field-${field.id}`;
           const hasError = Boolean(errorMessage);
-          const errorLabel = hasError ? (
-            <Label basic color="red" pointing>
-              {errorMessage}
-            </Label>
-          ) : null;
+          const errorClass = hasError ? 'blink-error' : '';
+
+          const errorLabel =
+            hasError && !hideErrorLabel ? (
+              <Label basic color="red" pointing>
+                {errorMessage}
+              </Label>
+            ) : null;
 
           if (field.type === 'textarea') {
             return (
-              <Form.Field key={field.id} error={hasError}>
-                <label htmlFor={fieldDomId}>{field.label}</label>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
+                <label htmlFor={fieldDomId}>{renderLabel(field)}</label>
                 <Form.TextArea
                   id={fieldDomId}
                   value={fieldValue || ''}
@@ -113,8 +128,8 @@ function DynamicFormFields({
 
           if (field.type === 'select') {
             return (
-              <Form.Field key={field.id} error={hasError}>
-                <label htmlFor={fieldDomId}>{field.label}</label>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
+                <label htmlFor={fieldDomId}>{renderLabel(field)}</label>
                 <Form.Select
                   id={fieldDomId}
                   options={getOptionsForField(field, categories)}
@@ -131,8 +146,8 @@ function DynamicFormFields({
 
           if (field.type === 'radio') {
             return (
-              <Form.Field key={field.id} error={hasError}>
-                <div style={{ fontWeight: 600, marginBottom: '0.35em' }}>{field.label}</div>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
+                <div style={{ fontWeight: 600, marginBottom: '0.35em' }}>{renderLabel(field)}</div>
                 {(getOptionsForField(field, categories) || []).map((option) => (
                   <Form.Radio
                     key={`${field.id}-${option.value}`}
@@ -152,10 +167,10 @@ function DynamicFormFields({
 
           if (field.type === 'checkbox') {
             return (
-              <Form.Field key={field.id} error={hasError}>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
                 <Form.Checkbox
                   id={fieldDomId}
-                  label={field.label}
+                  label={renderLabel(field)}
                   checked={fieldValue === true}
                   onChange={(e, { checked }) => handleValueChange(field.id, checked)}
                   disabled={readOnly}
@@ -168,8 +183,8 @@ function DynamicFormFields({
 
           if (field.type === 'date') {
             return (
-              <Form.Field key={field.id} error={hasError}>
-                <label htmlFor={fieldDomId}>{field.label}</label>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
+                <label htmlFor={fieldDomId}>{renderLabel(field)}</label>
                 <Form.Input
                   id={fieldDomId}
                   type="date"
@@ -185,8 +200,8 @@ function DynamicFormFields({
 
           if (field.type === 'file') {
             return (
-              <Form.Field key={field.id} error={hasError}>
-                <div style={{ fontWeight: 600, marginBottom: '0.35em' }}>{field.label}</div>
+              <Form.Field key={field.id} error={hasError} className={errorClass}>
+                <div style={{ fontWeight: 600, marginBottom: '0.35em' }}>{renderLabel(field)}</div>
                 {readOnly ? (
                   <div>Pré-visualização de anexos indisponível.</div>
                 ) : (
@@ -204,8 +219,8 @@ function DynamicFormFields({
           if (field.type === 'phone') inputType = 'tel';
 
           return (
-            <Form.Field key={field.id} error={hasError}>
-              <label htmlFor={fieldDomId}>{field.label}</label>
+            <Form.Field key={field.id} error={hasError} className={errorClass}>
+              <label htmlFor={fieldDomId}>{renderLabel(field)}</label>
               {field.mask ? (
                 <InputMask
                   mask={field.mask}
@@ -261,6 +276,7 @@ DynamicFormFields.propTypes = {
   files: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onFilesChange: PropTypes.func,
   readOnly: PropTypes.bool,
+  hideErrorLabel: PropTypes.bool,
 };
 
 DynamicFormFields.defaultProps = {
@@ -269,6 +285,7 @@ DynamicFormFields.defaultProps = {
   files: [],
   onFilesChange: () => {},
   readOnly: false,
+  hideErrorLabel: false,
 };
 
 export default DynamicFormFields;

@@ -15,7 +15,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .titleSection {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .actionsSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .headerTitle {
@@ -24,6 +38,36 @@
     text-transform: uppercase !important;
     letter-spacing: 2px !important;
     margin: 0 !important;
+  }
+
+  .searchInputWrapper {
+    width: 280px;
+    font-size: 0.95rem !important;
+
+    :global(input) {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      padding: 10px 15px 10px 35px !important;
+      transition: all 0.3s ease !important;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+      }
+
+      &:focus {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(26, 201, 204, 0.5) !important;
+        color: #fff !important;
+      }
+    }
+
+    :global(i.icon) {
+      color: rgba(255, 255, 255, 0.5) !important;
+      left: 0 !important;
+      width: 35px !important;
+    }
   }
 
   .addButton {
@@ -36,6 +80,7 @@
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 20px rgba(26, 201, 204, 0.3) !important;
     letter-spacing: 1px !important;
+    white-space: nowrap;
 
     &:hover {
       background: #fff !important;
@@ -46,16 +91,19 @@
 
   .formList {
     background: transparent !important;
-    margin-top: 2rem !important;
+    margin-top: 1rem !important;
   }
 
   .formItem {
     background: rgba(30, 30, 35, 0.6) !important;
     backdrop-filter: blur(20px) !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 20px !important;
-    padding: 1.5rem 2rem !important;
-    margin-bottom: 1.5rem !important;
+    border-radius: 16px !important;
+    /* Slightly reduced radius */
+    padding: 0.75rem 1.5rem !important;
+    /* Reduced padding for compact view */
+    margin-bottom: 0.5rem !important;
+    /* Reduced margin */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     display: flex !important;
     justify-content: space-between !important;
@@ -64,47 +112,59 @@
     &:hover {
       background: rgba(40, 40, 45, 0.8) !important;
       border-color: rgba(26, 201, 204, 0.5) !important;
-      transform: translateX(5px) scale(1.01);
+      transform: translateX(5px) scale(1.005);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
     }
   }
 
   .formContent {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .formName {
     color: #fff !important;
     font-family: 'Oswald', sans-serif !important;
-    font-size: 1.3rem !important;
+    font-size: 1.1rem !important;
+    /* Slightly smaller font */
     font-weight: 600 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 2px !important;
     display: block;
     letter-spacing: 0.5px !important;
   }
 
   .formMeta {
     color: rgba(255, 255, 255, 0.5) !important;
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
+    /* Smaller meta text */
   }
 
   .formActions {
     display: flex;
-    gap: 0.8rem;
+    gap: 0.5rem;
+    /* Reduced gap */
   }
 
   .actionButton {
     background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 12px !important;
+    border-radius: 10px !important;
+    /* Smaller radius */
     color: rgba(255, 255, 255, 0.6) !important;
-    width: 44px !important;
-    height: 44px !important;
+    width: 36px !important;
+    /* Smaller buttons */
+    height: 36px !important;
     padding: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.2s ease !important;
     border: 1px solid transparent !important;
+
+    :global(i.icon) {
+      font-size: 0.9em !important;
+    }
 
     &:hover {
       background: rgba(26, 201, 204, 0.1) !important;
