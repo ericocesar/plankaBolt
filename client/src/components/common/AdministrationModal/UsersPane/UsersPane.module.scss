@@ -5,44 +5,94 @@
 
 :global(#app) {
   .actions {
-    border-top: 1px solid rgba(34, 36, 38, 0.15);
-    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding-top: 2rem;
+    margin-top: 1rem;
     text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &:after {
-      clear: both;
-      content: "";
-      display: table;
+      display: none;
     }
   }
 
   .addButton {
     margin-right: 0;
+    background: #1ac9cc !important;
+    border-radius: 12px !important;
+    color: #062e53 !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 4px 12px rgba(26, 201, 204, 0.2) !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      background: #15a8aa !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(26, 201, 204, 0.3) !important;
+    }
   }
 
   .addButtonCounter {
-    margin-left: 6px;
-    opacity: 0.5;
+    margin-left: 8px;
+    opacity: 0.8;
+    color: #062e53 !important;
+    font-weight: 700 !important;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 6px;
   }
 
   .tableWrapper {
-    margin-right: -2.5rem;
-    max-height: calc(100vh - 338px);
+    margin-right: -1rem;
+    max-height: calc(100vh - 350px);
     overflow: auto;
-    padding-right: 2.5rem;
+    padding-right: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    
+    :global(table) {
+      background: transparent !important;
+      color: #fff !important;
+      border: none !important;
+      
+      :global(thead th) {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: #1ac9cc !important;
+        font-family: 'Oswald', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        padding: 1rem !important;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      
+      :global(tbody td) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+        padding: 1rem !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 13px !important;
+        vertical-align: middle !important;
+      }
+      
+      :global(tbody tr:hover) {
+        background: rgba(255, 255, 255, 0.03) !important;
+      }
 
-    @media (width < 768px) {
-      margin-right: -2rem;
-      max-height: calc(100vh - 296px);
-      padding-right: 2rem;
+      :global(tbody tr:last-child td) {
+        border-bottom: none !important;
+      }
     }
 
-    @media (768px <= width < 926px) {
-      max-height: calc(100vh - 310px);
-    }
-
-    @supports (-moz-appearance: none) {
-      scrollbar-color: rgba(0, 0, 0, 0.32) transparent;
+    &::-webkit-scrollbar {
+      width: 8px;
     }
 
     &::-webkit-scrollbar-track {
@@ -50,32 +100,39 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
     }
   }
 
   .toggleDeactivatedButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
-    float: left;
-    font-weight: normal;
-    margin-left: auto;
-    margin-right: 0;
-    padding: 6px 11px;
-    text-align: left;
-    text-decoration: underline;
-    transition: none;
-    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-weight: 500 !important;
+    padding: 10px 16px !important;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+    }
+
+    &.active {
+      background: rgba(26, 201, 204, 0.1) !important;
+      color: #1ac9cc !important;
+      border-color: rgba(26, 201, 204, 0.2) !important;
     }
   }
 
   .wrapper {
-    border: none;
-    box-shadow: none;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 }

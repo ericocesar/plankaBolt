@@ -15,15 +15,17 @@
   }
 
   .wrapper {
-    border-radius: 3px;
+    border-radius: 8px !important;
     color: #fff;
     display: inline-block;
-    font-weight: normal;
+    font-weight: 500 !important;
     overflow: hidden;
     text-overflow: ellipsis;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
     vertical-align: top;
     white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.2s ease !important;
   }
 
   .wrapperNameless {
@@ -37,23 +39,23 @@
   /* Sizes */
 
   .wrapperTiny {
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 11px !important;
+    line-height: 18px !important;
     max-width: 176px;
-    padding: 0 6px;
+    padding: 0 8px !important;
   }
 
   .wrapperSmall {
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 11px !important;
+    line-height: 20px !important;
     max-width: 176px;
-    padding: 2px 8px;
+    padding: 2px 10px !important;
   }
 
   .wrapperMedium {
-    font-size: 14px;
-    line-height: 32px;
+    font-size: 13px !important;
+    line-height: 30px !important;
     max-width: 230px;
-    padding: 0 12px;
+    padding: 0 14px !important;
   }
 }

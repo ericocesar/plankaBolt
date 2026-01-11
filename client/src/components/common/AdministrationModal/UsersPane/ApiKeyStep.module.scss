@@ -5,31 +5,31 @@
 
 :global(#app) {
   .actionButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: normal;
     margin-top: 8px;
-    padding: 6px 11px;
+    padding: 10px 16px;
     text-align: left;
-    text-decoration: underline;
-    transition: background 0.3s ease;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
 
     &:hover {
-      background: #e9e9e9;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
   }
 
-  .content {
-    margin-bottom: 6px;
-  }
-
   .copyButton {
-    background: #ebeef0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: none;
-    border-radius: 3px;
+    border-radius: 8px;
     box-sizing: content-box;
-    color: #516b7a;
+    color: rgba(255, 255, 255, 0.7);
     display: none;
     height: 30px;
     margin: 0;
@@ -39,12 +39,12 @@
     position: absolute;
     right: 0;
     top: 0;
-    transition: background 85ms ease;
+    transition: all 0.3s ease;
     width: 20px;
 
     &:hover {
-      background: #dfe3e6;
-      color: #4c4c4c;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
     }
   }
 

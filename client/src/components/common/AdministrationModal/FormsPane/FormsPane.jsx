@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, List, Icon, Segment, Header, Confirm } from 'semantic-ui-react';
+import { Button, List, Icon, Header, Confirm } from 'semantic-ui-react';
 import QRCode from 'qrcode';
 import api from '../../../../api/forms';
 import FormEditor from './FormEditor';
 import { getAccessToken } from '../../../../utils/access-token-storage';
+
+import styles from './FormsPane.module.scss';
 
 function FormsPane() {
   const [forms, setForms] = useState([]);
@@ -102,89 +104,82 @@ function FormsPane() {
   }
 
   return (
-    <div>
-      <div
-        style={{
-          marginBottom: '1em',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Header as="h3" style={{ margin: 0 }}>
-          Formulários de Suporte Público
+    <div className={styles.wrapper}>
+      <div className={styles.headerContainer}>
+        <Header as="h2" className={styles.headerTitle}>
+          Formulários de Suporte
         </Header>
-        <Button primary onClick={() => setEditingForm('new')}>
-          <Icon name="plus" /> Novo Formulário
-        </Button>
+        <Button
+          className={styles.addButton}
+          icon="plus"
+          content="Novo Formulário"
+          onClick={() => setEditingForm('new')}
+        />
       </div>
 
-      <Segment loading={loading}>
-        <List divided relaxed>
-          {forms.length === 0 && <List.Item>Nenhum formulário encontrado.</List.Item>}
+      {forms.length === 0 && !loading ? (
+        <div className={styles.emptyState}>
+          <Icon name="wpforms" size="huge" />
+          <p>Nenhum formulário criado ainda.</p>
+        </div>
+      ) : (
+        <List className={styles.formList}>
           {forms.map((form) => (
-            <List.Item key={form.id}>
-              <List.Content floated="right">
-                <Button icon onClick={() => handleDownloadQRCode(form)} title="Baixar QR Code">
-                  <Icon name="qrcode" />
-                </Button>
+            <List.Item key={form.id} className={styles.formItem}>
+              <div className={styles.formContent}>
+                <span className={styles.formName}>{form.name}</span>
+                <span className={styles.formMeta}>
+                  {form.id} • {new Date(form.createdAt).toLocaleDateString()}
+                </span>
+              </div>
+              <div className={styles.formActions}>
                 <Button
-                  icon
+                  className={styles.actionButton}
+                  icon="external alternate"
+                  title="Abrir formulário"
                   as="a"
-                  href={`/support/${form.id}/embed-code`}
+                  href={`/support/${form.id}`}
                   target="_blank"
-                  title="Gerar código de incorporação"
-                >
-                  <Icon name="code" />
-                </Button>
-                <Button icon onClick={() => setEditingForm(form)} title="Editar Formulário">
-                  <Icon name="pencil" />
-                </Button>
+                />
                 <Button
-                  icon
-                  color="red"
+                  className={styles.actionButton}
+                  icon={copiedId === form.id ? 'check' : 'copy'}
+                  title="Copiar link"
+                  onClick={() => handleCopyLink(form.id)}
+                  color={copiedId === form.id ? 'teal' : undefined}
+                />
+                <Button
+                  className={styles.actionButton}
+                  icon="qrcode"
+                  title="Download QR Code"
+                  onClick={() => handleDownloadQRCode(form)}
+                />
+                <Button
+                  className={styles.actionButton}
+                  icon="edit"
+                  title="Editar"
+                  onClick={() => setEditingForm(form)}
+                />
+                <Button
+                  className={`${styles.actionButton} ${styles.delete}`}
+                  icon="trash"
+                  title="Excluir"
                   onClick={() => setConfirmDeleteId(form.id)}
-                  title="Excluir Formulário"
-                >
-                  <Icon name="trash" />
-                </Button>
-              </List.Content>
-              <List.Content>
-                <List.Header>{form.name}</List.Header>
-                <List.Description>
-                  ID: {form.id} | Ativo: {form.isActive ? 'Sim' : 'Não'} | Link Público:{' '}
-                  <a
-                    href={`${window.location.origin}/support/${form.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    /support/{form.id}
-                  </a>
-                  <Button
-                    icon
-                    size="mini"
-                    compact
-                    onClick={() => handleCopyLink(form.id)}
-                    style={{ marginLeft: '0.5em' }}
-                    title={copiedId === form.id ? 'Copiado!' : 'Copiar Link'}
-                    color={copiedId === form.id ? 'green' : undefined}
-                  >
-                    <Icon name={copiedId === form.id ? 'check' : 'copy'} />
-                  </Button>
-                </List.Description>
-              </List.Content>
+                />
+              </div>
             </List.Item>
           ))}
         </List>
-      </Segment>
+      )}
 
       <Confirm
         open={!!confirmDeleteId}
         content="Tem certeza que deseja excluir este formulário?"
-        cancelButton="Cancelar"
         confirmButton="Excluir"
+        cancelButton="Cancelar"
         onCancel={() => setConfirmDeleteId(null)}
         onConfirm={handleDelete}
+        size="mini"
       />
     </div>
   );

@@ -5,27 +5,30 @@
 
 :global(#app) {
   .addListButton {
-    background: rgba(0, 0, 0, 0.24);
-    border: none;
-    border-radius: 3px;
-    color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     cursor: pointer;
     display: block;
-    fill: rgba(255, 255, 255, 0.72);
-    font-weight: normal;
-    height: 42px;
-    padding: 11px;
+    fill: rgba(255, 255, 255, 0.6) !important;
+    font-weight: 500 !important;
+    height: 48px !important;
+    padding: 12px 20px !important;
     text-align: left;
-    transition: background 85ms ease-in, opacity 40ms ease-in,
-      border-color 85ms ease-in;
-    width: 100%;
+    transition: all 0.25s ease !important;
+    width: 272px !important;
 
     &:active {
       outline: none;
     }
 
     &:hover {
-      background: rgba(0, 0, 0, 0.32);
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: #1ac9cc !important;
+      color: #1ac9cc !important;
+      fill: #1ac9cc !important;
     }
   }
 

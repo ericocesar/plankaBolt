@@ -5,8 +5,9 @@
 
 :global(#app) {
   .editButton {
-    background: transparent;
-    box-shadow: none;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
     color: #fff;
     font-size: 15px;
     line-height: 34px;
@@ -14,9 +15,20 @@
     opacity: 0;
     padding: 0;
     width: 34px;
+    height: 34px;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+
+    :global(.icon) {
+      font-size: 16px !important;
+      margin: 0 !important;
+    }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1) !important;
+      transform: scale(1.05) !important;
     }
   }
 
@@ -48,63 +60,88 @@
     color: #bdff22;
   }
 
-  .logo {
-    color: #fff;
+  .wrapper {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 50px !important;
+    display: flex;
     flex: 0 0 auto;
-    letter-spacing: 3.5px;
-    line-height: 50px;
-    padding: 0 16px;
-    text-transform: uppercase;
+    margin: 20px auto !important;
+    padding: 0 10px !important;
+    width: fit-content !important;
+    min-width: 400px;
+    max-width: 95%;
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
 
-    &:before {
-      background: none;
+    @media only screen and (width < 768px) {
+      min-width: auto;
+      width: 90%;
+      border-radius: 20px !important;
+      margin: 10px auto !important;
+      top: 10px;
     }
   }
 
   .menu {
-    background: transparent;
-    border: none;
+    background: transparent !important;
+    border: none !important;
     border-radius: 0;
-    box-shadow: none;
+    box-shadow: none !important;
     color: #fff;
     flex: 1 1 auto;
-    height: 50px;
-    margin: 0;
+    height: 54px;
+    margin: 0 !important;
     width: 100%;
   }
 
-  .notification {
-    background: #eb5a46;
-    border-radius: 8px;
+  .logo {
     color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-    height: 16px;
-    left: 22px;
-    line-height: 16px;
-    min-width: 16px;
-    position: absolute;
-    text-align: center;
-    top: 8px;
-  }
+    flex: 0 0 auto;
+    letter-spacing: 2px;
+    line-height: 54px;
+    padding: 0 20px;
+    text-transform: uppercase;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
 
-  .title {
-    font-size: 20px;
-    font-weight: bold;
-  }
+    &:before {
+      background: none;
+    }
 
-  .userName {
-    margin-right: 10px;
-
-    @media only screen and (width < 768px) {
-      display: none;
+    &:hover {
+      color: #1ac9cc !important;
     }
   }
 
-  .wrapper {
-    background: rgba(0, 0, 0, 0.24);
-    display: flex;
-    flex: 0 0 auto;
+  .item {
+    cursor: auto;
+    user-select: auto;
+    padding: 0 15px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+
+    &:before {
+      background: none !important;
+    }
+
+    &:active,
+    &:hover {
+      background: transparent !important;
+      color: #1ac9cc !important;
+
+      .editButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .itemHoverable:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 30px !important;
   }
 }

@@ -12,8 +12,10 @@
   }
 
   .editButton {
-    background: transparent;
-    box-shadow: none;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     line-height: 28px;
     margin: 0;
     min-height: auto;
@@ -23,21 +25,33 @@
     right: 4px;
     top: 4px;
     width: 28px;
+    height: 28px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+
+    :global(.icon) {
+      font-size: 14px !important;
+      margin: 0 !important;
+    }
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+      transform: scale(1.05) !important;
     }
   }
 
   .information {
     display: block;
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.5);
     line-height: 20px;
     margin-bottom: 6px;
   }
 
   .name {
-    color: #17394d;
+    color: #fff;
     font-size: 14px;
     font-weight: bold;
     line-height: 20px;
@@ -47,17 +61,18 @@
   .option {
     background: none;
     border: none;
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     outline: none;
     padding: 0;
+    transition: color 0.2s ease;
 
     &:not(:last-child) {
       margin-right: 10px;
     }
 
     &:hover {
-      color: #172b4d;
+      color: #fff;
     }
   }
 
@@ -77,8 +92,9 @@
 
   .thumbnail {
     align-items: center;
-    background: rgba(9, 30, 66, 0.04);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     display: flex;
     height: 80px;
     justify-content: center;
@@ -86,10 +102,11 @@
     position: absolute;
     top: 50%;
     width: 112px;
+    overflow: hidden;
   }
 
   .thumbnailExtension {
-    color: #5e6c84;
+    color: rgba(255, 255, 255, 0.7);
     display: block;
     font-size: 18px;
     font-weight: bold;
@@ -108,15 +125,18 @@
   }
 
   .wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
     cursor: pointer;
-    margin-bottom: 8px;
+    display: block;
     min-height: 80px;
     position: relative;
+    transition: all 0.3s ease;
 
     &:hover {
-      .details {
-        background: rgba(9, 30, 66, 0.04);
-      }
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
 
       .editButton {
         opacity: 1;

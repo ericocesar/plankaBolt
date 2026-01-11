@@ -36,13 +36,20 @@
 
   .formTitle {
     font-size: 36px;
-    font-weight: bold;
+    font-weight: 700 !important;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #ffffff !important;
+    margin-bottom: 8px !important;
   }
 
   .formSubtitle {
-    font-size: 28px;
-    font-weight: normal;
-    margin-bottom: 32px;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+    margin-bottom: 40px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    letter-spacing: 0.5px !important;
   }
 
   .grid {
@@ -56,9 +63,13 @@
   }
 
   .inputLabel {
-    font-size: 16px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
     line-height: 20px;
-    margin-bottom: 4px;
+    margin-bottom: 8px !important;
+    color: #1ac9cc !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
   }
 
   .inputWrapper {
@@ -66,19 +77,38 @@
   }
 
   .login {
-    background: #ffffff;
+    background: #062e53 !important;
+    background: linear-gradient(135deg, #062e53 0%, #031a2f 100%) !important;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     max-width: 440px;
     min-height: 100vh;
-    padding: 40px;
+    padding: 60px 40px !important;
     row-gap: 40px;
-    color: #000000;
+    color: #ffffff !important;
+    box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5) !important;
+
+    :global(.ui.button.primary) {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      padding: 14px !important;
+      font-size: 16px !important;
+      margin-top: 20px !important;
+      transition: all 0.25s ease !important;
+
+      &:hover {
+        background: #f0f0f0 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1) !important;
+      }
+    }
   }
 
-  .formTitle, .formSubtitle, .inputLabel {
-    color: #000000 !important;
+  .formTitle, .formSubtitle {
+    color: #ffffff !important;
   }
 
   .logo {

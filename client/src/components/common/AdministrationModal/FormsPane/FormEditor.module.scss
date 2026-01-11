@@ -1,0 +1,248 @@
+/*!
+ * Copyright (c) 2024 PLANKA Software GmbH
+ * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
+ */
+
+:global(#app) {
+  .wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .headerTitle {
+    color: #fff !important;
+    font-family: 'Oswald', sans-serif !important;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    margin: 0 !important;
+  }
+
+  .backButton {
+    background: #fff !important;
+    border-radius: 20px !important;
+    color: #000 !important;
+    padding: 12px 24px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    &:hover {
+      background: #1ac9cc !important;
+      color: #fff !important;
+      transform: scale(1.05);
+    }
+  }
+
+  .tabContainer {
+    :global(.ui.menu.secondary) {
+      border: none !important;
+      margin-bottom: 3rem !important;
+      background: rgba(255, 255, 255, 0.02) !important;
+      padding: 8px !important;
+      border-radius: 20px !important;
+      display: inline-flex !important;
+
+      :global(.item) {
+        border: none !important;
+        border-radius: 16px !important;
+        color: rgba(255, 255, 255, 0.4) !important;
+        font-family: 'Oswald', sans-serif !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        padding: 12px 28px !important;
+        transition: all 0.3s ease !important;
+        margin: 0 4px !important;
+
+        &:hover {
+          color: #fff !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        & :global(.active), &.active {
+          background: #1ac9cc !important;
+          color: #000 !important;
+          box-shadow: 0 4px 15px rgba(26, 201, 204, 0.3) !important;
+        }
+      }
+    }
+
+    :global(.ui.segment.tab) {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+  }
+
+  .editorFooter {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .saveButton {
+    background: #fff !important;
+    border-radius: 20px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    padding: 14px 40px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+
+    &:hover {
+      background: #1ac9cc !important;
+      color: #fff !important;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.3) !important;
+    }
+  }
+
+  .cancelButton {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 20px !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    padding: 14px 30px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+    }
+  }
+
+  .formField {
+    margin-bottom: 2rem !important;
+
+    label {
+      color: #1ac9cc !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      margin-bottom: 10px !important;
+      display: block;
+    }
+
+    :global(.ui.dropdown) {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      padding: 10px 16px !important;
+      min-height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: all 0.2s ease !important;
+
+      &:focus-within {
+        border-color: #1ac9cc !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+      }
+
+      :global(.text) {
+        color: #fff !important;
+      }
+
+      :global(.menu) {
+        background: #1a1a1a !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        margin-top: 8px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+
+        :global(.item) {
+          color: rgba(255, 255, 255, 0.7) !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.03) !important;
+          padding: 12px 16px !important;
+
+          &:hover {
+            background: rgba(26, 201, 204, 0.1) !important;
+            color: #1ac9cc !important;
+          }
+
+          :global(.label) {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+          }
+        }
+      }
+
+      /* Fix the "strange square" (search input) */
+      :global(input.search) {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      /* Style for multiple selection labels (tokens) */
+      :global(.label) {
+        background: rgba(26, 201, 204, 0.2) !important;
+        color: #1ac9cc !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 6px 10px !important;
+        border: 1px solid rgba(26, 201, 204, 0.3) !important;
+
+        :global(.delete.icon) {
+          color: #1ac9cc !important;
+          opacity: 0.7;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    :global(input), :global(textarea) {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      padding: 14px 18px !important;
+      transition: all 0.2s ease !important;
+
+      &:focus {
+        border-color: #1ac9cc !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+      }
+    }
+  }
+
+  /* Global targeting for fields inside the form */
+  :global(.ui.form) {
+    :global(.field) {
+      @extend .formField;
+    }
+  }
+}

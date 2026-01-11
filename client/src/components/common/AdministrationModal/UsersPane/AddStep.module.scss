@@ -22,26 +22,33 @@
   }
 
   .selectRoleButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
-    font-weight: normal;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
+    color: #1ac9cc !important;
+    font-weight: 500 !important;
     margin-left: auto;
     margin-right: 0;
     overflow: hidden;
+    padding: 6px 12px !important;
     text-align: left;
-    text-decoration: underline;
+    text-decoration: none !important;
     text-overflow: ellipsis;
-    transition: none;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
     }
   }
 
-  .selectRoleButtonIcon {
-    text-decoration: none;
+  .text {
+    color: #1ac9cc !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding-bottom: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
   }
 
   .text {

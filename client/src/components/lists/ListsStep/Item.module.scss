@@ -5,9 +5,10 @@
 
 :global(#app) {
   .name {
-    background: rgba(9, 30, 66, 0.04);
-    border-radius: 3px;
-    color: #17394d;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: #fff;
     cursor: pointer;
     flex: 1 1 auto;
     font-size: 14px;
@@ -15,14 +16,18 @@
     padding: 8px 32px 8px 10px;
     position: relative;
     text-overflow: ellipsis;
+    transition: all 0.2s ease;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
     }
   }
 
   .nameActive {
-    opacity: 0.45;
+    opacity: 0.6;
+    background: rgba(26, 201, 204, 0.1) !important;
+    border-color: #1ac9cc !important;
 
     &:before {
       bottom: 1px;
@@ -35,11 +40,12 @@
       text-align: center;
       transform: rotate(-135deg);
       width: 36px;
+      color: #1ac9cc;
     }
   }
 
   .nameIcon {
-    color: rgba(9, 30, 66, 0.24);
+    color: #1ac9cc;
     font-size: 12px;
     margin: 0 8px 0 0;
     width: 14px;

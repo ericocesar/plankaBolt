@@ -5,7 +5,6 @@
 
 import { dequal } from 'dequal';
 import React, { useCallback, useMemo } from 'react';
-import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -129,6 +128,7 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <Checkbox
+          toggle
           name="smtpSecure"
           checked={data.smtpSecure}
           label={t('common.useSecureConnection')}
@@ -136,10 +136,11 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <Checkbox
+          toggle
           name="smtpTlsRejectUnauthorized"
           checked={data.smtpTlsRejectUnauthorized}
           label={t('common.rejectUnauthorizedTlsCertificates')}
-          className={classNames(styles.field, styles.checkbox)}
+          className={styles.checkbox}
           onChange={handleFieldChange}
         />
         <div className={styles.text}>
@@ -191,10 +192,11 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <div className={styles.controls}>
-          <Button positive disabled={!isModified} content={t('action.save')} />
+          <Button className={styles.saveButton} disabled={!isModified} content={t('action.save')} />
           {config.smtpHost && !isModified && (
             <Button
               type="button"
+              className={styles.testButton}
               content={t('action.sendTestEmail')}
               loading={smtpTestState.isLoading}
               disabled={smtpTestState.isLoading}

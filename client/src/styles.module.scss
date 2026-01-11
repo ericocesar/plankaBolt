@@ -5,11 +5,104 @@
 
 :global {
   #app {
-    background: #000000;
+    background: radial-gradient(
+        circle at 50% -20%,
+        rgba(26, 201, 204, 0.2) 0%,
+        rgba(0, 0, 0, 1) 80%
+      ),
+      #000000;
+    background-attachment: fixed;
     overflow-x: auto;
 
     &::-webkit-scrollbar {
       height: auto;
+    }
+
+    /* Global UI Overrides to match layout.jpg */
+    :global {
+      .ui.button.primary {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        padding: 12px 24px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.1) !important;
+
+        &:hover {
+          background: #f0f0f0 !important;
+          transform: translateY(-1px) !important;
+          box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        &:active {
+          transform: translateY(0) !important;
+        }
+      }
+
+      .ui.input > input,
+      .ui.form input:not([type]),
+      .ui.form input[type="text"],
+      .ui.form input[type="email"],
+      .ui.form input[type="search"],
+      .ui.form input[type="password"],
+      .ui.form input[type="date"],
+      .ui.form input[type="datetime-local"],
+      .ui.form input[type="tel"],
+      .ui.form input[type="time"],
+      .ui.form input[type="url"],
+      .ui.form input[type="number"],
+      .ui.form textarea {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        color: #ffffff !important;
+        padding: 12px 16px !important;
+        transition: all 0.3s ease !important;
+
+        &:focus {
+          background: rgba(255, 255, 255, 0.05) !important;
+          border-color: rgba(26, 201, 204, 0.4) !important;
+          box-shadow: 0 0 0 1px rgba(26, 201, 204, 0.2) !important;
+        }
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.3) !important;
+        }
+      }
+
+      .ui.modal {
+        background: rgba(15, 15, 15, 0.8) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 24px !important;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5) !important;
+
+        > .header {
+          background: transparent !important;
+          color: #ffffff !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+          font-family: "Oswald", sans-serif !important;
+          text-transform: uppercase !important;
+          letter-spacing: 1px !important;
+        }
+
+        > .content {
+          background: transparent !important;
+          color: #ffffff !important;
+        }
+
+        > .actions {
+          background: transparent !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+      }
+
+      .ui.dimmer {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(4px) !important;
+      }
     }
 
     .mentions-input {

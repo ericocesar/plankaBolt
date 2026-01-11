@@ -10,42 +10,48 @@
   }
 
   .icon {
-    color: #888888;
-    margin: 0 0.35714286em 0 0;
+    color: #1ac9cc !important;
+    margin: 0 0.5rem 0 0 !important;
   }
 
   .information {
-    font-size: 13px;
+    font-size: 13px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
 
     &:not(:last-of-type) {
-      margin-bottom: 4px;
+      margin-bottom: 4px !important;
     }
   }
 
   .informationApiKey {
-    color: #cf513d;
+    color: #fd8139 !important;
 
     .icon {
-      color: inherit;
+      color: inherit !important;
     }
   }
 
   .note {
-    color: #888888;
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 11px !important;
   }
 
   .roleCell {
-    white-space: nowrap;
+    white-space: nowrap !important;
+    color: #1ac9cc !important;
+    font-weight: 500 !important;
   }
 
   .user {
-    align-items: center;
-    display: flex;
-    gap: 8px;
+    align-items: center !important;
+    display: flex !important;
+    gap: 12px !important;
+    color: #fff !important;
+    font-weight: 500 !important;
   }
 
   .wrapper {
-    color: #212121;
+    color: #fff !important;
   }
 
   .wrapperDeactivated {

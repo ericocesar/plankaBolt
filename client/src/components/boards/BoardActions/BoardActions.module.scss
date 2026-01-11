@@ -32,23 +32,44 @@
   }
 
   .contextTitle {
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
     color: #fff;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
     line-height: 34px;
-    padding: 2px 14px;
-  }
-
-  .contextTitleIcon {
-    margin-right: 8px;
+    padding: 2px 16px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   }
 
   .wrapper {
     overflow-x: auto;
     overflow-y: hidden;
     -ms-overflow-style: none;
-    padding: 15px 0;
+    padding: 12px 0 !important;
     scrollbar-width: none;
+    
+    :global(.ui.button) {
+      background: rgba(255, 255, 255, 0.05) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      border-radius: 12px !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      transition: all 0.2s ease !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+        border-color: rgba(26, 201, 204, 0.4) !important;
+      }
+      
+      &.active {
+        background: #1ac9cc !important;
+        color: #062e53 !important;
+      }
+    }
 
     &::-webkit-scrollbar {
       display: none;

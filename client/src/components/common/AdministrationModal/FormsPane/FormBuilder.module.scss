@@ -1,0 +1,270 @@
+/*!
+ * Copyright (c) 2024 PLANKA Software GmbH
+ * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
+ */
+
+:global(#app) {
+  .builderWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
+  }
+
+  .builderGrid {
+    display: grid !important;
+    grid-template-columns: 800px 1fr 850px !important;
+    gap: 4rem !important;
+    margin: 0 !important;
+    align-items: start !important;
+  }
+
+  .paletteColumn, .settingsColumn {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  .mainColumn {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-radius: 40px !important;
+    padding: 3rem !important;
+    min-height: 600px;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .sectionTitle {
+    color: #fff !important;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 2.5rem !important;
+    display: block;
+  }
+
+  .paletteItem {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 24px !important;
+    padding: 30px 40px !important;
+    margin-bottom: 20px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    cursor: grab !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 25px !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+
+    &:hover {
+      background: rgba(26, 201, 204, 0.08) !important;
+      border-color: #1ac9cc !important;
+      color: #fff !important;
+      transform: translateX(15px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    i {
+      color: #1ac9cc !important;
+      font-size: 2rem !important;
+      width: 40px;
+      text-align: center;
+    }
+  }
+
+  .fieldItem {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 24px !important;
+    padding: 2.5rem !important;
+    margin-bottom: 2rem !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    cursor: pointer;
+
+    &.selected {
+      border-color: #1ac9cc !important;
+      background: rgba(26, 201, 204, 0.04) !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      background: rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+
+  .fieldLabel {
+    color: #1ac9cc !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 4px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fieldTypeLabel {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    font-size: 0.6rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  .stepLabel {
+    background: #1ac9cc !important;
+    color: #000 !important;
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    margin-right: 12px !important;
+    font-size: 1.1rem !important;
+    transition: all 0.3s ease !important;
+    min-width: 140px !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+
+    &:hover {
+      background: #fff !important;
+      transform: translateY(-2px);
+    }
+
+    &.active {
+      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.4) !important;
+    }
+  }
+
+  .deleteButton {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 10px !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    padding: 8px !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:hover {
+      background: rgba(255, 69, 58, 0.1) !important;
+      border-color: rgba(255, 69, 58, 0.2) !important;
+      color: #ff453a !important;
+    }
+  }
+
+  .formField {
+    margin-bottom: 2rem !important;
+
+    label {
+      color: #1ac9cc !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      margin-bottom: 10px !important;
+      display: block;
+    }
+
+    input, select, :global(.ui.dropdown) {
+      background: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      padding: 14px 18px !important;
+      width: 100%;
+      transition: all 0.2s ease !important;
+
+      &:focus, &:focus-within {
+        border-color: #1ac9cc !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+      }
+    }
+
+    :global(.ui.dropdown) {
+      padding: 10px 16px !important;
+      min-height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+
+      :global(.text) {
+        color: #fff !important;
+      }
+
+      :global(.menu) {
+        background: #1a1a1a !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        margin-top: 8px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+
+        :global(.item) {
+          color: rgba(255, 255, 255, 0.7) !important;
+          padding: 12px 16px !important;
+
+          &:hover {
+            background: rgba(26, 201, 204, 0.1) !important;
+            color: #1ac9cc !important;
+          }
+        }
+      }
+
+      :global(input.search) {
+        background: transparent !important;
+        border: none !important;
+        color: #fff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  /* Global targeting for fields in the settings column */
+  .settingsColumn {
+    :global(.ui.form) {
+      :global(.field) {
+        @extend .formField;
+      }
+    }
+}
+
+  .emptyCanvas {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    
+    i {
+      margin-bottom: 1rem;
+    }
+  }
+}

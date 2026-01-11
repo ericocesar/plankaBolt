@@ -40,14 +40,46 @@
   .wrapper {
     margin: 2rem auto;
     width: 880px;
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+    overflow: hidden;
 
     @media (width < 926px) {
       @include smallScreen;
+    }
+
+    :global(.ui.header) {
+      color: #ffffff !important;
+      font-family: 'Oswald', sans-serif !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+    }
+
+    :global(.ui.button.primary) {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      transition: all 0.25s ease !important;
+
+      &:hover {
+        background: #f0f0f0 !important;
+        transform: translateY(-1px) !important;
+      }
     }
   }
 
   .wrapperStory {
     width: 980px;
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+    overflow: hidden;
 
     @media (width < 1026px) {
       @include smallScreen;

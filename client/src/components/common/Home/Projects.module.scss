@@ -7,7 +7,7 @@
   .addButton {
     background: transparent;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     color: rgba(255, 255, 255, 0.48);
     cursor: pointer;
     fill: rgba(255, 255, 255, 0.48);
@@ -16,23 +16,28 @@
     position: relative;
     text-align: center;
     width: 100%;
+    height: 150px;
 
     &:hover {
       .addButtonCover {
-        filter: brightness(0.8);
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(26, 201, 204, 0.3) !important;
       }
+      color: #1ac9cc !important;
     }
   }
 
   .addButtonCover {
-    background: rgba(107, 128, 140, 0.08);
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
     bottom: 0;
     content: "";
     left: 0;
     position: absolute;
     right: 0;
     top: 0;
-    transition: filter 0.2s ease;
+    transition: all 0.2s ease;
   }
 
   .addButtonTitle {
@@ -56,12 +61,18 @@
   }
 
   .card {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
     height: 150px;
-    transition: box-shadow 0.2s ease;
+    transition: all 0.3s ease !important;
 
     &:hover {
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.06) !important;
+      transform: translateY(-5px) !important;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4) !important;
     }
   }
 

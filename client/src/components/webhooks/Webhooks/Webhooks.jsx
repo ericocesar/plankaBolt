@@ -14,6 +14,8 @@ import { isUrl } from '../../../utils/validator';
 import Item from './Item';
 import Editor from './Editor';
 
+import styles from './Webhooks.module.scss';
+
 const DEFAULT_DATA = {
   name: '',
   url: '',
@@ -70,17 +72,17 @@ const Webhooks = React.memo(({ ids, onCreate }) => {
   return (
     <>
       {ids.length > 0 && (
-        <Accordion styled fluid>
+        <Accordion styled fluid className={styles.accordion}>
           {ids.map((id) => (
             <Item key={id} id={id} />
           ))}
         </Accordion>
       )}
       {ids.length < 10 && (
-        <Segment>
+        <Segment className={styles.segment}>
           <Form onSubmit={handleCreateSubmit}>
             <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} />
-            <Button positive>{t('action.addWebhook')}</Button>
+            <Button className={styles.submitButton}>{t('action.addWebhook')}</Button>
           </Form>
         </Segment>
       )}

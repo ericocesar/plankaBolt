@@ -9,23 +9,25 @@
   }
 
   .addCardButton {
-    background: #dfe3e6;
+    background: rgba(255, 255, 255, 0.05) !important;
     border: none;
-    color: #6b808c;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     cursor: pointer;
     display: block;
-    fill: #6b808c;
+    fill: rgba(255, 255, 255, 0.6) !important;
     flex: 1;
-    font-weight: normal;
-    height: 36px;
+    font-weight: 500 !important;
+    height: 40px !important;
     outline: none;
-    padding: 8px;
+    padding: 8px 12px !important;
     text-align: left;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: #c3cbd0;
-      color: #17394d;
-      fill: #17394d;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #ffffff !important;
+      fill: #ffffff !important;
     }
 
     &.paste {
@@ -34,16 +36,15 @@
   }
 
   .addCardButtonIcon {
-    height: 20px;
-    padding: 0.64px;
-    width: 20px;
+    height: 18px !important;
+    width: 18px !important;
   }
 
   .addCardButtonText {
     display: inline-block;
-    font-size: 14px;
-    line-height: 20px;
-    margin-left: 2px;
+    font-size: 13px !important;
+    line-height: 18px !important;
+    margin-left: 6px !important;
     vertical-align: top;
   }
 
@@ -139,14 +140,17 @@
   }
 
   .headerName {
-    color: #17394d;
-    font-weight: bold;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-family: "Oswald", sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
     line-height: 20px;
     max-height: 256px;
     outline: none;
     overflow: hidden;
     overflow-wrap: break-word;
-    padding: 4px 8px;
+    padding: 6px 10px !important;
     word-break: break-word;
   }
 
@@ -161,12 +165,15 @@
   }
 
   .outerWrapper {
-    background: #dfe3e6;
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 20px !important;
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 198px);
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
   }
 
   .outerWrapperTransitioning {

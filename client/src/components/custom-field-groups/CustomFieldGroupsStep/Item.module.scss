@@ -5,15 +5,28 @@
 
 :global(#app) {
   .editButton {
-    background: transparent;
-    box-shadow: none;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    width: 45px !important;
+    height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     flex: 0 0 auto;
-    font-weight: normal;
-    padding: 8px 10px;
-    text-decoration: underline;
+
+    :global(.icon) {
+      font-size: 20px !important;
+      margin: 0 !important;
+    }
 
     &:hover {
-      background: #e9e9e9;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+      transform: scale(1.05) !important;
     }
   }
 

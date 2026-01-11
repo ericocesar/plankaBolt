@@ -10,6 +10,8 @@ import boardActions from '../../../../actions/boards';
 import FormBuilder from './FormBuilder';
 import { normalizeSchema } from '../../../../utils/formSchema';
 
+import styles from './FormEditor.module.scss';
+
 const selectProjects = createSelector(orm, (session) => session.Project.all().toRefArray());
 const selectBoards = createSelector(orm, (session) => session.Board.all().toRefArray());
 const selectLists = createSelector(orm, (session) => session.List.all().toRefArray());
@@ -36,8 +38,8 @@ function FormEditor({ form, onSave, onCancel }) {
 
   const [loading, setLoading] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
-  const [publishLoading, setPublishLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [publishLoading, setPublishLoading] = useState(false);
   const [publishError, setPublishError] = useState(null);
 
   const dispatch = useDispatch();
@@ -254,8 +256,6 @@ function FormEditor({ form, onSave, onCancel }) {
     }
   };
 
-  const handleSaveDraft = () => handleSubmit({ closeOnSuccess: false });
-
   const handlePublish = async () => {
     const formId = form?.id || currentFormId;
     if (!formId) return;
@@ -278,7 +278,6 @@ function FormEditor({ form, onSave, onCancel }) {
   };
 
   const hasSavedForm = Boolean(form?.id || currentFormId);
-  const fieldsTabIndex = 1;
   const isBusy = loading || loadingForm || publishLoading;
 
   const panes = [
@@ -289,9 +288,10 @@ function FormEditor({ form, onSave, onCancel }) {
           attached={false}
           segment={false}
           style={{
-            background: '#e0f2fe',
-            border: '1px solid #bae6fd',
-            borderRadius: '8px',
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '12px',
+            padding: '1.5rem',
           }}
         >
           <Form>
@@ -375,15 +375,7 @@ function FormEditor({ form, onSave, onCancel }) {
       menuItem: 'Campos',
       render: () => (
         <Tab.Pane attached={false} segment={false}>
-          <FormBuilder
-            schema={draftSchema}
-            onChange={setDraftSchema}
-            onSaveDraft={handleSaveDraft}
-            onSave={() => handleSubmit()}
-            onCancel={onCancel}
-            saveDisabled={!name || !listId || isBusy}
-            cancelDisabled={isBusy}
-          />
+          <FormBuilder schema={draftSchema} onChange={setDraftSchema} />
         </Tab.Pane>
       ),
     },
@@ -423,51 +415,44 @@ function FormEditor({ form, onSave, onCancel }) {
   ];
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {error && <Message error header="Erro" content={error} />}
-      <Segment loading={isBusy}>
-        {activeTabIndex !== fieldsTabIndex && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              gap: '0.75em',
-              marginBottom: '0.75em',
-            }}
-          >
-            <Button primary onClick={() => handleSubmit()} disabled={!name || !listId || isBusy}>
-              Salvar
-            </Button>
-            <Button onClick={onCancel} disabled={isBusy}>
-              Cancelar
-            </Button>
-          </div>
-        )}
+      <div className={styles.headerContainer}>
+        <Header as="h2" className={styles.headerTitle}>
+          {hasSavedForm ? `Editar: ${name}` : 'Novo Formulário'}
+        </Header>
+        <Button
+          className={styles.backButton}
+          icon="arrow left"
+          content="Voltar"
+          onClick={onCancel}
+        />
+      </div>
+
+      <div className={styles.tabContainer}>
         <Tab
-          menu={{ secondary: true, pointing: true }}
+          menu={{ secondary: true, pointing: false }}
           panes={panes}
-          renderActiveOnly
           activeIndex={activeTabIndex}
           onTabChange={handleTabChange}
         />
-      </Segment>
-      {(activeTabIndex === 0 || publishedSchemaVersion) && (
-        <>
-          <Divider />
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75em' }}>
-            {activeTabIndex === 0 && (
-              <Button onClick={() => setActiveTabIndex(fieldsTabIndex)} disabled={isBusy}>
-                Avancar
-              </Button>
-            )}
-            {publishedSchemaVersion && (
-              <span style={{ alignSelf: 'center' }}>
-                <strong>Publicado:</strong> v{publishedSchemaVersion}
-              </span>
-            )}
-          </div>
-        </>
-      )}
+      </div>
+
+      <div className={styles.editorFooter}>
+        <Button
+          className={styles.cancelButton}
+          content="Cancelar"
+          onClick={onCancel}
+          disabled={isBusy}
+        />
+        <Button
+          className={styles.saveButton}
+          content={form ? 'Salvar Alterações' : 'Criar Formulário'}
+          loading={loading}
+          disabled={isBusy || !name || !listId}
+          onClick={() => handleSubmit()}
+        />
+      </div>
     </div>
   );
 }

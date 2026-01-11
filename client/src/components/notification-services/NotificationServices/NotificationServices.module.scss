@@ -6,17 +6,33 @@
 :global(#app) {
   .addItem {
     display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
   }
 
   .button {
-    margin: 0 0 0 8px;
+    margin: 0;
+    background: #1ac9cc !important;
+    border-radius: 12px !important;
+    color: #000 !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
   }
 
   .field {
     flex: auto;
 
-    input {
-      width: auto;
+    :global(input) {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      padding: 10px 15px !important;
+      width: 100% !important;
+
+      &:focus {
+        border-color: #1ac9cc !important;
+      }
     }
   }
 

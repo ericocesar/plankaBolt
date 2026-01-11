@@ -5,18 +5,43 @@
 
 :global(#app) {
   .button {
-    margin: 0 0 0 8px;
+    margin: 0 0 0 12px;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #fff !important;
+    }
   }
 
   .field {
     flex: auto;
 
-    input {
-      width: auto;
+    :global(input) {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      padding: 10px 15px !important;
+      width: 100% !important;
+
+      &:focus {
+        border-color: #1ac9cc !important;
+      }
     }
   }
 
   .wrapper {
     display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.03) !important;
+    border-radius: 16px !important;
+    padding: 12px 16px !important;
   }
 }
