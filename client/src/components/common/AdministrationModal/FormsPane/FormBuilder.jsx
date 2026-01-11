@@ -104,6 +104,13 @@ function FormBuilder({ schema, onChange }) {
     }));
   };
 
+  const updateStep = (stepId, updates) => {
+    updateSchema((current) => ({
+      ...current,
+      steps: current.steps.map((step) => (step.id === stepId ? { ...step, ...updates } : step)),
+    }));
+  };
+
   const addFieldToStep = (type, destinationIndex = null) => {
     if (type === 'file' && hasFileField) {
       setError('Apenas um campo de arquivo é permitido por formulário.');
@@ -217,6 +224,174 @@ function FormBuilder({ schema, onChange }) {
     updateField(field.id, { options: nextOptions });
   };
 
+  const renderSettings = () => {
+    if (selectedField) {
+      return (
+        <Form size="small" className={styles.settingsForm}>
+          <div className={styles.formField}>
+            <Form.Input
+              label="Rótulo da Pergunta"
+              value={selectedField.label || ''}
+              onChange={(e) => updateField(selectedField.id, { label: e.target.value })}
+              placeholder="Ex: Seu Nome Completo"
+            />
+          </div>
+          <Form.Checkbox
+            label="Campo Obrigatório"
+            checked={!!selectedField.required}
+            onChange={(e, { checked }) => updateField(selectedField.id, { required: checked })}
+            style={{ marginBottom: '1rem' }}
+          />
+
+          <div className={styles.formField}>
+            <span className={styles.fieldLabel}>Largura do Campo</span>
+            <Form.Dropdown
+              selection
+              value={selectedField.width || '100%'}
+              options={[
+                { text: 'Largura Total (100%)', value: '100%' },
+                { text: 'Metade (50%)', value: '50%' },
+              ]}
+              onChange={(e, { value }) => updateField(selectedField.id, { width: value })}
+            />
+          </div>
+
+          {(selectedField.type === 'text' ||
+            selectedField.type === 'textarea' ||
+            selectedField.type === 'email' ||
+            selectedField.type === 'phone' ||
+            selectedField.type === 'number') && (
+            <div className={styles.formField}>
+              <Form.Input
+                label="Placeholder (Dica)"
+                value={selectedField.placeholder || ''}
+                onChange={(e) => updateField(selectedField.id, { placeholder: e.target.value })}
+                placeholder="Ex: Digite aqui..."
+              />
+            </div>
+          )}
+
+          {selectedField.type === 'text' && (
+            <div className={styles.formField}>
+              <Form.Input
+                label="Máscara (Opcional)"
+                value={selectedField.mask || ''}
+                onChange={(e) => updateField(selectedField.id, { mask: e.target.value })}
+                placeholder="Ex: 999.999.999-99"
+              />
+            </div>
+          )}
+
+          {(selectedField.type === 'select' || selectedField.type === 'radio') && (
+            <div style={{ marginTop: '2.5rem' }}>
+              <div
+                className={styles.sectionTitle}
+                style={{ fontSize: '0.8rem', marginBottom: '1rem' }}
+              >
+                Opções
+              </div>
+              {(selectedField.options || []).map((option) => (
+                <div
+                  key={option.value}
+                  style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}
+                >
+                  <input
+                    value={option.label || ''}
+                    onChange={(e) => {
+                      const index = selectedField.options.findIndex(
+                        (o) => o.value === option.value,
+                      );
+                      handleOptionChange(selectedField, index, { label: e.target.value });
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: '10px 14px',
+                      borderRadius: '12px',
+                      background: 'rgba(0,0,0,0.3)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      color: '#fff',
+                      fontSize: '0.9rem',
+                    }}
+                  />
+                  <Button
+                    icon="trash"
+                    size="mini"
+                    circular
+                    className={styles.deleteOptionButton}
+                    onClick={() => {
+                      const index = selectedField.options.findIndex(
+                        (o) => o.value === option.value,
+                      );
+                      removeOption(selectedField, index);
+                    }}
+                    style={{
+                      background: 'rgba(255,255,255,0.05)',
+                      color: 'rgba(255,255,255,0.4)',
+                    }}
+                  />
+                </div>
+              ))}
+              <Button
+                size="small"
+                icon="plus"
+                content="Adicionar Opção"
+                onClick={() => addOption(selectedField)}
+                style={{
+                  marginTop: '10px',
+                  background: 'rgba(26, 201, 204, 0.1)',
+                  color: '#1ac9cc',
+                  borderRadius: '12px',
+                  textTransform: 'uppercase',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                }}
+              />
+            </div>
+          )}
+        </Form>
+      );
+    }
+
+    if (selectedStep) {
+      return (
+        <Form size="small" className={styles.settingsForm}>
+          <div className={styles.formField}>
+            <Form.Input
+              label="Título da Etapa"
+              value={selectedStep.title || ''}
+              onChange={(e) => updateStep(selectedStep.id, { title: e.target.value })}
+              placeholder="Ex: Dados Pessoais"
+            />
+          </div>
+          <div className={styles.formField}>
+            <Form.TextArea
+              label="Descrição (Opcional)"
+              value={selectedStep.description || ''}
+              onChange={(e) => updateStep(selectedStep.id, { description: e.target.value })}
+              placeholder="Instruções para o usuário..."
+              rows={3}
+              style={{ background: 'rgba(0,0,0,0.3)', color: '#fff', borderRadius: '12px' }}
+            />
+          </div>
+          <div className={styles.formField}>
+            <Form.Input
+              label="Texto do Botão de Avançar"
+              value={selectedStep.buttonText || ''}
+              onChange={(e) => updateStep(selectedStep.id, { buttonText: e.target.value })}
+              placeholder="Ex: Próximo"
+            />
+          </div>
+        </Form>
+      );
+    }
+
+    return (
+      <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255,255,255,0.3)' }}>
+        <Icon name="settings" size="large" style={{ marginBottom: '1rem' }} />
+        <p>Selecione um passo ou campo para editar suas propriedades</p>
+      </div>
+    );
+  };
   return (
     <div className={styles.builderWrapper}>
       {error && (
@@ -359,14 +534,11 @@ function FormBuilder({ schema, onChange }) {
                   <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
+                    className={styles.canvasArea}
                     style={{
-                      minHeight: '300px',
-                      padding: '10px',
                       background: snapshot.isDraggingOver
                         ? 'rgba(26, 201, 204, 0.05)'
-                        : 'transparent',
-                      borderRadius: '16px',
-                      transition: 'background 0.2s ease',
+                        : 'rgba(0,0,0,0.2)',
                     }}
                   >
                     {selectedStep?.fields.length === 0 ? (
@@ -383,6 +555,10 @@ function FormBuilder({ schema, onChange }) {
                               {...draggableProvided.draggableProps}
                               {...draggableProvided.dragHandleProps}
                               className={`${styles.fieldItem} ${selectedFieldId === field.id ? styles.selected : ''}`}
+                              style={{
+                                ...draggableProvided.draggableProps.style,
+                                width: field.width === '50%' ? 'calc(50% - 6px)' : '100%',
+                              }}
                               onClick={() => setSelectedFieldId(field.id)}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {
@@ -436,95 +612,7 @@ function FormBuilder({ schema, onChange }) {
           <Header as="h4" className={styles.sectionTitle}>
             Propriedades
           </Header>
-          {selectedField ? (
-            <Form size="small" className={styles.settingsForm}>
-              <div className={styles.formField}>
-                <Form.Input
-                  label="Rótulo da Pergunta"
-                  value={selectedField.label || ''}
-                  onChange={(e) => updateField(selectedField.id, { label: e.target.value })}
-                  placeholder="Ex: Seu Nome Completo"
-                />
-              </div>
-              <Form.Checkbox
-                label="Campo Obrigatório"
-                checked={!!selectedField.required}
-                onChange={(e, { checked }) => updateField(selectedField.id, { required: checked })}
-              />
-
-              {(selectedField.type === 'select' || selectedField.type === 'radio') && (
-                <div style={{ marginTop: '2.5rem' }}>
-                  <div
-                    className={styles.sectionTitle}
-                    style={{ fontSize: '0.8rem', marginBottom: '1rem' }}
-                  >
-                    Opções
-                  </div>
-                  {(selectedField.options || []).map((option) => (
-                    <div
-                      key={option.value}
-                      style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}
-                    >
-                      <input
-                        value={option.label || ''}
-                        onChange={(e) => {
-                          const index = selectedField.options.findIndex(
-                            (o) => o.value === option.value,
-                          );
-                          handleOptionChange(selectedField, index, { label: e.target.value });
-                        }}
-                        style={{
-                          flex: 1,
-                          padding: '10px 14px',
-                          borderRadius: '12px',
-                          background: 'rgba(0,0,0,0.3)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          color: '#fff',
-                          fontSize: '0.9rem',
-                        }}
-                      />
-                      <Button
-                        icon="trash"
-                        size="mini"
-                        circular
-                        className={styles.deleteOptionButton}
-                        onClick={() => {
-                          const index = selectedField.options.findIndex(
-                            (o) => o.value === option.value,
-                          );
-                          removeOption(selectedField, index);
-                        }}
-                        style={{
-                          background: 'rgba(255,255,255,0.05)',
-                          color: 'rgba(255,255,255,0.4)',
-                        }}
-                      />
-                    </div>
-                  ))}
-                  <Button
-                    size="small"
-                    icon="plus"
-                    content="Adicionar Opção"
-                    onClick={() => addOption(selectedField)}
-                    style={{
-                      marginTop: '10px',
-                      background: 'rgba(26, 201, 204, 0.1)',
-                      color: '#1ac9cc',
-                      borderRadius: '12px',
-                      textTransform: 'uppercase',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                    }}
-                  />
-                </div>
-              )}
-            </Form>
-          ) : (
-            <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255,255,255,0.3)' }}>
-              <Icon name="settings" size="large" style={{ marginBottom: '1rem' }} />
-              <p>Selecione um campo para editar suas propriedades</p>
-            </div>
-          )}
+          {renderSettings()}
         </Grid.Column>
       </Grid>
     </div>

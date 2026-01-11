@@ -15,87 +15,52 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.03);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .headerTitle {
     color: #fff !important;
     font-family: 'Oswald', sans-serif !important;
-    font-size: 2.2rem !important;
+    font-size: 1.6rem !important;
+    /* Smaller size as requested */
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    letter-spacing: 3px !important;
+    letter-spacing: 2px !important;
     margin: 0 !important;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   }
 
   .backButton {
-    background: #fff !important;
-    border-radius: 20px !important;
-    color: #000 !important;
-    padding: 12px 24px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 50% !important;
+    /* Circular back button */
+    color: #fff !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     font-weight: 700 !important;
-    text-transform: uppercase !important;
-    font-size: 0.8rem !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
     &:hover {
       background: #1ac9cc !important;
-      color: #fff !important;
-      transform: scale(1.05);
+      color: #000 !important;
+      border-color: #1ac9cc !important;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(26, 201, 204, 0.4) !important;
     }
   }
 
-  .tabContainer {
-    :global(.ui.menu.secondary) {
-      border: none !important;
-      margin-bottom: 3rem !important;
-      background: rgba(255, 255, 255, 0.02) !important;
-      padding: 8px !important;
-      border-radius: 20px !important;
-      display: inline-flex !important;
-
-      :global(.item) {
-        border: none !important;
-        border-radius: 16px !important;
-        color: rgba(255, 255, 255, 0.4) !important;
-        font-family: 'Oswald', sans-serif !important;
-        font-weight: 600 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        padding: 12px 28px !important;
-        transition: all 0.3s ease !important;
-        margin: 0 4px !important;
-
-        &:hover {
-          color: #fff !important;
-          background: rgba(255, 255, 255, 0.05) !important;
-        }
-
-        & :global(.active), &.active {
-          background: #1ac9cc !important;
-          color: #000 !important;
-          box-shadow: 0 4px 15px rgba(26, 201, 204, 0.3) !important;
-        }
-      }
-    }
-
-    :global(.ui.segment.tab) {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-  }
-
-  .editorFooter {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  .headerActions {
     display: flex;
-    justify-content: flex-end;
     gap: 1rem;
+    align-items: center;
   }
 
   .saveButton {
@@ -105,34 +70,39 @@
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    padding: 14px 40px !important;
+    padding: 10px 24px !important;
+    font-size: 0.85rem !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border: none !important;
 
     &:hover {
       background: #1ac9cc !important;
       color: #fff !important;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(26, 201, 204, 0.3) !important;
     }
   }
 
   .cancelButton {
-    background: rgba(255, 255, 255, 0.05) !important;
+    background: transparent !important;
     border-radius: 20px !important;
-    color: rgba(255, 255, 255, 0.4) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
-    padding: 14px 30px !important;
+    padding: 10px 20px !important;
+    font-size: 0.85rem !important;
     transition: all 0.2s ease !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
+      background: rgba(255, 255, 255, 0.05) !important;
       color: #fff !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
     }
   }
+
+
 
   .formField {
     margin-bottom: 2rem !important;
@@ -216,6 +186,7 @@
         :global(.delete.icon) {
           color: #1ac9cc !important;
           opacity: 0.7;
+
           &:hover {
             opacity: 1;
           }
@@ -223,7 +194,8 @@
       }
     }
 
-    :global(input), :global(textarea) {
+    :global(input),
+    :global(textarea) {
       background: rgba(0, 0, 0, 0.2) !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
       border-radius: 12px !important;

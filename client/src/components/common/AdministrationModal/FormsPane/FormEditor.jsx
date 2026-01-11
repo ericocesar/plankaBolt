@@ -418,15 +418,27 @@ function FormEditor({ form, onSave, onCancel }) {
     <div className={styles.wrapper}>
       {error && <Message error header="Erro" content={error} />}
       <div className={styles.headerContainer}>
-        <Header as="h2" className={styles.headerTitle}>
-          {hasSavedForm ? `Editar: ${name}` : 'Novo Formulário'}
-        </Header>
-        <Button
-          className={styles.backButton}
-          icon="arrow left"
-          content="Voltar"
-          onClick={onCancel}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <Button className={styles.backButton} icon="arrow left" onClick={onCancel} />
+          <Header as="h2" className={styles.headerTitle}>
+            {hasSavedForm ? `Editar: ${name}` : 'Novo Formulário'}
+          </Header>
+        </div>
+        <div className={styles.headerActions}>
+          <Button
+            className={styles.cancelButton}
+            content="Cancelar"
+            onClick={onCancel}
+            disabled={isBusy}
+          />
+          <Button
+            className={styles.saveButton}
+            content="Salvar Alterações"
+            loading={loading}
+            disabled={isBusy || !name || !listId}
+            onClick={() => handleSubmit()}
+          />
+        </div>
       </div>
 
       <div className={styles.tabContainer}>
@@ -435,22 +447,6 @@ function FormEditor({ form, onSave, onCancel }) {
           panes={panes}
           activeIndex={activeTabIndex}
           onTabChange={handleTabChange}
-        />
-      </div>
-
-      <div className={styles.editorFooter}>
-        <Button
-          className={styles.cancelButton}
-          content="Cancelar"
-          onClick={onCancel}
-          disabled={isBusy}
-        />
-        <Button
-          className={styles.saveButton}
-          content={form ? 'Salvar Alterações' : 'Criar Formulário'}
-          loading={loading}
-          disabled={isBusy || !name || !listId}
-          onClick={() => handleSubmit()}
         />
       </div>
     </div>

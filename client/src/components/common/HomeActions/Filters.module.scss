@@ -8,7 +8,8 @@
     height: 36px;
     transition: max-width 0.2s ease;
     max-width: 500px;
-    width: 100%;
+    width: 300px;
+    /* Fixed width for right alignment */
 
     input {
       font-size: 13px;

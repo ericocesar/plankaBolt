@@ -22,16 +22,13 @@
     }
   }
 
-  .actionFilters {
-    flex-grow: 1;
-  }
 
-  .actionRightSide {
-    margin-left: auto;
-  }
 
   .actions {
     display: flex;
+    justify-content: flex-end;
+    /* Align everything to the right */
+    width: 100%;
   }
 
   .content {
