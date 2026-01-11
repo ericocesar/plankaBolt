@@ -13,7 +13,8 @@
   }
 
   .attachmentContent {
-    color: #6a808b;
+    color: #8db5cc;
+    /* Lighter blue-grey for metadata */
     font-size: 12px;
     line-height: 20px;
     max-width: 176px;
@@ -23,6 +24,10 @@
     text-overflow: ellipsis;
     transition: background 0.3s ease;
     white-space: nowrap;
+
+    &:hover {
+      color: #fff;
+    }
   }
 
   .attachmentLeft {
@@ -48,13 +53,17 @@
   }
 
   .descriptionText {
-    color: #17394d;
-    font-size: 10px;
+    color: #e6f7ff;
+    /* Light blue text for readability on dark bg */
+    font-size: 11px;
+    /* Slightly increased from 10px */
+    line-height: 1.4;
     margin-bottom: 8px;
-    mask-image: linear-gradient(180deg, #000 60%, transparent);
-    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+    mask-image: linear-gradient(180deg, #000 70%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
     max-height: 100px;
     overflow: hidden;
+    opacity: 0.9;
   }
 
   .labels {
@@ -65,12 +74,15 @@
   }
 
   .name {
-    color: #17394d;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
+    color: #ffffff !important;
+    font-size: 17px !important;
+    /* Increased by 1pt */
+    font-family: "Oswald", sans-serif !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 22px !important;
     margin: 0 0 8px;
-    text-transform: uppercase;
     word-wrap: break-word;
   }
 

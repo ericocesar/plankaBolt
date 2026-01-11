@@ -45,44 +45,48 @@ const Editor = React.forwardRef(({ data, isReadOnly, onFieldChange }, ref) => {
 
   return (
     <>
-      <div className={styles.text}>{t('common.title')}</div>
-      <Input
-        fluid
-        ref={handleNameFieldRef}
-        name="name"
-        value={data.name}
-        maxLength={128}
-        readOnly={isReadOnly}
-        className={styles.field}
-        onChange={onFieldChange}
-      />
-      <div className={styles.text}>{t('common.url')}</div>
-      <Input
-        fluid
-        ref={handleUrlFieldRef}
-        name="url"
-        value={data.url}
-        maxLength={2048}
-        readOnly={isReadOnly}
-        className={styles.field}
-        onChange={onFieldChange}
-      />
-      <div className={styles.text}>
-        {t('common.accessToken')} (
-        {t('common.optional', {
-          context: 'inline',
-        })}
-        )
+      <div className={styles.row}>
+        <div className={styles.col}>
+          <div className={styles.text}>{t('common.title')}</div>
+          <Input
+            fluid
+            ref={handleNameFieldRef}
+            name="name"
+            value={data.name}
+            maxLength={128}
+            readOnly={isReadOnly}
+            className={styles.field}
+            onChange={onFieldChange}
+          />
+        </div>
+        <div className={styles.col}>
+          <div className={styles.text}>{t('common.url')}</div>
+          <Input
+            fluid
+            ref={handleUrlFieldRef}
+            name="url"
+            value={data.url}
+            maxLength={2048}
+            readOnly={isReadOnly}
+            className={styles.field}
+            onChange={onFieldChange}
+          />
+        </div>
+        <div className={styles.col}>
+          <div className={styles.text}>
+            {t('common.accessToken')} ({t('common.optional', { context: 'inline' })})
+          </div>
+          <Input
+            fluid
+            name="accessToken"
+            value={data.accessToken}
+            maxLength={512}
+            readOnly={isReadOnly}
+            className={styles.field}
+            onChange={onFieldChange}
+          />
+        </div>
       </div>
-      <Input
-        fluid
-        name="accessToken"
-        value={data.accessToken}
-        maxLength={512}
-        readOnly={isReadOnly}
-        className={styles.field}
-        onChange={onFieldChange}
-      />
       {data.excludedEvents.length === 0 && (
         <>
           <div className={styles.text}>

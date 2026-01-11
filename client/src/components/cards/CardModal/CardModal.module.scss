@@ -1,96 +1,240 @@
-/*!
- * Copyright (c) 2024 PLANKA Software GmbH
- * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
- */
+/* Main Modal Wrapper Styling */
+.wrapper,
+.wrapperStory {
+  margin: 2rem auto;
+  margin-top: 5vh;
+  background: rgba(10, 10, 15, 0.95) !important;
+  /* Dark Neural Bg */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(24px) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+  max-width: 95vw !important;
 
-:global(#app) {
-  @mixin smallScreen {
+  @media (width < 926px) {
     margin: 1rem auto;
-    width: 95%;
+    width: 95% !important;
   }
 
-  .prevButton {
-    background: rgba(255, 255, 255, 0.036);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    left: -120px;
-    padding: 18px 0;
-    position: absolute;
-    width: 100px;
+  /* Modal Content Force Transparent - GLOBAL scope to hit portal */
+  :global(.content),
+  :global(.ui.modal .content) {
+    background: transparent !important;
+    padding: 1.5rem !important;
+    flex: 1 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    /* Keep internal layout if needed, usually Cards are flex */
+    box-shadow: none !important;
+  }
+
+  /* Force Semantic UI Segments within modal to be transparent */
+  :global(.ui.segment) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Headers (Card Title etc) */
+  :global(.ui.header) {
+    color: #ffffff !important;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 5px !important;
+  }
+
+  /* Close Icon */
+  :global(.close) {
+    color: rgba(255, 255, 255, 0.5) !important;
+    top: 1.5rem !important;
+    right: 1.5rem !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.072);
+      color: #fff !important;
+      transform: rotate(90deg);
+    }
+  }
 
-      .prevkButtonIcon {
-        color: rgba(255, 255, 255, 0.72);
+  /* Buttons */
+  :global(.ui.button) {
+    border-radius: 12px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Action Buttons (Sidebar) */
+  :global(.ui.button.icon) {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding-left: 1rem !important;
+
+    &:hover {
+      background: rgba(26, 201, 204, 0.1) !important;
+      color: #1ac9cc !important;
+      border-color: rgba(26, 201, 204, 0.3) !important;
+    }
+  }
+
+  /* Labels/Chips within Card */
+  :global(.ui.label) {
+    font-family: 'Oswald', sans-serif !important;
+  }
+
+  /* Tab Navigation (Comentários / Ações) */
+  :global(.ui.menu) {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+    :global(.item) {
+      color: rgba(255, 255, 255, 0.6) !important;
+      background: transparent !important;
+
+      &.active {
+        color: #1ac9cc !important;
+        background: transparent !important;
+        border-bottom-color: #1ac9cc !important;
       }
-    }
-  }
-
-  .prevButtonIcon {
-    color: rgba(255, 255, 255, 0.36);
-    position: sticky;
-    top: 5px;
-  }
-
-  .wrapper {
-    margin: 2rem auto;
-    width: 880px;
-    background: rgba(255, 255, 255, 0.02) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 24px !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
-    overflow: hidden;
-
-    @media (width < 926px) {
-      @include smallScreen;
-    }
-
-    :global(.ui.header) {
-      color: #ffffff !important;
-      font-family: 'Oswald', sans-serif !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.05em !important;
-    }
-
-    :global(.ui.button.primary) {
-      background: #ffffff !important;
-      color: #000000 !important;
-      border-radius: 12px !important;
-      font-weight: 600 !important;
-      transition: all 0.25s ease !important;
 
       &:hover {
-        background: #f0f0f0 !important;
-        transform: translateY(-1px) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
       }
     }
   }
 
-  .wrapperStory {
-    width: 980px;
-    background: rgba(255, 255, 255, 0.02) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 24px !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
-    overflow: hidden;
+  /* Tab content area */
+  :global(.ui.tab.segment) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
 
-    @media (width < 1026px) {
-      @include smallScreen;
-    }
+  /* Links in general */
+  :global(a:not(.ui):not(.button)) {
+    color: rgba(255, 255, 255, 0.7) !important;
 
-    .prevButton {
-      padding: 20px 0;
-    }
-
-    .prevButtonIcon {
-      top: 7px;
+    &:hover {
+      color: #1ac9cc !important;
     }
   }
+
+  /* Anchored selectors for Custom Fields (Real components) */
+  :global([data-role="custom-field-name"]) {
+    color: #89CFF0 !important;
+  }
+
+  :global([data-role="custom-field-value"]) {
+    color: #FFFFFF !important;
+  }
+
+  /* Anchored selectors for Markdown/YFM content (Description behaving as fields) */
+  :global(.yfm) {
+    color: #ffffff !important;
+
+    :global(strong) {
+      color: #89CFF0 !important;
+      /* Bold text acts as Label */
+    }
+
+    :global(p),
+    :global(li),
+    :global(span),
+    :global(div) {
+      color: #ffffff !important;
+    }
+  }
+
+  /* Card Title Styling (Targeting textarea in header) */
+  :global([class*="headerTitleWrapper"]) {
+    :global(textarea) {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+      caret-color: #ffffff;
+    }
+
+    :global(textarea::placeholder) {
+      color: rgba(255, 255, 255, 0.6) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  /* Generic Header Styling (kept for consistency) */
+  :global(.header) {
+    color: #89CFF0 !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Form Labels */
+  :global(label) {
+    color: #89CFF0 !important;
+  }
+
+  /* Markdown content - Re-enforce */
+  :global(.markdown) {
+    color: #ffffff !important;
+
+    :global(p),
+    :global(li),
+    :global(div),
+    :global(span) {
+      color: #ffffff !important;
+    }
+
+    :global(a) {
+      color: #1ac9cc !important;
+    }
+
+    :global(code) {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #1ac9cc !important;
+    }
+  }
+}
+
+.wrapper {
+  width: 880px;
+}
+
+.wrapperStory {
+  width: 980px;
+}
+
+/* Previous Card Button (Left Arrow) */
+.prevButton {
+  background: rgba(255, 255, 255, 0.036);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  height: auto;
+  min-height: 100px;
+  justify-content: center;
+  align-items: center;
+  left: -80px;
+  position: absolute;
+  width: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+
+    .prevButtonIcon {
+      color: #fff;
+    }
+  }
+}
+
+.prevButtonIcon {
+  color: rgba(255, 255, 255, 0.36);
 }

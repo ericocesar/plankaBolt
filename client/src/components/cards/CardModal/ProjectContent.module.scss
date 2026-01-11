@@ -39,7 +39,7 @@
   }
 
   .actionsTitle {
-    color: #8c8c8c;
+    color: rgba(255, 255, 255, 0.6) !important;
     font-size: 12px;
     font-weight: normal;
     letter-spacing: 0.04em;
@@ -102,10 +102,10 @@
   }
 
   .dueDate {
-    background: rgba(9, 30, 66, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 3px;
-    color: #6b808c;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8) !important;
     cursor: pointer;
     line-height: 20px;
     outline: none;
@@ -116,17 +116,17 @@
     vertical-align: top;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #17394d;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff !important;
     }
   }
 
   .descriptionButton {
-    background: rgba(9, 30, 66, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 3px;
+    border-radius: 8px;
     display: block;
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.6) !important;
     cursor: pointer;
     min-height: 54px;
     outline: none;
@@ -137,8 +137,8 @@
     width: 100%;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9) !important;
     }
   }
 
@@ -180,11 +180,12 @@
   }
 
   .headerTitle {
-    color: #17394d;
+    color: #ffffff !important;
     font-size: 20px;
     font-weight: bold;
     line-height: 24px;
     word-wrap: break-word;
+    font-family: 'Oswald', sans-serif !important;
   }
 
   .headerTitleWrapper {
@@ -205,10 +206,10 @@
 
   .list {
     align-items: center;
-    background: rgba(9, 30, 66, 0.04);
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 3px;
-    color: #6b808c;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8) !important;
     display: flex;
     line-height: 20px;
     outline: none;
@@ -228,8 +229,8 @@
   }
 
   .listHoverable:hover {
-    background: rgba(9, 30, 66, 0.08);
-    color: #17394d;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff !important;
   }
 
   .listIcon {
@@ -241,17 +242,19 @@
   }
 
   .moduleHeader {
-    color: #17394d;
+    color: #ffffff !important;
     font-size: 16px;
     font-weight: bold;
     line-height: 1.5;
     margin: 0 0 4px;
     padding: 6px 0;
     word-wrap: break-word;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
   }
 
   .moduleIcon {
-    color: #17394d;
+    color: #1ac9cc !important;
     font-size: 17px;
     height: 32px;
     left: -40px;
@@ -270,7 +273,7 @@
   .moreActionsButton {
     background: transparent;
     box-shadow: none;
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.6) !important;
     font-weight: normal;
     margin-top: 8px;
     padding: 6px 8px 6px 18px;
@@ -279,8 +282,8 @@
     transition: none;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.9) !important;
     }
   }
 
@@ -310,7 +313,8 @@
   }
 
   .text {
-    color: #6b808c;
+    color: #89CFF0 !important;
+    /* Light blue for labels */
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.3px;
@@ -324,8 +328,10 @@
   }
 
   .wrapper {
-    background: #f5f6f7;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04) !important;
+    /* Same as card background */
+    border-radius: 12px;
+    padding: 16px;
     margin: 0;
   }
 }

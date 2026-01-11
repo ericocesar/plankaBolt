@@ -17,6 +17,7 @@ const selectBoards = createSelector(orm, (session) => session.Board.all().toRefA
 const selectLists = createSelector(orm, (session) => session.List.all().toRefArray());
 const selectUsers = createSelector(orm, (session) => session.User.all().toRefArray());
 const selectLabels = createSelector(orm, (session) => session.Label.all().toRefArray());
+const selectCustomFields = createSelector(orm, (session) => session.CustomField.all().toRefArray());
 
 function FormEditor({ form, onSave, onCancel }) {
   const [name, setName] = useState(form ? form.name : '');
@@ -48,7 +49,9 @@ function FormEditor({ form, onSave, onCancel }) {
   const allBoards = useSelector(selectBoards);
   const allLists = useSelector(selectLists);
   const allUsers = useSelector(selectUsers);
+
   const allLabels = useSelector(selectLabels);
+  const allCustomFields = useSelector(selectCustomFields);
 
   const projectOptions = useMemo(
     () => projects.map((p) => ({ key: p.id, text: p.name, value: p.id })),
@@ -133,6 +136,16 @@ function FormEditor({ form, onSave, onCancel }) {
   const handleAssigneeIdsChange = useCallback((e, { value }) => {
     setAssigneeIds(value);
   }, []);
+
+  const boardCustomFields = useMemo(
+    () => allCustomFields.filter((cf) => cf.boardId === boardId),
+    [allCustomFields, boardId],
+  );
+
+  const boardLabels = useMemo(
+    () => allLabels.filter((l) => l.boardId === boardId),
+    [allLabels, boardId],
+  );
 
   const handleLabelIdsChange = useCallback(
     (e, { value }) => {
@@ -375,7 +388,12 @@ function FormEditor({ form, onSave, onCancel }) {
       menuItem: 'Campos',
       render: () => (
         <Tab.Pane attached={false} segment={false}>
-          <FormBuilder schema={draftSchema} onChange={setDraftSchema} />
+          <FormBuilder
+            schema={draftSchema}
+            customFields={boardCustomFields}
+            labels={boardLabels}
+            onChange={(newSchema) => setDraftSchema(newSchema)}
+          />
         </Tab.Pane>
       ),
     },

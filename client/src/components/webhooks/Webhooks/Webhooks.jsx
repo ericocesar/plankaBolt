@@ -5,7 +5,6 @@
 
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { Accordion, Button, Form, Segment } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
 
@@ -25,8 +24,6 @@ const DEFAULT_DATA = {
 };
 
 const Webhooks = React.memo(({ ids, onCreate }) => {
-  const [t] = useTranslation();
-
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
 
@@ -71,6 +68,19 @@ const Webhooks = React.memo(({ ids, onCreate }) => {
 
   return (
     <>
+      <div className={styles.headerContainer}>
+        <div className={styles.searchPlaceholder}>
+          {/* Search field placeholder - will be implemented later */}
+        </div>
+        {ids.length < 10 && (
+          <Button
+            className={styles.addButton}
+            icon="plus"
+            content="Novo Webhook"
+            onClick={handleCreateSubmit}
+          />
+        )}
+      </div>
       {ids.length > 0 && (
         <Accordion styled fluid className={styles.accordion}>
           {ids.map((id) => (
@@ -82,7 +92,6 @@ const Webhooks = React.memo(({ ids, onCreate }) => {
         <Segment className={styles.segment}>
           <Form onSubmit={handleCreateSubmit}>
             <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} />
-            <Button className={styles.submitButton}>{t('action.addWebhook')}</Button>
           </Form>
         </Segment>
       )}

@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) 2024 PLANKA Software GmbH
+ * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
+ */
+
 :global(#app) {
   .dimmerTransparent {
     background-color: transparent;
@@ -122,27 +127,6 @@
       }
     }
 
-    /* Buttons */
-    :global(.ui.button) {
-      border-radius: 12px !important;
-      text-transform: uppercase !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.5px !important;
-    }
-
-    :global(.ui.button.positive),
-    :global(.ui.button.green) {
-      background: #1ac9cc !important;
-      color: #000 !important;
-      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
-        background: #fff !important;
-      }
-    }
-
     /* Dividers and Headers - Force Colors */
     :global(.ui.divider),
     :global(.ui.horizontal.divider) {
@@ -191,10 +175,27 @@
       }
     }
 
-    /* Action Buttons (Delete Project etc) */
+    /* Buttons */
     :global(.ui.button) {
-      /* ensure basic buttons have readable text */
+      border-radius: 12px !important;
+      text-transform: uppercase !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.5px !important;
       color: #fff !important;
+    }
+
+    :global(.ui.button.positive),
+    :global(.ui.button.green) {
+      background: #1ac9cc !important;
+      color: #000 !important;
+      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+      border: none !important;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+        background: #fff !important;
+      }
     }
   }
 }

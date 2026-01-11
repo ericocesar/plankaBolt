@@ -5,11 +5,12 @@
 
 :global(#app) {
   .cover {
-    background-color: #000000;
+    background-color: #020202;
+    /* Match very dark background */
     background-image: url("/fundo.svg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
   }
 
   .coverOverlay {
@@ -25,6 +26,7 @@
 
   .divider {
     font-weight: normal;
+    color: rgba(255, 255, 255, 0.4) !important;
   }
 
   .form {
@@ -63,8 +65,8 @@
   }
 
   .inputLabel {
-    font-size: 14px !important;
-    font-weight: 500 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
     line-height: 20px;
     margin-bottom: 8px !important;
     color: #1ac9cc !important;
@@ -76,39 +78,70 @@
     margin-bottom: 16px;
   }
 
+  /* Login Sidebar - Neural Interface Style */
   .login {
-    background: #062e53 !important;
-    background: linear-gradient(135deg, #062e53 0%, #031a2f 100%) !important;
+    background: rgba(10, 10, 15, 0.95) !important;
+    /* Dark Neural Bg */
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(24px) !important;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    max-width: 440px;
+    max-width: none;
+    /* Let grid handle width */
+    width: 100%;
     min-height: 100vh;
     padding: 60px 40px !important;
     row-gap: 40px;
     color: #ffffff !important;
     box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5) !important;
+    position: relative;
+    z-index: 10;
 
-    :global(.ui.button.primary) {
-      background: #ffffff !important;
-      color: #000000 !important;
-      border-radius: 12px !important;
-      font-weight: 600 !important;
-      padding: 14px !important;
-      font-size: 16px !important;
-      margin-top: 20px !important;
-      transition: all 0.25s ease !important;
+    :global(.ui.input) {
+      width: 100%;
 
-      &:hover {
-        background: #f0f0f0 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1) !important;
+      input {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        color: #fff !important;
+        padding: 14px 16px !important;
+        transition: all 0.2s ease !important;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        &:focus {
+          border-color: #1ac9cc !important;
+          background: rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+        }
       }
     }
-  }
 
-  .formTitle, .formSubtitle {
-    color: #ffffff !important;
+    :global(.ui.button) {
+      border-radius: 12px !important;
+      text-transform: uppercase !important;
+      font-weight: 600 !important;
+      letter-spacing: 1px !important;
+      padding: 16px !important;
+      transition: all 0.2s ease !important;
+    }
+
+    :global(.ui.button.primary) {
+      background: #1ac9cc !important;
+      color: #000000 !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+
+      &:hover {
+        background: #ffffff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+      }
+    }
   }
 
   .logo {
@@ -132,12 +165,13 @@
   }
 
   .poweredByText {
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.4);
     font-weight: lighter;
     text-align: center;
+    font-size: 12px;
   }
 
   .wrapper {
-    background: #fff;
+    background: #000;
   }
 }

@@ -76,6 +76,7 @@ const ProjectSettingsModal = React.memo(() => {
       centered={false}
       dimmer={isBackgroundPaneActive && { className: styles.dimmerTransparent }}
       onClose={handleClose}
+      className={styles.wrapper}
     >
       <ClosableModal.Content>
         <Tab

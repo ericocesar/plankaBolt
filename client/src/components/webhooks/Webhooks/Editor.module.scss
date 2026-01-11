@@ -7,7 +7,8 @@
   .field {
     margin-bottom: 1.5rem !important;
 
-    :global(input), :global(.ui.dropdown) {
+    :global(input),
+    :global(.ui.dropdown) {
       background: rgba(0, 0, 0, 0.2) !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
       border-radius: 12px !important;
@@ -15,7 +16,8 @@
       padding: 12px 16px !important;
       transition: all 0.2s ease !important;
 
-      &:focus, &:focus-within {
+      &:focus,
+      &:focus-within {
         border-color: #1ac9cc !important;
         background: rgba(0, 0, 0, 0.3) !important;
         box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
@@ -44,6 +46,7 @@
 
         :global(.item) {
           color: rgba(255, 255, 255, 0.7) !important;
+
           &:hover {
             background: rgba(26, 201, 204, 0.1) !important;
             color: #1ac9cc !important;
@@ -59,6 +62,18 @@
         margin: 0 !important;
       }
     }
+  }
+
+  .row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 0 !important;
+    align-items: flex-start;
+  }
+
+  .col {
+    flex: 1;
+    min-width: 0;
   }
 
   .text {

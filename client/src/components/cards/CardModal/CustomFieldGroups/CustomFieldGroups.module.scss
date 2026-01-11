@@ -7,5 +7,42 @@
   .item {
     border-radius: 3px;
     margin-bottom: 24px;
+
+    /* Custom field labels */
+    :global(.text) {
+      color: #89CFF0 !important;
+      /* Light blue for labels */
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    /* Custom field values - AGGRESSIVE white color */
+    > * {
+      color: #ffffff !important;
+    }
+
+    div,
+    span,
+    p {
+      color: #ffffff !important;
+    }
+
+    /* Editable inputs */
+    :global(input),
+    :global(textarea),
+    :global(.ui.input input) {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 8px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+
+      &:focus {
+        border-color: #1ac9cc !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+      }
+    }
   }
 }

@@ -37,17 +37,23 @@ const BoardActions = React.memo(() => {
     return selectors.selectIsCurrentUserManagerForCurrentProject(state);
   });
 
+  const board = useSelector(selectors.selectCurrentBoard); // Fetch full board object
+
   const [t] = useTranslation();
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.actions}>
-        {withContextTitle && (
+        {withContextTitle ? (
           <div className={styles.action}>
             <div className={styles.contextTitle}>
               <Icon name={BoardContextIcons[boardContext]} className={styles.contextTitleIcon} />
               {t(`common.${boardContext}`)}
             </div>
+          </div>
+        ) : (
+          <div className={styles.action}>
+            <div className={styles.boardTitle}>{board.name}</div>
           </div>
         )}
         {withMemberships && (

@@ -15,6 +15,8 @@ import PreferencesPane from './PreferencesPane';
 import NotificationsPane from './NotificationsPane';
 import ApiPane from './ApiPane';
 
+import styles from './UserSettingsModal.module.scss';
+
 const UserSettingsModal = React.memo(() => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
@@ -53,7 +55,14 @@ const UserSettingsModal = React.memo(() => {
   ];
 
   return (
-    <ClosableModal open closeIcon size="small" centered={false} onClose={handleClose}>
+    <ClosableModal
+      open
+      closeIcon
+      size="small"
+      centered={false}
+      onClose={handleClose}
+      className={styles.wrapper}
+    >
       <ClosableModal.Content>
         <Tab
           menu={{

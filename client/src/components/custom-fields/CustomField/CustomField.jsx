@@ -80,8 +80,10 @@ const CustomField = React.memo(({ id, customFieldGroupId }) => {
   }, [customFieldValue, isCopied]);
 
   return (
-    <div>
-      <div className={styles.name}>{customField.name}</div>
+    <div data-role="custom-field-wrapper">
+      <div className={styles.name} data-role="custom-field-name">
+        {customField.name}
+      </div>
       <div className={styles.valueWrapper}>
         {canEdit ? (
           <ValueField
@@ -90,7 +92,7 @@ const CustomField = React.memo(({ id, customFieldGroupId }) => {
             onUpdate={handleValueUpdate}
           />
         ) : (
-          <div className={styles.value}>
+          <div className={styles.value} data-role="custom-field-value">
             {customFieldValue ? customFieldValue.content : '\u00A0'}
           </div>
         )}

@@ -102,23 +102,39 @@
           font-weight: 700 !important;
           margin-bottom: 8px !important;
         }
+      }
 
-        :global(input:not([type='checkbox'])),
-        :global(textarea),
-        :global(.ui.dropdown) {
-          background: rgba(0, 0, 0, 0.3) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
-          border-radius: 14px !important;
-          color: #fff !important;
-          padding: 14px 18px !important;
-          transition: all 0.2s ease !important;
+      /* Direct Inputs */
+      :global(.ui.input) input,
+      :global(textarea),
+      :global(.ui.dropdown) {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 14px !important;
+        color: #fff !important;
+        padding: 14px 18px !important;
+        transition: all 0.2s ease !important;
 
-          &:focus {
-            border-color: #1ac9cc !important;
-            background: rgba(0, 0, 0, 0.5) !important;
-            box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
-          }
+        &:focus {
+          border-color: #1ac9cc !important;
+          background: rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
         }
+      }
+    }
+
+    /* Target EditInformation custom structure */
+    div[class*="text"] {
+      color: #1ac9cc !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 8px !important;
+      margin-top: 1rem !important;
+
+      &:first-child {
+        margin-top: 0 !important;
       }
     }
 
@@ -135,12 +151,62 @@
       background: #1ac9cc !important;
       color: #000 !important;
       box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+      border: none !important;
 
       &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
         background: #fff !important;
       }
+    }
+
+    /* Dividers and Headers */
+    :global(.ui.divider) {
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-bottom: none !important;
+
+      :global(.header) {
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-family: 'Oswald', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Checkboxes / Radios */
+    :global(.ui.radio.checkbox),
+    :global(.ui.checkbox) {
+      :global(label) {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 500 !important;
+
+        &:before {
+          background: rgba(0, 0, 0, 0.3) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        &:hover {
+          color: #fff !important;
+        }
+      }
+
+      :global(input:checked ~ label) {
+        color: #fff !important;
+
+        &:after {
+          color: #1ac9cc !important;
+        }
+      }
+    }
+
+    /* Segments (General Tabs content) */
+    :global(.ui.tab.segment) {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
     }
 
     /* Dividers and Headers - Force Colors */

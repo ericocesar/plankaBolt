@@ -15,6 +15,8 @@ import GeneralPane from './GeneralPane';
 import PreferencesPane from './PreferencesPane';
 import NotificationsPane from './NotificationsPane';
 
+import styles from './BoardSettingsModal.module.scss';
+
 const BoardSettingsModal = React.memo(() => {
   const openPreferences = useSelector(
     (state) => selectors.selectCurrentModal(state).params.openPreferences,
@@ -51,7 +53,13 @@ const BoardSettingsModal = React.memo(() => {
   ];
 
   return (
-    <ClosableModal closeIcon size="small" centered={false} onClose={handleClose}>
+    <ClosableModal
+      closeIcon
+      size="small"
+      centered={false}
+      onClose={handleClose}
+      className={styles.wrapper}
+    >
       <ClosableModal.Content>
         <Tab
           menu={{

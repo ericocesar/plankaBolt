@@ -77,9 +77,14 @@
   }
 
   .name {
-    color: #17394d;
-    font-size: 14px;
-    line-height: 18px;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    /* Increased by 1pt */
+    font-family: "Oswald", sans-serif !important;
+    text-transform: uppercase !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 20px !important;
     margin-bottom: 8px;
     word-wrap: break-word;
   }

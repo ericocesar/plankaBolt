@@ -9,7 +9,11 @@
   .wrapperForms,
   .wrapperWebhooks {
     width: 95% !important;
-    max-width: 1800px !important;
+    height: 95vh !important;
+    margin: 2.5vh auto !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .wrapper,
@@ -36,7 +40,11 @@
 
     :global(.content) {
       background: transparent !important;
-      padding: 3rem !important;
+      padding: 0.75rem !important;
+      flex: 1 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
     }
 
     :global(.ui.menu.tabular) {
@@ -54,13 +62,14 @@
         justify-content: center !important;
         border: none !important;
         background: transparent !important;
-        color: rgba(255, 255, 255, 0.5) !important;
+        color: #ffffff !important;
         border-radius: 14px !important;
         padding: 14px 24px !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 1.5px !important;
         font-size: 0.9rem !important;
+        font-family: 'Oswald', sans-serif !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
         &:after {

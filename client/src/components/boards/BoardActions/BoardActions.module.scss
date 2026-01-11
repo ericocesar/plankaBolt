@@ -45,13 +45,25 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   }
 
+  .boardTitle {
+    color: #fff;
+    font-family: 'Oswald', sans-serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    font-size: 19px !important;
+    /* +1pt from default approx */
+    font-weight: 600 !important;
+    line-height: 34px;
+    padding: 0 16px;
+  }
+
   .wrapper {
     overflow-x: auto;
     overflow-y: hidden;
     -ms-overflow-style: none;
     padding: 12px 0 !important;
     scrollbar-width: none;
-    
+
     :global(.ui.button) {
       background: rgba(255, 255, 255, 0.05) !important;
       color: rgba(255, 255, 255, 0.7) !important;
@@ -64,7 +76,7 @@
         color: #ffffff !important;
         border-color: rgba(26, 201, 204, 0.4) !important;
       }
-      
+
       &.active {
         background: #1ac9cc !important;
         color: #062e53 !important;

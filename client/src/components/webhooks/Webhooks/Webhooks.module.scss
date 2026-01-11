@@ -4,6 +4,38 @@
  */
 
 :global(#app) {
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 12px;
+  }
+
+  .searchPlaceholder {
+    flex: 1;
+    max-width: 500px;
+    /* Search field will be added here later */
+  }
+
+  .addButton {
+    background: #1ac9cc !important;
+    border-radius: 12px !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    padding: 12px 24px !important;
+    box-shadow: 0 4px 20px rgba(26, 201, 204, 0.3) !important;
+    letter-spacing: 1px !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      background: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(26, 201, 204, 0.5) !important;
+    }
+  }
+
   .accordion {
     background: transparent !important;
     box-shadow: none !important;
@@ -22,6 +54,12 @@
       justify-content: space-between !important;
       align-items: center !important;
       transition: all 0.2s ease !important;
+
+      /* Typography updates */
+      font-family: 'Oswald', sans-serif !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      font-weight: 500 !important;
 
       &:hover {
         background: rgba(255, 255, 255, 0.05) !important;

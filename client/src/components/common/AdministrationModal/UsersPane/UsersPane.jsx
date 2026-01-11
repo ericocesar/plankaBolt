@@ -6,7 +6,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button, Divider, Tab, Table } from 'semantic-ui-react';
+import { Button, Tab, Table } from 'semantic-ui-react';
 import { Input } from '../../../../lib/custom-ui';
 
 import selectors from '../../../../selectors';
@@ -68,16 +68,43 @@ const UsersPane = React.memo(() => {
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
-      <Input
-        fluid
-        ref={handleSearchFieldRef}
-        value={search}
-        placeholder={t('common.searchUsers')}
-        maxLength={256}
-        icon="search"
-        onChange={handleSearchChange}
-      />
-      <Divider />
+      <div className={styles.headerContainer}>
+        <Input
+          fluid
+          ref={handleSearchFieldRef}
+          value={search}
+          placeholder={t('common.searchUsers')}
+          maxLength={256}
+          icon="search"
+          onChange={handleSearchChange}
+          className={styles.searchInput}
+        />
+        <Button
+          content={isDeactivatedVisible ? t('action.showActive') : t('action.showDeactivated')}
+          className={styles.toggleDeactivatedButton}
+          onClick={handleToggleDeactivatedClick}
+        />
+        {canAdd && (
+          <AddPopup>
+            <Button
+              positive
+              disabled={activeUsersLimit !== null && activeUsersTotal >= activeUsersLimit}
+              className={styles.addButton}
+              icon="plus"
+              content={
+                <>
+                  Novo Usuário
+                  {activeUsersLimit !== null && (
+                    <span className={styles.addButtonCounter}>
+                      {activeUsersTotal}/{activeUsersLimit}
+                    </span>
+                  )}
+                </>
+              }
+            />
+          </AddPopup>
+        )}
+      </div>
       <div className={styles.tableWrapper}>
         <Table unstackable basic="very">
           <Table.Header>
@@ -95,29 +122,6 @@ const UsersPane = React.memo(() => {
             ))}
           </Table.Body>
         </Table>
-      </div>
-      <div className={styles.actions}>
-        <Button
-          content={isDeactivatedVisible ? t('action.showActive') : t('action.showDeactivated')}
-          className={styles.toggleDeactivatedButton}
-          onClick={handleToggleDeactivatedClick}
-        />
-        {canAdd && (
-          <AddPopup>
-            <Button
-              positive
-              disabled={activeUsersLimit !== null && activeUsersTotal >= activeUsersLimit}
-              className={styles.addButton}
-            >
-              {t('action.addUser')}
-              {activeUsersLimit !== null && (
-                <span className={styles.addButtonCounter}>
-                  {activeUsersTotal}/{activeUsersLimit}
-                </span>
-              )}
-            </Button>
-          </AddPopup>
-        )}
       </div>
     </Tab.Pane>
   );

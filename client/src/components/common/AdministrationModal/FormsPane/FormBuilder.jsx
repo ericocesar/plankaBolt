@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, Grid, Header, Icon, Message } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Message } from 'semantic-ui-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { nanoid } from 'nanoid';
 import {
@@ -60,7 +60,7 @@ const FIELD_TYPE_DETAILS = {
   },
 };
 
-function FormBuilder({ schema, onChange }) {
+function FormBuilder({ schema, customFields, labels, onChange }) {
   const normalized = useMemo(() => normalizeSchema(schema), [schema]);
   const [selectedStepId, setSelectedStepId] = useState(normalized.steps[0]?.id || null);
   const [selectedFieldId, setSelectedFieldId] = useState(null);
@@ -224,6 +224,50 @@ function FormBuilder({ schema, onChange }) {
     updateField(field.id, { options: nextOptions });
   };
 
+  const renderCanvasFieldInput = (field) => {
+    if (field.type === 'file') {
+      return (
+        <div className={styles.fileUploadMock}>
+          <Icon name="cloud upload" />
+          <span>{field.placeholder || 'Arraste ou clique para anexar um arquivo'}</span>
+        </div>
+      );
+    }
+
+    if (field.type === 'textarea') {
+      return (
+        <textarea
+          placeholder={field.placeholder}
+          defaultValue={field.defaultValue}
+          disabled={field.readOnly}
+          readOnly
+          rows={3}
+        />
+      );
+    }
+
+    if (field.type === 'select') {
+      return (
+        <select disabled={field.readOnly}>
+          <option>{field.placeholder || 'Selecione uma opção...'}</option>
+          {(field.options || []).map((opt) => (
+            <option key={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+      );
+    }
+
+    return (
+      <input
+        type={field.type === 'date' ? 'text' : field.type}
+        placeholder={field.type === 'date' ? 'DD/MM/AAAA' : field.placeholder}
+        defaultValue={field.defaultValue}
+        disabled={field.readOnly}
+        readOnly
+      />
+    );
+  };
+
   const renderSettings = () => {
     if (selectedField) {
       return (
@@ -260,16 +304,45 @@ function FormBuilder({ schema, onChange }) {
             selectedField.type === 'textarea' ||
             selectedField.type === 'email' ||
             selectedField.type === 'phone' ||
-            selectedField.type === 'number') && (
-            <div className={styles.formField}>
-              <Form.Input
-                label="Placeholder (Dica)"
-                value={selectedField.placeholder || ''}
-                onChange={(e) => updateField(selectedField.id, { placeholder: e.target.value })}
-                placeholder="Ex: Digite aqui..."
-              />
-            </div>
+            selectedField.type === 'number' ||
+            selectedField.type === 'date') && (
+            <>
+              <div className={styles.formField}>
+                <Form.Input
+                  label="Placeholder (Dica)"
+                  value={selectedField.placeholder || ''}
+                  onChange={(e) => updateField(selectedField.id, { placeholder: e.target.value })}
+                  placeholder="Ex: Digite aqui..."
+                />
+              </div>
+              <div className={styles.formField}>
+                <Form.Input
+                  label="Valor Padrão"
+                  value={selectedField.defaultValue || ''}
+                  onChange={(e) => updateField(selectedField.id, { defaultValue: e.target.value })}
+                  placeholder="Valor inicial preenchido"
+                />
+              </div>
+            </>
           )}
+
+          <div className={styles.formField}>
+            <Form.TextArea
+              label="Texto de Ajuda (Descrição)"
+              value={selectedField.description || ''}
+              onChange={(e) => updateField(selectedField.id, { description: e.target.value })}
+              placeholder="Ex: Instruções detalhadas abaixo do campo"
+              rows={2}
+            />
+          </div>
+
+          <div style={{ display: 'flex', gap: '2rem', marginBottom: '1.5rem' }}>
+            <Form.Checkbox
+              label="Somente Leitura"
+              checked={!!selectedField.readOnly}
+              onChange={(e, { checked }) => updateField(selectedField.id, { readOnly: checked })}
+            />
+          </div>
 
           {selectedField.type === 'text' && (
             <div className={styles.formField}>
@@ -403,9 +476,9 @@ function FormBuilder({ schema, onChange }) {
         />
       )}
 
-      <Grid className={styles.builderGrid}>
+      <div className={styles.builderGrid}>
         {/* Palette */}
-        <Grid.Column className={styles.paletteColumn}>
+        <div className={styles.toolBoxColumn}>
           <Header as="h4" className={styles.sectionTitle}>
             Componentes
           </Header>
@@ -457,10 +530,10 @@ function FormBuilder({ schema, onChange }) {
               <p>{FIELD_TYPE_DETAILS[hoveredPaletteType]?.hint}</p>
             </Message>
           )}
-        </Grid.Column>
+        </div>
 
         {/* Canvas */}
-        <Grid.Column className={styles.mainColumn}>
+        <div className={styles.canvasColumn}>
           <div
             style={{
               display: 'flex',
@@ -568,31 +641,36 @@ function FormBuilder({ schema, onChange }) {
                               role="button"
                               tabIndex={0}
                             >
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'flex-start',
-                                }}
-                              >
-                                <div>
+                              <div style={{ position: 'relative' }}>
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    marginBottom: '8px',
+                                  }}
+                                >
                                   <span className={styles.fieldLabel}>
                                     {field.label || '(Sem Rótulo)'}
                                     {field.required && (
-                                      <span style={{ color: '#db2828', marginLeft: '4px' }}>*</span>
+                                      <span className={styles.requiredStar}>*</span>
                                     )}
                                   </span>
-                                  <span className={styles.fieldTypeLabel}>{field.type}</span>
+                                  <Button
+                                    className={styles.deleteButton}
+                                    icon="trash"
+                                    size="mini"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      removeField(field.id);
+                                    }}
+                                  />
                                 </div>
-                                <Button
-                                  className={styles.deleteButton}
-                                  icon="trash"
-                                  size="mini"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeField(field.id);
-                                  }}
-                                />
+
+                                {renderCanvasFieldInput(field)}
+
+                                {field.description && (
+                                  <div className={styles.helpText}>{field.description}</div>
+                                )}
                               </div>
                             </div>
                           )}
@@ -605,23 +683,169 @@ function FormBuilder({ schema, onChange }) {
               </Droppable>
             </DragDropContext>
           )}
-        </Grid.Column>
+        </div>
 
         {/* Settings */}
-        <Grid.Column className={styles.settingsColumn}>
+        <div className={styles.settingsColumn}>
           <Header as="h4" className={styles.sectionTitle}>
             Propriedades
           </Header>
           {renderSettings()}
-        </Grid.Column>
-      </Grid>
+          {selectedField && (
+            <div
+              style={{
+                marginTop: '2rem',
+                paddingTop: '1rem',
+                borderTop: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <div
+                className={styles.sectionTitle}
+                style={{ fontSize: '0.85rem', marginBottom: '1rem', color: '#1ac9cc' }}
+              >
+                Mapeamento do Campo
+              </div>
+              <Form size="small" className={styles.settingsForm}>
+                <div className={styles.formField}>
+                  <span className={styles.fieldLabel}>Salvar valor em:</span>
+                  <Form.Dropdown
+                    selection
+                    value={selectedField.mapTo || 'description'}
+                    options={[
+                      { text: 'Descrição do Cartão', value: 'description' },
+                      { text: 'Rótulos (Labels)', value: 'labels' },
+                      { text: 'Lista de Tarefas', value: 'task' },
+                      ...(selectedField.type === 'file' ? [{ text: 'Anexo', value: 'file' }] : []),
+                      { text: 'Campo Personalizado', value: 'custom-field' },
+                    ]}
+                    onChange={(e, { value }) =>
+                      updateField(selectedField.id, { mapTo: value, customFieldId: null })
+                    }
+                  />
+                  <div
+                    style={{
+                      fontSize: '0.75rem',
+                      color: 'rgba(255,255,255,0.5)',
+                      marginTop: '4px',
+                    }}
+                  >
+                    Onde os dados preenchidos serão salvos no cartão criado.
+                  </div>
+                </div>
+
+                {selectedField.mapTo === 'labels' && (
+                  <div className={styles.formField}>
+                    <span className={styles.fieldLabel}>Selecione o Rótulo</span>
+                    {!labels || labels.length === 0 ? (
+                      <div
+                        style={{
+                          background: 'rgba(255, 188, 66, 0.1)',
+                          color: '#ffbc42',
+                          border: '1px solid rgba(255, 188, 66, 0.3)',
+                          padding: '10px',
+                          borderRadius: '4px',
+                          fontSize: '0.85rem',
+                        }}
+                      >
+                        <p style={{ margin: 0 }}>Nenhum rótulo disponível neste quadro.</p>
+                      </div>
+                    ) : (
+                      <Form.Dropdown
+                        selection
+                        placeholder="Selecione um rótulo..."
+                        value={selectedField.labelId || ''}
+                        options={labels.map((l) => ({
+                          key: l.id,
+                          text: l.name || '(Sem nome)',
+                          value: l.id,
+                          label: { color: l.color, empty: true, circular: true },
+                        }))}
+                        onChange={(e, { value }) =>
+                          updateField(selectedField.id, { labelId: value })
+                        }
+                      />
+                    )}
+                  </div>
+                )}
+
+                {selectedField.mapTo === 'custom-field' && (
+                  <div className={styles.formField}>
+                    <span className={styles.fieldLabel}>Selecione o Campo Personalizado</span>
+                    {!customFields || customFields.length === 0 ? (
+                      <div
+                        style={{
+                          background: 'rgba(255, 188, 66, 0.1)',
+                          color: '#ffbc42',
+                          border: '1px solid rgba(255, 188, 66, 0.3)',
+                          padding: '10px',
+                          borderRadius: '4px',
+                          fontSize: '0.85rem',
+                        }}
+                      >
+                        <p style={{ margin: 0 }}>Nenhum campo personalizado disponível.</p>
+                        <p style={{ margin: '4px 0 0 0', opacity: 0.8 }}>
+                          Crie campos nas configurações do quadro.
+                        </p>
+                      </div>
+                    ) : (
+                      <Form.Dropdown
+                        selection
+                        placeholder="Selecione um campo..."
+                        value={selectedField.customFieldId || ''}
+                        options={customFields.map((cf) => ({
+                          key: cf.id,
+                          text: cf.name,
+                          value: cf.id,
+                          content: (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span
+                                style={{
+                                  width: '8px',
+                                  height: '8px',
+                                  borderRadius: '50%',
+                                  background: '#1ac9cc',
+                                  opacity: 0.7,
+                                }}
+                              />
+                              {cf.name}
+                              <span
+                                style={{
+                                  fontSize: '0.75rem',
+                                  opacity: 0.5,
+                                  marginLeft: 'auto',
+                                }}
+                              >
+                                {cf.type}
+                              </span>
+                            </div>
+                          ),
+                        }))}
+                        onChange={(e, { value }) =>
+                          updateField(selectedField.id, { customFieldId: value })
+                        }
+                      />
+                    )}
+                  </div>
+                )}
+              </Form>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
 
 FormBuilder.propTypes = {
   schema: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  customFields: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onChange: PropTypes.func.isRequired,
+};
+
+FormBuilder.defaultProps = {
+  customFields: [],
+  labels: [],
 };
 
 export default FormBuilder;
