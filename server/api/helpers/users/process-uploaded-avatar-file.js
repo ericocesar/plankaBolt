@@ -7,7 +7,7 @@ const { v4: uuid } = require('uuid');
 const { rimraf } = require('rimraf');
 const sharp = require('sharp');
 
-const { fileTypeFromFile } = require('file-type');
+const { fromFile: fileTypeFromFile } = require('file-type');
 
 const { MAX_SIZE_TO_PROCESS_AS_IMAGE } = require('../../../constants');
 
