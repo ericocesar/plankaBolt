@@ -67,15 +67,18 @@ module.exports = {
     },
     dueDateQuantity: {
       type: 'number',
+      allowNull: true,
       columnName: 'due_date_quantity',
     },
     dueDateUnit: {
       type: 'string',
       isIn: ['days', 'hours'],
+      allowNull: true,
       columnName: 'due_date_unit',
     },
     dueDateFixed: {
       type: 'string', // ISO date string
+      allowNull: true,
       columnName: 'due_date_fixed',
     },
     cardType: {
