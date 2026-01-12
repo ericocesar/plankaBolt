@@ -36,8 +36,8 @@ $bp-blur: 24px;
 
 /* --- Left Column: Tool Box --- */
 .toolBoxColumn {
-  width: 385px !important;
-  flex: 0 0 385px !important;
+  width: 192px !important;
+  flex: 0 0 192px !important;
   background: rgba(20, 20, 25, 0.6);
   border: 1px solid $bp-border-subtle;
   border-radius: $bp-radius-lg;
@@ -94,10 +94,8 @@ $bp-blur: 24px;
   border-radius: $bp-radius-md;
   cursor: grab;
   color: $bp-text-primary;
-  transition: all 0.3s ease;
-  width: calc(50% - 4px);
-  /* 50% minus half gap */
-  flex: 0 0 calc(50% - 4px);
+  width: 100%;
+  /* Full width - single column */
 
   span {
     font-size: 0.85rem;
@@ -109,7 +107,6 @@ $bp-blur: 24px;
   &:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
     i {
@@ -129,6 +126,22 @@ $bp-blur: 24px;
   }
 }
 
+.addButton {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: $bp-accent-primary !important;
+  padding: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $bp-accent-primary !important;
+    color: white !important;
+    transform: scale(1.1);
+  }
+}
+
 /* --- Center Column: Canvas --- */
 .canvasColumn {
   flex: 1 !important;
@@ -140,7 +153,7 @@ $bp-blur: 24px;
   overflow: hidden;
   background: radial-gradient(circle at 50% 0%, #1a1a20 0%, #050505 100%);
   border: 1px solid $bp-border-subtle;
-  padding: 24px; // Add padding to container so fixed headers aren't edge-to-edge
+  padding: 20px 24px 24px 24px; // Match top padding with other columns (20px)
 }
 
 .canvasHeader {
@@ -305,9 +318,13 @@ $bp-blur: 24px;
 
 .settingsForm {
   padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
 
   :global(.field) {
-    margin-bottom: 24px !important;
+    margin-bottom: 0 !important;
   }
 
   :global(.ui.input input),

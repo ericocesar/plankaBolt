@@ -482,44 +482,27 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
           <Header as="h4" className={styles.sectionTitle}>
             Componentes
           </Header>
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="palette" isDropDisabled>
-              {(provided) => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className={styles.paletteContainer}
-                >
-                  {paletteItems.map((item, index) => (
-                    <Draggable key={item.type} draggableId={`palette-${item.type}`} index={index}>
-                      {(draggableProvided, draggableSnapshot) => (
-                        <>
-                          <div
-                            ref={draggableProvided.innerRef}
-                            {...draggableProvided.draggableProps}
-                            {...draggableProvided.dragHandleProps}
-                            className={styles.paletteItem}
-                            onMouseEnter={() => setHoveredPaletteType(item.type)}
-                            onMouseLeave={() => setHoveredPaletteType(null)}
-                          >
-                            <Icon name={FIELD_TYPE_DETAILS[item.type]?.icon || 'circle'} />
-                            {item.label}
-                          </div>
-                          {draggableSnapshot.isDragging && (
-                            <div className={styles.paletteItem}>
-                              <Icon name={FIELD_TYPE_DETAILS[item.type]?.icon || 'circle'} />
-                              {item.label}
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <div className={styles.paletteContainer}>
+            {paletteItems.map((item) => (
+              <div
+                key={item.type}
+                className={styles.paletteItem}
+                onMouseEnter={() => setHoveredPaletteType(item.type)}
+                onMouseLeave={() => setHoveredPaletteType(null)}
+              >
+                <Icon name={FIELD_TYPE_DETAILS[item.type]?.icon || 'circle'} />
+                <span style={{ flex: 1 }}>{item.label}</span>
+                <Button
+                  icon="plus"
+                  size="mini"
+                  circular
+                  className={styles.addButton}
+                  onClick={() => addFieldToStep(item.type)}
+                  title={`Adicionar ${item.label}`}
+                />
+              </div>
+            ))}
+          </div>
           {hoveredPaletteType && (
             <Message
               info
