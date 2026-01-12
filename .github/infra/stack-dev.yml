@@ -34,7 +34,7 @@ x-variaveis: &variaveis
 version: "3.7"
 services:
   planka_app:
-    image: ericocesar/plankabolt:develop
+    image: ghcr.io/ericocesar/plankabolt:develop
     environment:
       <<: *variaveis
     networks:
