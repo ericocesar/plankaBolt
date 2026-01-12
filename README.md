@@ -1,4 +1,4 @@
-# PLANKA
+# Bolt
 
 **Project mastering driven by fun**
 
