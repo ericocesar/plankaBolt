@@ -1,7 +1,16 @@
 const { v4: uuid } = require('uuid');
 const { rimraf } = require('rimraf');
-const { fileTypeFromFile } = require('file-type');
 const sharp = require('sharp');
+
+// Handle file-type v16.5.4+ which may have different export structures
+let fileTypeFromFile;
+try {
+  // eslint-disable-next-line global-require
+  ({ fileTypeFromFile } = require('file-type'));
+} catch (error) {
+  // Fallback for ESM-only versions
+  fileTypeFromFile = null;
+}
 
 const { MAX_SIZE_TO_PROCESS_AS_IMAGE } = require('../../../constants');
 
@@ -19,6 +28,12 @@ module.exports = {
 
   async fn(inputs) {
     const fileManager = sails.hooks['file-manager'].getInstance();
+
+    // Lazy load file-type if not already loaded (for ESM versions)
+    if (!fileTypeFromFile) {
+      const fileTypeModule = await import('file-type');
+      fileTypeFromFile = fileTypeModule.fileTypeFromFile;
+    }
 
     const fileType = await fileTypeFromFile(inputs.file.fd);
     const { mime: mimeType = null } = fileType || {};

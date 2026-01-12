@@ -5,9 +5,18 @@
 
 const fsPromises = require('fs').promises;
 const { rimraf } = require('rimraf');
-const { fileTypeFromFile } = require('file-type');
 const { getEncoding } = require('istextorbinary');
 const sharp = require('sharp');
+
+// Handle file-type v16.5.4+ which may have different export structures
+let fileTypeFromFile;
+try {
+  // eslint-disable-next-line global-require
+  ({ fileTypeFromFile } = require('file-type'));
+} catch (error) {
+  // Fallback for ESM-only versions
+  fileTypeFromFile = null;
+}
 
 const filenamify = require('../../../utils/filenamify');
 const { MAX_SIZE_TO_GET_ENCODING, MAX_SIZE_TO_PROCESS_AS_IMAGE } = require('../../../constants');
@@ -24,6 +33,12 @@ module.exports = {
     const fileManager = sails.hooks['file-manager'].getInstance();
 
     const filename = filenamify(inputs.file.filename);
+
+    if (!fileTypeFromFile) {
+      const fileTypeModule = await import('file-type');
+      fileTypeFromFile = fileTypeModule.fileTypeFromFile;
+    }
+
     const fileType = await fileTypeFromFile(inputs.file.fd);
     const { mime: mimeType = null } = fileType || {};
     const { size } = inputs.file;

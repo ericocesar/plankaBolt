@@ -34,7 +34,7 @@ x-variaveis: &variaveis
   SMTP_HOST: "mail.bolt360.com.br"
   SMTP_PORT: "587"
   SMTP_NAME: "bchat@bolt360.com.br"
-  SMTP_SECURE: "true"
+  SMTP_SECURE: "false"
   SMTP_TLS_REJECT_UNAUTHORIZED: "false"
   SMTP_USER: "bchat@bolt360.com.br"
   SMTP_PASSWORD: "Bolt36023@"
