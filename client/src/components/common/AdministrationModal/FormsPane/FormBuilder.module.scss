@@ -1,27 +1,27 @@
-/* Neural Interface Variables */
-$ni-bg-deep: #0a0a0a;
-$ni-bg-surface: #1a1a1a; // Deep Slate
-$ni-bg-glass: rgba(26, 26, 26, 0.6);
-$ni-accent-teal: #00f2ff; // Bioluminescent Teal
-$ni-accent-white: #ffffff; // Solar White
-$ni-text-primary: #ffffff;
-$ni-text-secondary: rgba(255, 255, 255, 0.6);
-$ni-border-subtle: rgba(255, 255, 255, 0.08);
-$ni-border-glow: rgba(0, 242, 255, 0.3);
-$ni-radius-lg: 16px;
-$ni-radius-md: 12px;
-$ni-radius-sm: 8px;
-$ni-blur: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;700&display=swap');
+
+/* Bolt Premium Design System Variables */
+$bp-bg-deep: #050505;
+$bp-bg-surface: #121212;
+$bp-accent-primary: #10b981; // Emerald
+$bp-accent-secondary: #059669;
+$bp-accent-error: #ef4444;
+$bp-text-primary: #ffffff;
+$bp-text-secondary: #9ca3af;
+$bp-border-subtle: rgba(255, 255, 255, 0.08);
+$bp-radius-lg: 24px;
+$bp-radius-md: 12px;
+$bp-radius-sm: 8px;
+$bp-blur: 24px;
 
 .builderWrapper {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 200px); // Adjust based on modal header/footer
-  background: $ni-bg-deep;
-  color: $ni-text-primary;
-  border-radius: $ni-radius-lg;
+  height: calc(100vh - 50px);
+  background: transparent;
+  color: $bp-text-primary;
   overflow: hidden;
-  font-family: 'Inter', sans-serif; // Assuming Inter is available or fallback
+  font-family: 'Inter', sans-serif;
 }
 
 .builderGrid {
@@ -31,82 +31,100 @@ $ni-blur: 20px;
   height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
-  gap: 0 !important;
-  overflow: hidden !important;
+  gap: 20px !important;
 }
 
 /* --- Left Column: Tool Box --- */
 .toolBoxColumn {
-  width: 260px !important;
-  min-width: 260px !important;
-  max-width: 260px !important;
-  flex: 0 0 260px !important;
-  background: $ni-bg-surface;
-  border-right: 1px solid $ni-border-subtle;
+  width: 385px !important;
+  flex: 0 0 385px !important;
+  background: rgba(20, 20, 25, 0.6);
+  border: 1px solid $bp-border-subtle;
+  border-radius: $bp-radius-lg;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  backdrop-filter: blur($ni-blur);
-  z-index: 2;
+  backdrop-filter: blur($bp-blur);
+  padding: 20px 0;
+  margin-left: 0 !important;
 }
 
 .sectionTitle {
-  font-size: 0.75rem;
+  font-family: 'Oswald', sans-serif !important;
+  font-size: 0.9rem !important;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: $ni-text-secondary;
-  margin: 24px 20px 12px 20px;
-  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: $bp-text-primary;
+  margin: 0 24px 10px 24px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 
   &::before {
     content: '';
     display: block;
-    width: 4px;
-    height: 4px;
-    background: $ni-accent-teal;
-    border-radius: 50%;
-    box-shadow: 0 0 8px $ni-accent-teal;
+    width: 3px;
+    height: 14px;
+    background: $bp-accent-primary;
+    border-radius: 2px;
   }
+}
+
+.paletteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 12px;
+  /* reduced padding to fit */
+  gap: 8px;
+  /* Gap between items */
 }
 
 .paletteItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  margin: 0 12px 4px 12px;
+  justify-content: center;
+  /* Center content */
+  gap: 10px;
+  padding: 12px 10px;
+  margin: 0;
+  /* Remove margin, use gap */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid transparent;
-  border-radius: $ni-radius-md;
+  border-radius: $bp-radius-md;
   cursor: grab;
-  color: $ni-text-primary;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+  color: $bp-text-primary;
+  transition: all 0.3s ease;
+  width: calc(50% - 4px);
+  /* 50% minus half gap */
+  flex: 0 0 calc(50% - 4px);
+
+  span {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.1);
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
     i {
-      color: $ni-accent-teal;
-      text-shadow: 0 0 8px rgba(0, 242, 255, 0.6);
+      color: $bp-accent-primary;
     }
   }
 
   i {
-    color: $ni-text-secondary;
-    font-size: 1.1rem;
-    transition: color 0.2s ease;
+    color: $bp-text-secondary;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
   }
 
   span {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
   }
 }
@@ -114,139 +132,85 @@ $ni-blur: 20px;
 /* --- Center Column: Canvas --- */
 .canvasColumn {
   flex: 1 !important;
-  min-width: 0; // Fix for flex items not shrinking
-  background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   position: relative;
+  border-radius: $bp-radius-lg;
   overflow: hidden;
-  z-index: 1;
+  background: radial-gradient(circle at 50% 0%, #1a1a20 0%, #050505 100%);
+  border: 1px solid $bp-border-subtle;
+  padding: 24px; // Add padding to container so fixed headers aren't edge-to-edge
+}
 
-  /* Grid pattern overlay */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-      linear-gradient($ni-border-subtle 1px, transparent 1px),
-      linear-gradient(90deg, $ni-border-subtle 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.1;
-    pointer-events: none;
+.canvasHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  .sectionTitle {
+    margin: 0; // Reset margin for this context
   }
 }
 
-/* Steps Bar (Tabs) */
-.stepsBar {
+.actionButtons {
   display: flex;
+  gap: 12px;
   align-items: center;
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid $ni-border-subtle;
-  padding: 0 20px;
-  height: 60px;
-  gap: 8px;
-  overflow-x: auto;
-  z-index: 10;
-  backdrop-filter: blur(10px);
 }
 
-.stepTab {
+.stepsContainer {
+  display: flex;
+  flex-wrap: wrap; // Allow steps to wrap if many
+  gap: 12px; // Space between steps
+  margin-bottom: 24px;
+}
+
+.stepLabel {
+  background: transparent;
+  border: 1px solid $bp-border-subtle;
+  color: $bp-text-secondary;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid $ni-border-subtle;
-  border-radius: $ni-radius-md;
-  color: $ni-text-secondary;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 140px;
-  position: relative;
+  white-space: nowrap;
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
-    color: $ni-text-primary;
+    color: $bp-text-primary;
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
-  &.activeStep {
-    background: rgba(0, 242, 255, 0.05);
-    border-color: $ni-border-glow;
-    color: $ni-accent-teal;
-    box-shadow: 0 0 12px rgba(0, 242, 255, 0.1);
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40%;
-      height: 2px;
-      background: $ni-accent-teal;
-      box-shadow: 0 0 8px $ni-accent-teal;
-      border-radius: 2px;
-    }
-  }
-
-  .stepLabel {
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
-  }
-
-  .deleteStepLink {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    color: rgba(255, 100, 100, 0.8);
-
-    &:hover {
-      color: #ff4d4d;
-    }
-  }
-
-  &:hover .deleteStepLink {
-    opacity: 1;
-  }
-}
-
-.addStepButton {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px dashed $ni-border-subtle;
-  border-radius: 50%;
-  color: $ni-text-secondary;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: $ni-accent-teal;
-    color: $ni-accent-teal;
-    background: rgba(0, 242, 255, 0.05);
+  &.active {
+    background: $bp-accent-primary;
+    color: white;
+    border-color: $bp-accent-primary;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    font-weight: 700;
   }
 }
 
 /* Canvas Area */
 .canvasArea {
   flex: 1;
-  padding: 40px;
   overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap; // Allow items to wrap
+  display: flex; // ENABLE FLEX
+  flex-direction: row; // ROW DIRECTION FOR GRID
+  flex-wrap: wrap; // WRAP ITEMS
   align-content: flex-start;
-  gap: 16px;
+  gap: 16px; // GRID GAP
   width: 100%;
-  z-index: 1;
+  padding-bottom: 40px;
 
   // Custom scrollbar
   &::-webkit-scrollbar {
@@ -264,19 +228,21 @@ $ni-blur: 20px;
 }
 
 .fieldItem {
-  background: $ni-bg-glass;
-  border: 1px solid $ni-border-subtle;
-  border-radius: $ni-radius-md;
+  // width is handled inline by JS based on prop (100% or calc(50% - gap))
+  background: rgba(20, 20, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: $bp-radius-md;
   padding: 24px;
   position: relative;
   transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   backdrop-filter: blur(10px);
-  /* Width is controlled dynamically via inline style in JS */
+  flex-grow: 0;
+  flex-shrink: 0;
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    z-index: 5;
 
     .deleteButton {
       opacity: 1;
@@ -285,167 +251,114 @@ $ni-blur: 20px;
   }
 
   &.selected {
-    border-color: $ni-accent-teal;
-    background: rgba(0, 242, 255, 0.02);
-    box-shadow:
-      0 0 0 1px $ni-accent-teal,
-      0 0 20px rgba(0, 242, 255, 0.1);
+    border-color: $bp-accent-primary;
+    box-shadow: 0 0 0 1px $bp-accent-primary, 0 8px 24px rgba(0, 0, 0, 0.4);
+    background: rgba(20, 20, 25, 0.9);
+    z-index: 6;
   }
 
-  label {
+  .fieldLabel {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: $bp-text-primary;
+    margin-bottom: 12px;
     display: block;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: $ni-text-secondary;
-    margin-bottom: 8px;
-    letter-spacing: 0.02em;
 
     .requiredStar {
-      color: $ni-accent-teal;
+      color: $bp-accent-error;
       margin-left: 4px;
-      text-shadow: 0 0 5px rgba(0, 242, 255, 0.5);
-    }
-  }
-
-  /* Mock inputs within canvas */
-  input,
-  textarea,
-  select {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid $ni-border-subtle !important;
-    border-radius: $ni-radius-sm !important;
-    padding: 10px 14px;
-    color: $ni-text-primary;
-    font-size: 0.9rem;
-    pointer-events: none; // Prevent typing in canvas
-  }
-
-  .fileUploadMock {
-    border: 1px dashed $ni-border-subtle;
-    border-radius: $ni-radius-sm;
-    padding: 20px;
-    text-align: center;
-    color: disabled;
-    background: rgba(0, 0, 0, 0.2);
-
-    i {
-      font-size: 1.5rem;
-      color: $ni-text-secondary;
-      margin-bottom: 8px;
-    }
-
-    span {
-      display: block;
-      font-size: 0.8rem;
-      color: $ni-text-secondary;
-    }
-  }
-
-  .deleteButton {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    opacity: 0;
-    transform: translateY(-4px);
-    transition: all 0.2s ease;
-    background: rgba(255, 60, 60, 0.1) !important;
-    color: #ff4d4d !important;
-
-    &:hover {
-      background: rgba(255, 60, 60, 0.2) !important;
-      box-shadow: 0 0 10px rgba(255, 60, 60, 0.2);
     }
   }
 }
 
-.helpText {
-  display: block;
-  font-size: 0.75rem;
-  color: $ni-text-secondary;
-  opacity: 0.7;
-  margin-top: 6px;
-  font-style: italic;
+.emptyCanvas {
+  width: 100%; // Takes full width
+  text-align: center;
+  color: $bp-text-secondary;
+  margin-top: 100px;
+  opacity: 0.5;
+
+  i {
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
 }
 
 /* --- Right Column: Properties --- */
 .settingsColumn {
-  width: 320px !important;
-  min-width: 320px !important;
-  max-width: 320px !important;
-  flex: 0 0 320px !important;
-  background: $ni-bg-surface;
-  border-left: 1px solid $ni-border-subtle;
-  padding: 0 !important;
+  width: 400px !important;
+  flex: 0 0 400px !important;
+  background: rgba(20, 20, 25, 0.6);
+  border: 1px solid $bp-border-subtle;
+  border-radius: $bp-radius-lg;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  backdrop-filter: blur($ni-blur);
-  z-index: 2;
+  backdrop-filter: blur($bp-blur);
+  margin-right: 0 !important;
 }
 
 .settingsForm {
-  padding: 0 20px 20px 20px;
+  padding: 0 24px;
 
-  /* Override Semantic UI input styles globally for this form */
   :global(.field) {
-    margin-bottom: 20px !important;
+    margin-bottom: 24px !important;
   }
 
   :global(.ui.input input),
   :global(.ui.form textarea),
   :global(.ui.dropdown) {
-    background: rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid $ni-border-subtle !important;
-    color: $ni-text-primary !important;
-    border-radius: $ni-radius-md !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: $bp-radius-md !important;
+    padding: 12px 16px !important;
+    font-size: 0.9rem !important;
 
     &:focus {
-      border-color: $ni-accent-teal !important;
-      box-shadow: 0 0 0 1px $ni-accent-teal !important;
-      background: rgba(0, 0, 0, 0.6) !important;
+      border-color: $bp-accent-primary !important;
+      background: rgba(255, 255, 255, 0.08) !important;
     }
   }
 
-  :global(.ui.checkbox label) {
-    color: $ni-text-secondary !important;
-
-    &::before {
-      background: rgba(0, 0, 0, 0.4) !important;
-      border-color: $ni-border-subtle !important;
-    }
-
-    &::after {
-      color: $ni-accent-teal !important;
-    }
+  :global(label) {
+    color: $bp-text-secondary !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
   }
 }
 
-.formField {
-  margin-bottom: 20px;
-}
-
-.fieldLabel {
-  display: block;
-  font-size: 0.8rem;
-  color: $ni-text-secondary;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.emptyState {
+// Mock Inputs in Canvas
+.fileUploadMock {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: $bp-radius-md;
+  padding: 30px;
   text-align: center;
-  padding: 40px 20px;
-  color: $ni-text-secondary;
+  color: $bp-text-secondary;
+  background: rgba(0, 0, 0, 0.2);
+}
 
-  i {
-    font-size: 2rem;
-    margin-bottom: 16px;
-    opacity: 0.5;
-  }
+.deleteButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  border-radius: 6px !important;
 
-  p {
-    font-size: 0.9rem;
-    line-height: 1.5;
+  &:hover {
+    background: #ef4444 !important;
+    color: white !important;
   }
 }

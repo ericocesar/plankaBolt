@@ -16,7 +16,7 @@ import DynamicFormFields from '../../../forms/DynamicFormFields';
 
 import styles from './FormBuilder.module.scss';
 
-const paletteItems = FIELD_TYPES;
+const paletteItems = FIELD_TYPES.filter((type) => type !== 'checkbox');
 const FIELD_TYPE_DETAILS = {
   text: {
     icon: 'font',
@@ -485,7 +485,11 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="palette" isDropDisabled>
               {(provided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef}>
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className={styles.paletteContainer}
+                >
                   {paletteItems.map((item, index) => (
                     <Draggable key={item.type} draggableId={`palette-${item.type}`} index={index}>
                       {(draggableProvided, draggableSnapshot) => (
@@ -534,29 +538,23 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
 
         {/* Canvas */}
         <div className={styles.canvasColumn}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '1.5rem',
-            }}
-          >
-            <Header as="h4" className={styles.sectionTitle} style={{ marginBottom: 0 }}>
+          <div className={styles.canvasHeader}>
+            <Header as="h4" className={styles.sectionTitle}>
               Estrutura do Formulário
             </Header>
-            <Button.Group size="mini">
+            <div className={styles.actionButtons}>
               <Button
                 icon="eye"
                 active={showPreview}
                 onClick={() => setShowPreview(!showPreview)}
                 title="Alternar Visualização"
+                className={showPreview ? styles.activeButton : ''}
               />
               <Button icon="plus" content="Nova Etapa" onClick={addStep} title="Adicionar Etapa" />
-            </Button.Group>
+            </div>
           </div>
 
-          <div style={{ marginBottom: '2.5rem' }}>
+          <div className={styles.stepsContainer}>
             {normalized.steps.map((step, index) => (
               <button
                 key={step.id}
@@ -630,7 +628,7 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                               className={`${styles.fieldItem} ${selectedFieldId === field.id ? styles.selected : ''}`}
                               style={{
                                 ...draggableProvided.draggableProps.style,
-                                width: field.width === '50%' ? 'calc(50% - 6px)' : '100%',
+                                width: field.width === '50%' ? 'calc(50% - 8px)' : '100%',
                               }}
                               onClick={() => setSelectedFieldId(field.id)}
                               onKeyDown={(e) => {

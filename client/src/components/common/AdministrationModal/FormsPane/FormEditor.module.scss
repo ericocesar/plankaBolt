@@ -15,8 +15,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
@@ -24,7 +24,6 @@
     color: #fff !important;
     font-family: 'Oswald', sans-serif !important;
     font-size: 1.6rem !important;
-    /* Smaller size as requested */
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 2px !important;
@@ -49,11 +48,11 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
     &:hover {
-      background: #1ac9cc !important;
-      color: #000 !important;
-      border-color: #1ac9cc !important;
+      background: #10b981 !important;
+      color: #fff !important;
+      border-color: #10b981 !important;
       transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(26, 201, 204, 0.4) !important;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4) !important;
     }
   }
 
@@ -76,10 +75,10 @@
     border: none !important;
 
     &:hover {
-      background: #1ac9cc !important;
+      background: #10b981 !important;
       color: #fff !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.3) !important;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3) !important;
     }
   }
 
@@ -108,7 +107,7 @@
     margin-bottom: 2rem !important;
 
     label {
-      color: #1ac9cc !important;
+      color: #10b981 !important;
       text-transform: uppercase !important;
       letter-spacing: 1px !important;
       font-size: 11px !important;
@@ -129,9 +128,9 @@
       transition: all 0.2s ease !important;
 
       &:focus-within {
-        border-color: #1ac9cc !important;
+        border-color: #10b981 !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1) !important;
       }
 
       :global(.text) {
@@ -151,8 +150,8 @@
           padding: 12px 16px !important;
 
           &:hover {
-            background: rgba(26, 201, 204, 0.1) !important;
-            color: #1ac9cc !important;
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #10b981 !important;
           }
 
           :global(.label) {
@@ -176,15 +175,15 @@
 
       /* Style for multiple selection labels (tokens) */
       :global(.label) {
-        background: rgba(26, 201, 204, 0.2) !important;
-        color: #1ac9cc !important;
+        background: rgba(16, 185, 129, 0.2) !important;
+        color: #10b981 !important;
         border-radius: 8px !important;
         font-weight: 600 !important;
         padding: 6px 10px !important;
-        border: 1px solid rgba(26, 201, 204, 0.3) !important;
+        border: 1px solid rgba(16, 185, 129, 0.3) !important;
 
         :global(.delete.icon) {
-          color: #1ac9cc !important;
+          color: #10b981 !important;
           opacity: 0.7;
 
           &:hover {
@@ -204,9 +203,9 @@
       transition: all 0.2s ease !important;
 
       &:focus {
-        border-color: #1ac9cc !important;
+        border-color: #10b981 !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1) !important;
       }
     }
   }
@@ -216,5 +215,18 @@
     :global(.field) {
       @extend .formField;
     }
+  }
+
+  /* Reduce spacing between Tabs and Content */
+  :global(.ui.pointing.secondary.menu) {
+    margin-bottom: 0.5rem !important;
+    /* Reduced from default */
+  }
+
+  :global(.ui.bottom.attached.segment.tab) {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    margin-top: 0 !important;
   }
 }
