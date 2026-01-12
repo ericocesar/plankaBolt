@@ -662,7 +662,7 @@ function Support({ isEmbed = false, hideHeader = false, prefillData = {} }) {
                         [styles.active]: stepNumber === currentStep,
                       })}
                     >
-                      STEP {stepNumber}
+                      PASSO {stepNumber}
                     </span>
                     <span
                       className={classNames(styles.stepLabel, {

@@ -248,10 +248,14 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
 
     if (field.type === 'select') {
       return (
-        <select disabled={field.readOnly}>
-          <option>{field.placeholder || 'Selecione uma opção...'}</option>
+        <select disabled={field.readOnly} defaultValue={field.defaultValue || ''}>
+          <option value="" disabled>
+            {field.placeholder || 'Selecione uma opção...'}
+          </option>
           {(field.options || []).map((opt) => (
-            <option key={opt.value}>{opt.label}</option>
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
           ))}
         </select>
       );
@@ -336,14 +340,6 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '2rem', marginBottom: '1.5rem' }}>
-            <Form.Checkbox
-              label="Somente Leitura"
-              checked={!!selectedField.readOnly}
-              onChange={(e, { checked }) => updateField(selectedField.id, { readOnly: checked })}
-            />
-          </div>
-
           {selectedField.type === 'text' && (
             <div className={styles.formField}>
               <Form.Input
@@ -366,7 +362,12 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
               {(selectedField.options || []).map((option) => (
                 <div
                   key={option.value}
-                  style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}
+                  style={{
+                    display: 'flex',
+                    gap: '10px',
+                    marginBottom: '10px',
+                    alignItems: 'center',
+                  }}
                 >
                   <input
                     value={option.label || ''}
@@ -384,6 +385,36 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                       border: '1px solid rgba(255,255,255,0.08)',
                       color: '#fff',
                       fontSize: '0.9rem',
+                    }}
+                  />
+                  <Button
+                    icon={
+                      selectedField.defaultValue === option.value
+                        ? 'check circle'
+                        : 'circle outline'
+                    }
+                    size="mini"
+                    circular
+                    onClick={() =>
+                      updateField(selectedField.id, {
+                        defaultValue:
+                          selectedField.defaultValue === option.value ? '' : option.value,
+                      })
+                    }
+                    title={
+                      selectedField.defaultValue === option.value
+                        ? 'Remover padrão'
+                        : 'Definir como padrão'
+                    }
+                    style={{
+                      background:
+                        selectedField.defaultValue === option.value
+                          ? 'rgba(26, 201, 204, 0.2)'
+                          : 'rgba(255,255,255,0.05)',
+                      color:
+                        selectedField.defaultValue === option.value
+                          ? '#1ac9cc'
+                          : 'rgba(255,255,255,0.4)',
                     }}
                   />
                   <Button

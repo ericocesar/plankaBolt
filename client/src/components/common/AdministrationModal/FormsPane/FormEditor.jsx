@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Message, Segment, Header, Tab, Divider, Icon } from 'semantic-ui-react';
+import { Form, Button, Message, Header, Tab, Divider } from 'semantic-ui-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from 'redux-orm';
 import orm from '../../../../orm';
@@ -301,6 +301,7 @@ function FormEditor({ form, onSave, onCancel }) {
       const response = await api.publishForm(formId, headers);
       if (response && response.item) {
         setPublishedSchemaVersion(response.item.publishedSchemaVersion || null);
+        // Reload form to update unpublished status if needed
       }
     } catch (err) {
       setPublishError(err.message || 'Falha ao publicar o formulário');
@@ -327,32 +328,30 @@ function FormEditor({ form, onSave, onCancel }) {
           }}
         >
           <Form>
-            <Form.Input
-              label="Nome do Formulário"
-              value={name}
-              onChange={handleNameChange}
-              required
-              placeholder="Digite o nome do formulário"
-            />
-
-            <Form.Dropdown
-              label="Tipo do Card"
-              options={[
-                { key: 'project', text: 'PROJETO', value: 'project' },
-                { key: 'history', text: 'HISTÓRICO', value: 'history' },
-              ]}
-              value={[cardType]}
-              onChange={(e, { value }) =>
-                setCardType(value.length ? value[value.length - 1] : 'project')
-              }
-              placeholder="Selecionar Tipo"
-              selection
-              multiple
-              fluid
-              required
-            />
-
             <Form.Group widths="equal">
+              <Form.Input
+                label="TÍTULO DO FORMULÁRIO"
+                value={name}
+                onChange={handleNameChange}
+                required
+                placeholder="Digite o nome do formulário"
+              />
+              <Form.Dropdown
+                label="Tipo do Card"
+                options={[
+                  { key: 'project', text: 'PROJETO', value: 'project' },
+                  { key: 'history', text: 'HISTÓRICO', value: 'history' },
+                ]}
+                value={[cardType]}
+                onChange={(e, { value }) =>
+                  setCardType(value.length ? value[value.length - 1] : 'project')
+                }
+                placeholder="Selecionar Tipo"
+                selection
+                multiple
+                fluid
+                required
+              />
               <Form.Dropdown
                 label="Projeto"
                 options={projectOptions}
@@ -412,9 +411,6 @@ function FormEditor({ form, onSave, onCancel }) {
                 onChange={handleAssigneeIdsChange}
                 disabled={!projectId}
               />
-            </Form.Group>
-
-            <Form.Group widths="equal">
               <Form.Dropdown
                 label="Selecionar Rótulos"
                 placeholder="Selecionar Rótulos"
@@ -492,65 +488,57 @@ function FormEditor({ form, onSave, onCancel }) {
         </Tab.Pane>
       ),
     },
-    {
-      menuItem: 'Publicação',
-      render: () => (
-        <Tab.Pane attached={false} segment={false}>
-          <Segment>
-            <Header as="h5">
-              <Icon name="cloud upload" />
-              Publicar formulário
-            </Header>
-            {hasSavedForm ? (
-              <>
-                <p>
-                  {publishedSchemaVersion
-                    ? `Publicado: v${publishedSchemaVersion}`
-                    : 'Nenhuma versão publicada ainda.'}
-                </p>
-                <Button
-                  color="green"
-                  onClick={handlePublish}
-                  loading={publishLoading}
-                  disabled={publishLoading}
-                >
-                  Publicar
-                </Button>
-              </>
-            ) : (
-              <Message info content="Salve o formulário antes de publicar." />
-            )}
-            {publishError && <Message error header="Erro ao publicar" content={publishError} />}
-          </Segment>
-        </Tab.Pane>
-      ),
-    },
   ];
 
   return (
     <div className={styles.wrapper}>
       {error && <Message error header="Erro" content={error} />}
+      {publishError && <Message error header="Erro ao publicar" content={publishError} />}
       <div className={styles.headerContainer}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <Button className={styles.backButton} icon="arrow left" onClick={onCancel} />
           <Header as="h2" className={styles.headerTitle}>
             {hasSavedForm ? `Editar: ${name}` : 'Novo Formulário'}
           </Header>
+          {hasSavedForm && publishedSchemaVersion && (
+            <span
+              style={{
+                background: 'rgba(16, 185, 129, 0.15)',
+                color: '#10b981',
+                border: '1px solid rgba(16, 185, 129, 0.2)',
+                padding: '4px 10px',
+                borderRadius: '8px',
+                fontSize: '0.8.5rem',
+                fontWeight: '700',
+              }}
+            >
+              Publicado v{publishedSchemaVersion}
+            </span>
+          )}
         </div>
         <div className={styles.headerActions}>
           <Button
             className={styles.cancelButton}
-            content="Cancelar"
+            content="Voltar"
             onClick={onCancel}
             disabled={isBusy}
           />
           <Button
             className={styles.saveButton}
-            content="Salvar Alterações"
+            content="Salvar Rascunho"
             loading={loading}
             disabled={isBusy || !name || !listId}
             onClick={() => handleSubmit()}
           />
+          {hasSavedForm && (
+            <Button
+              className={styles.publishButton}
+              icon="cloud upload"
+              content="Publicar"
+              loading={publishLoading}
+              disabled={publishLoading}
+              onClick={handlePublish}
+            />
+          )}
         </div>
       </div>
 

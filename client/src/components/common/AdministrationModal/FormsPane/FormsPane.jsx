@@ -163,6 +163,18 @@ function FormsPane() {
                 <span className={styles.formMeta}>
                   {form.id} • {new Date(form.createdAt).toLocaleDateString()}
                 </span>
+                <div className={styles.statusTags}>
+                  {form.publishedVersion && (
+                    <span className={`${styles.tag} ${styles.public}`}>
+                      PÚBLICO v{form.publishedVersion}
+                    </span>
+                  )}
+                  {form.hasUnpublishedChanges && (
+                    <span className={`${styles.tag} ${styles.unpublished}`}>
+                      Modificações pendentes
+                    </span>
+                  )}
+                </div>
               </div>
               <div className={styles.formActions}>
                 <Button

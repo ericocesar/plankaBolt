@@ -26,7 +26,6 @@ module.exports.up = async (knex) => {
     'custom_field_group',
     'custom_field',
     'custom_field_value',
-    'file_reference',
     'identity_provider_user',
     'session',
     'background_image',

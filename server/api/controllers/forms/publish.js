@@ -55,6 +55,31 @@ module.exports = {
       };
     }
 
+    // Check if there's already a published version
+    let currentPublishedVersion = null;
+    if (form.publishedSchemaVersionId) {
+      currentPublishedVersion = await FormSchemaVersion.findOne({
+        id: form.publishedSchemaVersionId,
+      });
+    }
+
+    // Compare schemas - only create new version if there are actual changes
+    if (currentPublishedVersion) {
+      const currentSchemaStr = JSON.stringify(currentPublishedVersion.schema);
+      const draftSchemaStr = JSON.stringify(form.draftSchema);
+
+      // If schemas are identical, return current version without creating a new one
+      if (currentSchemaStr === draftSchemaStr) {
+        return {
+          item: {
+            ...form,
+            publishedSchema: currentPublishedVersion.schema,
+            publishedSchemaVersion: currentPublishedVersion.version,
+          },
+        };
+      }
+    }
+
     const latestVersion = await FormSchemaVersion.find({
       formId: form.id,
     })
