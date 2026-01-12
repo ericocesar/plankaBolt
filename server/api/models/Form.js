@@ -59,5 +59,30 @@ module.exports = {
       model: 'FormSchemaVersion',
       columnName: 'published_schema_version_id',
     },
+    dueDateType: {
+      type: 'string',
+      isIn: ['none', 'relative', 'fixed'],
+      defaultsTo: 'none',
+      columnName: 'due_date_type',
+    },
+    dueDateQuantity: {
+      type: 'number',
+      columnName: 'due_date_quantity',
+    },
+    dueDateUnit: {
+      type: 'string',
+      isIn: ['days', 'hours'],
+      columnName: 'due_date_unit',
+    },
+    dueDateFixed: {
+      type: 'string', // ISO date string
+      columnName: 'due_date_fixed',
+    },
+    cardType: {
+      type: 'string',
+      isIn: ['card', 'project', 'history'], // 'card' is default generic if needed? User asked Project/History options. Let's include card as fallback or existing?
+      defaultsTo: 'project',
+      columnName: 'card_type',
+    },
   },
 };

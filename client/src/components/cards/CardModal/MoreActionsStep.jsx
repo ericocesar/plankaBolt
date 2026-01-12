@@ -29,7 +29,6 @@ const MoreActionsStep = React.memo(({ onClose }) => {
   const selectListById = useMemo(() => selectors.makeSelectListById(), []);
 
   const card = useSelector(selectors.selectCurrentCard);
-  const board = useSelector(selectors.selectCurrentBoard);
 
   const { canEditType, canDuplicate, canMove } = useSelector((state) => {
     const list = selectListById(state, card.listId);
@@ -108,7 +107,7 @@ const MoreActionsStep = React.memo(({ onClose }) => {
       </Popup.Header>
       <Popup.Content>
         <Menu secondary vertical className={styles.menu}>
-          {!board.limitCardTypesToDefaultOne && canEditType && (
+          {canEditType && (
             <Menu.Item className={styles.menuItem} onClick={handleEditTypeClick}>
               <Icon name="map outline" className={styles.menuItemIcon} />
               {t('action.editType', {

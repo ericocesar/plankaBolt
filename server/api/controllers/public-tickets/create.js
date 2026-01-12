@@ -315,15 +315,30 @@ module.exports = {
     const lastCard = await Card.find({ listId: form.listId }).sort('position DESC').limit(1);
     const position = lastCard.length > 0 ? lastCard[0].position + 65536 : 65536;
 
+    // Calculate Due Date based on Form settings
+    let dueDate = null; // Default to none
+    if (form.dueDateType === 'fixed') {
+      dueDate = form.dueDateFixed;
+    } else if (form.dueDateType === 'relative' && form.dueDateQuantity && form.dueDateUnit) {
+      dueDate = moment().add(form.dueDateQuantity, form.dueDateUnit).toISOString();
+    }
+
+    // Determine Card Type
+    // Map form types to valid Card model types (project, story)
+    let cardType = 'story';
+    if (form.cardType === 'project') {
+      cardType = 'project';
+    }
+
     // 3. Create Card
     const card = await Card.create({
       boardId: form.boardId,
       listId: form.listId,
       name: subject,
       description,
-      type: 'story', // Default type (was 'card' which is invalid)
+      type: cardType,
       position,
-      dueDate: moment().add(1, 'days').toISOString(),
+      dueDate,
       creatorUserId: null, // Public
     }).fetch();
 

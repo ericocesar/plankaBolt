@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
 import { Button, Checkbox, Grid, Icon } from 'semantic-ui-react';
 import { useDidUpdate } from '../../../lib/hooks';
 
@@ -551,6 +552,15 @@ const ProjectContent = React.memo(() => {
           <div className={styles.sticky}>
             <div className={styles.actions}>
               <div className={classNames(styles.attachments, styles.attachmentsList)}>
+                <div className={classNames(styles.text, styles.textList)}>
+                  {t('common.createdAt')}
+                </div>
+                <span className={styles.list}>
+                  <Icon name="clock outline" size="small" className={styles.listIcon} />
+                  <span className={styles.hidable}>
+                    {format(new Date(card.createdAt), 'dd/MM/yyyy HH:mm')}
+                  </span>
+                </span>
                 <div className={classNames(styles.text, styles.textList)}>{t('common.list')}</div>
                 {canUseLists ? (
                   <ListsPopup currentId={list.id} onSelect={handleListSelect}>

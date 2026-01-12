@@ -1,0 +1,46 @@
+.checkbox {
+  // Apply styles to label inside our checkbox
+  // We use !important to override Semantic UI default styles
+
+  label {
+    color: #ffffff !important;
+    font-weight: 500;
+
+    &:before {
+      background: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+    }
+
+    &:after {
+      color: #ffffff !important;
+    }
+
+    &:hover:before {
+      border-color: #00b5ad !important; // Teal hover
+      background: rgba(0, 255, 255, 0.05) !important;
+    }
+  }
+
+  // Checked state
+  // Semantic UI uses input:checked ~ label
+  input:checked ~ label {
+    color: #ffffff !important;
+
+    &:before {
+      background: #00b5ad !important; // Teal background
+      border-color: #00b5ad !important;
+    }
+
+    &:after {
+      color: #ffffff !important; // Checkmark
+    }
+  }
+
+  // Focus state
+  input:focus ~ label:before {
+    border-color: #00b5ad !important;
+    box-shadow: 0 0 0 2px rgba(0, 181, 173, 0.2) !important;
+  }
+}

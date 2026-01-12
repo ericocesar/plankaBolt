@@ -56,13 +56,14 @@
     color: #e6f7ff;
     /* Light blue text for readability on dark bg */
     font-size: 11px;
-    /* Slightly increased from 10px */
     line-height: 1.4;
     margin-bottom: 8px;
-    mask-image: linear-gradient(180deg, #000 70%, transparent);
-    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent);
-    max-height: 100px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
     opacity: 0.9;
   }
 

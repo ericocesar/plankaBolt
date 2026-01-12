@@ -123,6 +123,7 @@ export default {
       contentExceedsLimit: 'Content exceeds {{limit}}',
       contentOfThisAttachmentIsTooBigToDisplay: 'Content of this attachment is too big to display.',
       copy_inline: 'copy',
+      createdAt: 'Created at',
       createBoard_title: 'Create Board',
       createCustomFieldGroup_title: 'Create Custom Field Group',
       createLabel_title: 'Create Label',

@@ -28,6 +28,14 @@ function FormEditor({ form, onSave, onCancel }) {
   const [labelIds, setLabelIds] = useState(form ? form.labelIds || [] : []);
   const [categoryMapping, setCategoryMapping] = useState(form ? form.categoryMapping || {} : {});
   const [isActive, setIsActive] = useState(form ? form.isActive : true);
+
+  // Due date assignment fields
+  const [dueDateType, setDueDateType] = useState(form?.dueDateType || 'none');
+  const [dueDateQuantity, setDueDateQuantity] = useState(form?.dueDateQuantity || 1);
+  const [dueDateUnit, setDueDateUnit] = useState(form?.dueDateUnit || 'days');
+  const [dueDateFixed, setDueDateFixed] = useState(form?.dueDateFixed || '');
+  const [cardType, setCardType] = useState(form?.cardType || 'project');
+
   const [draftSchema, setDraftSchema] = useState(
     normalizeSchema(form ? form.draftSchema : null, form ? form.name : 'Formulário'),
   );
@@ -173,7 +181,7 @@ function FormEditor({ form, onSave, onCancel }) {
   }, []);
 
   const handleNameChange = useCallback((e, { value }) => {
-    setName(value);
+    setName(value.toUpperCase());
   }, []);
 
   const hydrateFormState = useCallback((data) => {
@@ -192,6 +200,12 @@ function FormEditor({ form, onSave, onCancel }) {
     setLabelIds(nextLabelIds);
     setCategoryMapping(data?.categoryMapping || {});
     setIsActive(typeof data?.isActive === 'boolean' ? data.isActive : true);
+    setDueDateType(data?.dueDateType || 'none');
+    setDueDateQuantity(data?.dueDateQuantity || 1);
+    setDueDateUnit(data?.dueDateUnit || 'days');
+    setDueDateUnit(data?.dueDateUnit || 'days');
+    setDueDateFixed(data?.dueDateFixed || '');
+    setCardType(data?.cardType || 'project');
     setDraftSchema(normalizeSchema(data?.draftSchema || null, data?.name || 'Formulário'));
     setPublishedSchemaVersion(data?.publishedSchemaVersion || null);
     setCurrentFormId(data?.id || null);
@@ -243,6 +257,11 @@ function FormEditor({ form, onSave, onCancel }) {
       labelIds,
       categoryMapping,
       isActive,
+      dueDateType,
+      dueDateQuantity,
+      dueDateUnit,
+      dueDateFixed,
+      cardType,
       draftSchema,
     };
 
@@ -316,44 +335,73 @@ function FormEditor({ form, onSave, onCancel }) {
               placeholder="Digite o nome do formulário"
             />
 
+            <Form.Dropdown
+              label="Tipo do Card"
+              options={[
+                { key: 'project', text: 'PROJETO', value: 'project' },
+                { key: 'history', text: 'HISTÓRICO', value: 'history' },
+              ]}
+              value={[cardType]}
+              onChange={(e, { value }) =>
+                setCardType(value.length ? value[value.length - 1] : 'project')
+              }
+              placeholder="Selecionar Tipo"
+              selection
+              multiple
+              fluid
+              required
+            />
+
             <Form.Group widths="equal">
-              <Form.Select
+              <Form.Dropdown
                 label="Projeto"
                 options={projectOptions}
-                value={projectId}
-                onChange={handleProjectIdChange}
+                value={projectId ? [projectId] : []}
+                onChange={(e, { value }) =>
+                  handleProjectIdChange(e, { value: value.length ? value[value.length - 1] : null })
+                }
                 placeholder="Selecionar Projeto"
                 search
                 selection
+                multiple
+                fluid
                 required
               />
-              <Form.Select
+              <Form.Dropdown
                 label="Quadro"
                 options={boardOptions}
-                value={boardId}
-                onChange={handleBoardIdChange}
+                value={boardId ? [boardId] : []}
+                onChange={(e, { value }) =>
+                  handleBoardIdChange(e, { value: value.length ? value[value.length - 1] : null })
+                }
                 placeholder="Selecionar Quadro"
                 disabled={!projectId}
                 search
                 selection
-                required
-              />
-              <Form.Select
-                label="Lista"
-                options={listOptions}
-                value={listId}
-                onChange={handleListIdChange}
-                placeholder="Selecionar Lista"
-                disabled={!boardId}
-                search
-                selection
+                multiple
+                fluid
                 required
               />
             </Form.Group>
 
             <Form.Group widths="equal">
               <Form.Dropdown
-                label="Atribuir Membros Automaticamente"
+                label="Lista"
+                options={listOptions}
+                value={listId ? [listId] : []}
+                onChange={(e, { value }) =>
+                  handleListIdChange(e, { value: value.length ? value[value.length - 1] : null })
+                }
+                placeholder="Selecionar Lista"
+                disabled={!boardId}
+                search
+                selection
+                multiple
+                fluid
+                required
+              />
+              <Form.Dropdown
+                label="Atribuir Membros"
                 placeholder="Selecionar Membros"
                 fluid
                 multiple
@@ -364,6 +412,9 @@ function FormEditor({ form, onSave, onCancel }) {
                 onChange={handleAssigneeIdsChange}
                 disabled={!projectId}
               />
+            </Form.Group>
+
+            <Form.Group widths="equal">
               <Form.Dropdown
                 label="Selecionar Rótulos"
                 placeholder="Selecionar Rótulos"
@@ -376,6 +427,50 @@ function FormEditor({ form, onSave, onCancel }) {
                 onChange={handleLabelIdsChange}
                 disabled={!boardId}
               />
+              <Form.Field>
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label htmlFor="dueDateTypeSelect">Atribuir vencimento</label>
+                <Form.Select
+                  id="dueDateTypeSelect"
+                  value={dueDateType}
+                  onChange={(e, { value }) => setDueDateType(value)}
+                  options={[
+                    { key: 'none', text: 'Sem vencimento', value: 'none' },
+                    { key: 'relative', text: 'Quantidade após criação', value: 'relative' },
+                    { key: 'fixed', text: 'Data e horário fixo', value: 'fixed' },
+                  ]}
+                  placeholder="Selecionar tipo"
+                />
+                {dueDateType === 'relative' && (
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                    <Form.Input
+                      type="number"
+                      value={dueDateQuantity}
+                      onChange={(e, { value }) => setDueDateQuantity(Number(value))}
+                      min={1}
+                      style={{ flex: 1 }}
+                      placeholder="Quantidade"
+                    />
+                    <Form.Select
+                      value={dueDateUnit}
+                      onChange={(e, { value }) => setDueDateUnit(value)}
+                      options={[
+                        { key: 'hours', text: 'horas', value: 'hours' },
+                        { key: 'days', text: 'dias', value: 'days' },
+                      ]}
+                      style={{ flex: 1 }}
+                    />
+                  </div>
+                )}
+                {dueDateType === 'fixed' && (
+                  <Form.Input
+                    type="datetime-local"
+                    value={dueDateFixed}
+                    onChange={(e, { value }) => setDueDateFixed(value)}
+                    style={{ marginTop: '0.5rem' }}
+                  />
+                )}
+              </Form.Field>
             </Form.Group>
 
             <Divider />

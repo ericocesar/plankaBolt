@@ -21,6 +21,7 @@ export function* createBoard(projectId, { import: boardImport, ...data }) {
   const nextData = {
     ...data,
     position: yield select(selectors.selectNextBoardPosition, projectId),
+    defaultCardType: 'project', // Set default card type to Project
   };
 
   yield put(

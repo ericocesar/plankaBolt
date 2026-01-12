@@ -16,16 +16,36 @@
   }
 
   .field {
-    background: #fff;
-    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 
     textarea {
-      border: 1px solid rgba(9, 30, 66, 0.13);
-      border-radius: 3px;
-      color: #333;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      caret-color: #ffffff !important;
       line-height: 1.4;
       margin: 0 !important;
-      padding: 8px 12px;
+      padding: 10px 14px !important;
+      transition: all 0.2s ease !important;
+
+      &:focus {
+        outline: none !important;
+      }
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+      }
+    }
+
+    &:focus-within {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border-color: #1ac9cc !important;
+      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
     }
   }
 

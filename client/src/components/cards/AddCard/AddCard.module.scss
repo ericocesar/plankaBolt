@@ -4,8 +4,15 @@
  */
 
 :global(#app) {
+  /* Neural Interface Styling for Add Card Dialog */
+
   .button {
     white-space: nowrap;
+    border-radius: 12px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    color: #fff !important;
   }
 
   .controls {
@@ -13,48 +20,82 @@
   }
 
   .field {
-    border: none;
+    /* Neural Interface Textarea Styling */
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    color: #fff !important;
+    padding: 14px 18px !important;
+    transition: all 0.2s ease !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
     margin-bottom: 4px;
     outline: none;
     overflow: hidden;
-    padding: 0;
     resize: none;
     width: 100%;
+
+    &:focus {
+      border-color: #1ac9cc !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
+    }
   }
 
   .fieldWrapper {
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 #ccc;
+    /* Transparent wrapper - styling moved to field itself */
+    background: transparent !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
     margin-bottom: 8px;
     min-height: 20px;
-    padding: 6px 8px 2px;
+    padding: 0 !important;
   }
 
   .selectTypeButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
-    font-weight: normal;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: normal !important;
     margin-left: auto;
     margin-right: 0;
     overflow: hidden;
     text-align: left;
     text-decoration: underline;
     text-overflow: ellipsis;
-    transition: none;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #1ac9cc !important;
     }
   }
 
   .selectTypeButtonIcon {
     text-decoration: none;
+    color: inherit !important;
   }
 
   .wrapperClosed {
     display: none;
+  }
+
+  /* Positive Button Styling */
+  :global(.ui.button.positive) {
+    background: #1ac9cc !important;
+    color: #000 !important;
+    box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+    border: none !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+      background: #fff !important;
+    }
   }
 }

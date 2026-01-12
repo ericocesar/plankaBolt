@@ -12,6 +12,7 @@ import { Icon } from 'semantic-ui-react';
 import selectors from '../../../selectors';
 import entryActions from '../../../entry-actions';
 import { startStopwatch, stopStopwatch } from '../../../utils/stopwatch';
+import markdownToText from '../../../utils/markdown-to-text';
 import { isListArchiveOrTrash } from '../../../utils/record-helpers';
 import { BoardMembershipRoles, BoardViews } from '../../../constants/Enums';
 import TaskList from './TaskList';
@@ -74,6 +75,11 @@ const ProjectContent = React.memo(({ cardId }) => {
     const attachment = selectAttachmentById(state, card.coverAttachmentId);
     return attachment && attachment.data.thumbnailUrls.outside360;
   });
+
+  const descriptionText = useMemo(
+    () => card.description && markdownToText(card.description),
+    [card.description],
+  );
 
   const { listName, withCreator } = useSelector((state) => {
     const board = selectors.selectCurrentBoard(state);
@@ -151,6 +157,7 @@ const ProjectContent = React.memo(({ cardId }) => {
           <img src={coverUrl} alt="" className={styles.cover} />
         </div>
       )}
+      {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
       {labelIds.length > 0 && (
         <span className={classNames(styles.labels, !isCompact && styles.labelsFull)}>
           {labelIds.map((labelId) => (
@@ -213,7 +220,7 @@ const ProjectContent = React.memo(({ cardId }) => {
               </span>
             </span>
           )}
-          {card.description && (
+          {card.description && !descriptionText && (
             <span className={classNames(styles.attachment, styles.attachmentLeft)}>
               <span className={styles.attachmentContent}>
                 <Icon name="align left" />

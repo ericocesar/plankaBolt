@@ -59,6 +59,21 @@
     overflow: hidden;
   }
 
+  .descriptionText {
+    color: #e6f7ff;
+    /* Light blue text for readability on dark bg */
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    opacity: 0.9;
+  }
+
   .creatorDivider {
     background: #dce0e4;
     display: inline-block;

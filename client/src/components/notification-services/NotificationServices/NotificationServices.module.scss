@@ -8,6 +8,7 @@
     display: flex;
     gap: 12px;
     margin-bottom: 24px;
+    align-items: stretch;
   }
 
   .button {
@@ -17,21 +18,72 @@
     color: #000 !important;
     font-weight: 600 !important;
     padding: 10px 20px !important;
+    flex-shrink: 0;
   }
 
   .field {
-    flex: auto;
+    flex: 1 1 auto;
+    display: flex !important;
+    align-items: stretch !important;
+
+    :global(.ui.input) {
+      flex: 1 1 auto;
+      display: flex !important;
+    }
 
     :global(input) {
       background: rgba(0, 0, 0, 0.2) !important;
       border: 1px solid rgba(255, 255, 255, 0.05) !important;
-      border-radius: 12px !important;
+      border-radius: 12px 0 0 12px !important;
       color: #fff !important;
       padding: 10px 15px !important;
       width: 100% !important;
+      border-right: none !important;
 
       &:focus {
         border-color: #1ac9cc !important;
+        border-right: none !important;
+      }
+    }
+
+    /* Dropdown label on the right */
+    :global(.ui.label) {
+      background: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-left: none !important;
+      border-radius: 0 12px 12px 0 !important;
+      padding: 10px 15px !important;
+      display: flex !important;
+      align-items: center !important;
+      margin: 0 !important;
+      flex-shrink: 0;
+
+      :global(.ui.dropdown) {
+        background: transparent !important;
+        border: none !important;
+        color: #fff !important;
+        padding: 0 !important;
+        min-width: 100px;
+
+        :global(.text) {
+          color: #fff !important;
+        }
+
+        :global(.menu) {
+          background: rgba(10, 10, 15, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          border-radius: 12px !important;
+
+          :global(.item) {
+            color: #fff !important;
+            background: transparent !important;
+
+            &:hover {
+              background: rgba(26, 201, 204, 0.1) !important;
+              color: #1ac9cc !important;
+            }
+          }
+        }
       }
     }
   }

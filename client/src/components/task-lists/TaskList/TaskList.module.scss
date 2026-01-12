@@ -5,7 +5,7 @@
 
 :global(#app) {
   .count {
-    color: #8c8c8c;
+    color: rgba(255, 255, 255, 0.7) !important;
     font-size: 14px;
     line-height: 14px;
   }
@@ -31,10 +31,10 @@
   }
 
   .taskButton {
-    background: transparent;
+    background: transparent !important;
     border: none;
-    border-radius: 3px;
-    color: #6b808c;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
     cursor: pointer;
     display: block;
     margin-top: 6px;
@@ -45,10 +45,11 @@
     text-align: left;
     text-decoration: none;
     width: 100%;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.04);
-      color: #092d42;
+      background: rgba(26, 201, 204, 0.1) !important;
+      color: #1ac9cc !important;
     }
   }
 

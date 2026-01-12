@@ -148,12 +148,19 @@
     :global(.ui.radio.checkbox),
     :global(.ui.checkbox) {
       margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+      display: flex !important;
+      align-items: center !important;
+      min-height: 2.5rem !important;
 
       :global(label) {
         color: #fff !important;
         /* White as requested */
         font-weight: 500 !important;
         padding-left: 2rem !important;
+        padding-right: 3rem !important;
+        display: inline-block !important;
+        line-height: 1.5 !important;
 
         &:before {
           background: rgba(0, 0, 0, 0.3) !important;

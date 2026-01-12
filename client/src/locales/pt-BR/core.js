@@ -131,6 +131,7 @@ export default {
       contentOfThisAttachmentIsTooBigToDisplay:
         'O conteúdo deste anexo é muito grande para ser exibido.',
       copy_inline: 'cópia',
+      createdAt: 'Criado em',
       createBoard_title: 'Criar quadro',
       createCustomFieldGroup_title: 'Criar grupo de campo personalizado',
       createLabel_title: 'Criar rótulo',

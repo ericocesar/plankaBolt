@@ -10,20 +10,36 @@
   }
 
   .field {
-    background: #fff;
-    border: 1px solid rgba(9, 30, 66, 0.08);
-    border-radius: 3px;
-    color: #17394d;
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    caret-color: #000 !important;
     display: block;
     line-height: 1.5;
     font-size: 14px;
     margin-bottom: 4px;
-    padding: 8px 12px;
+    padding: 10px 14px !important;
     resize: none;
+    transition: all 0.2s ease !important;
+
+    &:focus {
+      background: rgba(0, 0, 0, 0.05) !important;
+      border-color: #2185d0 !important;
+      box-shadow: 0 0 0 2px rgba(33, 133, 208, 0.15) !important;
+    }
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.5) !important;
+      -webkit-text-fill-color: rgba(0, 0, 0, 0.5) !important;
+    }
 
     :global {
       .menu {
-        border: 1px solid rgba(9, 30, 66, 0.08);
+        background: rgba(10, 10, 15, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
       }
 
       .search {
@@ -33,26 +49,27 @@
   }
 
   .toggleLinkingButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
-    font-weight: normal;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #2185d0 !important;
+    font-weight: normal !important;
     margin-left: auto;
     margin-right: 0;
     overflow: hidden;
     text-align: left;
     text-decoration: underline;
     text-overflow: ellipsis;
-    transition: none;
+    transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(26, 201, 204, 0.1) !important;
+      color: #1ac9cc !important;
     }
   }
 
   .toggleLinkingButtonIcon {
     text-decoration: none;
+    color: inherit !important;
   }
 
   .wrapper {

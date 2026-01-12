@@ -25,7 +25,17 @@ export default (markdown) => {
       }
 
       return token.children
-        .flatMap((childrenToken) => (childrenToken.type === 'text' ? childrenToken.content : []))
+        .flatMap((childrenToken) => {
+          if (childrenToken.type === 'text') {
+            return childrenToken.content;
+          }
+
+          if (childrenToken.type === 'softbreak' || childrenToken.type === 'hardbreak') {
+            return '\n';
+          }
+
+          return [];
+        })
         .join('');
     })
     .join('\n');

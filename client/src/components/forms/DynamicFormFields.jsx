@@ -5,6 +5,7 @@ import { Form, Label } from 'semantic-ui-react';
 import InputMask from 'react-input-mask';
 import StackedCardsUpload from '../Support/StackedCardsUpload';
 import { DEFAULT_PRIORITY_OPTIONS } from '../../utils/formSchema';
+import styles from './DynamicFormFields.module.scss';
 
 const buildRows = (fields, columns = 1) => {
   if (columns <= 1) {
@@ -170,6 +171,7 @@ function DynamicFormFields({
               <Form.Field key={field.id} error={hasError} className={errorClass}>
                 <Form.Checkbox
                   id={fieldDomId}
+                  className={styles.checkbox}
                   label={renderLabel(field)}
                   checked={fieldValue === true}
                   onChange={(e, { checked }) => handleValueChange(field.id, checked)}
