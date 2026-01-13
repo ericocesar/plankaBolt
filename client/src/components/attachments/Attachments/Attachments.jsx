@@ -4,7 +4,6 @@
  */
 
 import React, { useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Gallery } from 'react-photoswipe-gallery';
@@ -17,9 +16,9 @@ import Item from './Item';
 
 import styles from './Attachments.module.scss';
 
-const INITIALLY_VISIBLE = 4;
+const INITIALLY_VISIBLE = 2;
 
-const Attachments = React.memo(({ hideImagesWhenNotAllVisible }) => {
+const Attachments = React.memo(() => {
   const attachments = useSelector(selectors.selectAttachmentsForCurrentCard);
 
   const [t] = useTranslation();
@@ -46,15 +45,8 @@ const Attachments = React.memo(({ hideImagesWhenNotAllVisible }) => {
   const itemsNode = attachments.map((attachment) => {
     let isVisible = false;
     if (isAllVisible || visibleTotal < INITIALLY_VISIBLE) {
-      if (
-        isAllVisible ||
-        !hideImagesWhenNotAllVisible ||
-        !attachment.data ||
-        !attachment.data.image
-      ) {
-        visibleTotal += 1;
-        isVisible = true;
-      }
+      visibleTotal += 1;
+      isVisible = true;
     }
 
     return <Item key={attachment.id} id={attachment.id} isVisible={isVisible} />;
@@ -89,7 +81,7 @@ const Attachments = React.memo(({ hideImagesWhenNotAllVisible }) => {
         }}
         onBeforeOpen={handleBeforeGalleryOpen}
       >
-        {itemsNode}
+        <div className={styles.grid}>{itemsNode}</div>
       </Gallery>
       {(isAllVisible ? attachments.length > hiddenTotal : hiddenTotal > 0) && (
         <Button
@@ -109,12 +101,8 @@ const Attachments = React.memo(({ hideImagesWhenNotAllVisible }) => {
   );
 });
 
-Attachments.propTypes = {
-  hideImagesWhenNotAllVisible: PropTypes.bool,
-};
+Attachments.propTypes = {};
 
-Attachments.defaultProps = {
-  hideImagesWhenNotAllVisible: false,
-};
+Attachments.defaultProps = {};
 
 export default Attachments;

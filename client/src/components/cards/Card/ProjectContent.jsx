@@ -151,13 +151,19 @@ const ProjectContent = React.memo(({ cardId }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>{card.name}</div>
-      {coverUrl && (
-        <div className={styles.coverWrapper}>
-          <img src={coverUrl} alt="" className={styles.cover} />
+      <div className={classNames(styles.headerWrapper, coverUrl && styles.headerWrapperWithCover)}>
+        {coverUrl && (
+          <div className={styles.coverWrapper}>
+            <img src={coverUrl} alt="" className={styles.cover} />
+          </div>
+        )}
+        <div className={styles.headerContent}>
+          <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>
+            {card.name}
+          </div>
+          {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
         </div>
-      )}
-      {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
+      </div>
       {labelIds.length > 0 && (
         <span className={classNames(styles.labels, !isCompact && styles.labelsFull)}>
           {labelIds.map((labelId) => (

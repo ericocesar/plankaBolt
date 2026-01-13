@@ -6,9 +6,12 @@
 :global(#app) {
   .details {
     box-sizing: border-box;
-    padding: 6px 32px 6px 128px;
+    padding: 8px 12px 8px 72px;
     margin: 0;
-    min-height: 80px;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .editButton {
@@ -94,24 +97,25 @@
     align-items: center;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 8px;
     display: flex;
-    height: 80px;
+    height: 52px;
     justify-content: center;
-    margin-top: -40px;
+    margin-top: -26px;
     position: absolute;
     top: 50%;
-    width: 112px;
+    width: 52px;
+    left: 8px;
     overflow: hidden;
   }
 
   .thumbnailExtension {
     color: rgba(255, 255, 255, 0.7);
     display: block;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     overflow: hidden;
-    padding: 0 20px 0 20px;
+    padding: 0 4px;
     text-overflow: ellipsis;
     text-transform: uppercase;
   }
@@ -127,10 +131,10 @@
   .wrapper {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
+    border-radius: 12px;
     cursor: pointer;
     display: block;
-    min-height: 80px;
+    min-height: 64px;
     position: relative;
     transition: all 0.3s ease;
 

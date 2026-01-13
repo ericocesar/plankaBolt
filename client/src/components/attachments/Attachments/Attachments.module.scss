@@ -4,10 +4,17 @@
  */
 
 :global(#app) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
   .toggleButton {
     background: transparent;
     box-shadow: none;
-    color: #6b808c;
+    color: #89CFF0 !important;
     font-weight: normal;
     margin-top: 8px;
     padding: 6px 11px;
@@ -16,8 +23,8 @@
     transition: none;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: rgba(255, 255, 255, 0.08);
+      color: #1ac9cc !important;
     }
   }
 }

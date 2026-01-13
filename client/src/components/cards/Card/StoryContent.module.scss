@@ -40,31 +40,46 @@
   }
 
   .cover {
-    max-height: 340px;
-    object-fit: cover;
-    transition: all .6s cubic-bezier(0.25, 0.1, 0.25, 1);
-    vertical-align: middle;
+    height: 100%;
     width: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .coverWrapper {
-    border-radius: 3px 3px 0 0;
+    flex: 0 0 80px;
+    height: 80px;
+    border-radius: 6px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .headerWrapper {
+    margin-bottom: 8px;
+  }
+
+  .headerWrapperWithCover {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .headerContent {
+    flex: 1;
+    min-width: 0;
   }
 
   .descriptionText {
-    color: #e6f7ff;
-    /* Light blue text for readability on dark bg */
+    color: rgba(255, 255, 255, 0.6);
     font-size: 11px;
-    line-height: 1.4;
-    margin-bottom: 8px;
+    line-height: 1.3;
+    margin-bottom: 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre-wrap;
-    opacity: 0.9;
   }
 
   .labels {
@@ -76,14 +91,13 @@
 
   .name {
     color: #ffffff !important;
-    font-size: 17px !important;
-    /* Increased by 1pt */
+    font-size: 15px !important;
     font-family: "Oswald", sans-serif !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
     letter-spacing: 0.5px !important;
-    line-height: 22px !important;
-    margin: 0 0 8px;
+    line-height: 1.2 !important;
+    margin: 0 0 4px;
     word-wrap: break-word;
   }
 

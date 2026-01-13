@@ -77,71 +77,69 @@ const StoryContent = React.memo(({ cardId }) => {
   );
 
   return (
-    <>
-      {coverUrl && (
-        <div className={styles.coverWrapper}>
-          <img src={coverUrl} alt="" className={styles.cover} />
+    <div className={styles.wrapper}>
+      <div className={classNames(styles.headerWrapper, coverUrl && styles.headerWrapperWithCover)}>
+        {coverUrl && (
+          <div className={styles.coverWrapper}>
+            <img src={coverUrl} alt="" className={styles.cover} />
+          </div>
+        )}
+        <div className={styles.headerContent}>
+          <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>
+            {card.name}
+          </div>
+          {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
         </div>
-      )}
-      <div className={styles.wrapper}>
-        {labelIds.length > 0 && (
-          <span className={styles.labels}>
-            {labelIds.map((labelId) => (
-              <span key={labelId} className={classNames(styles.attachment, styles.attachmentLeft)}>
-                <LabelChip id={labelId} size="tiny" />
-              </span>
-            ))}
-          </span>
-        )}
-        {customFieldValueIds.length > 0 && (
-          <span className={classNames(styles.labels)}>
-            {customFieldValueIds.map((customFieldValueId) => (
-              <span
-                key={customFieldValueId}
-                className={classNames(styles.attachment, styles.attachmentLeft)}
-              >
-                <CustomFieldValueChip id={customFieldValueId} size="tiny" />
-              </span>
-            ))}
-          </span>
-        )}
-        <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>
-          {card.name}
-        </div>
-        {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
-        {(attachmentsTotal > 0 || notificationsTotal > 0 || listName) && (
-          <span className={styles.attachments}>
-            {notificationsTotal > 0 && (
-              <span
-                className={classNames(
-                  styles.attachment,
-                  styles.attachmentLeft,
-                  styles.notification,
-                )}
-              >
-                {notificationsTotal}
-              </span>
-            )}
-            {listName && (
-              <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                <span className={styles.attachmentContent}>
-                  <Icon name="columns" />
-                  {listName}
-                </span>
-              </span>
-            )}
-            {attachmentsTotal > 0 && (
-              <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                <span className={styles.attachmentContent}>
-                  <Icon name="attach" />
-                  {attachmentsTotal}
-                </span>
-              </span>
-            )}
-          </span>
-        )}
       </div>
-    </>
+      {labelIds.length > 0 && (
+        <span className={styles.labels}>
+          {labelIds.map((labelId) => (
+            <span key={labelId} className={classNames(styles.attachment, styles.attachmentLeft)}>
+              <LabelChip id={labelId} size="tiny" />
+            </span>
+          ))}
+        </span>
+      )}
+      {customFieldValueIds.length > 0 && (
+        <span className={classNames(styles.labels)}>
+          {customFieldValueIds.map((customFieldValueId) => (
+            <span
+              key={customFieldValueId}
+              className={classNames(styles.attachment, styles.attachmentLeft)}
+            >
+              <CustomFieldValueChip id={customFieldValueId} size="tiny" />
+            </span>
+          ))}
+        </span>
+      )}
+      {(attachmentsTotal > 0 || notificationsTotal > 0 || listName) && (
+        <span className={styles.attachments}>
+          {notificationsTotal > 0 && (
+            <span
+              className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}
+            >
+              {notificationsTotal}
+            </span>
+          )}
+          {listName && (
+            <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+              <span className={styles.attachmentContent}>
+                <Icon name="columns" />
+                {listName}
+              </span>
+            </span>
+          )}
+          {attachmentsTotal > 0 && (
+            <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+              <span className={styles.attachmentContent}>
+                <Icon name="attach" />
+                {attachmentsTotal}
+              </span>
+            </span>
+          )}
+        </span>
+      )}
+    </div>
   );
 });
 

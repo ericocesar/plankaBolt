@@ -7,7 +7,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Gallery, Item as GalleryItem } from 'react-photoswipe-gallery';
+import { Gallery } from 'react-photoswipe-gallery';
 import { format } from 'date-fns';
 import { Button, Grid, Icon } from 'semantic-ui-react';
 import { useDidUpdate } from '../../../lib/hooks';
@@ -20,7 +20,6 @@ import { BoardMembershipRoles, CardTypes, ListTypes } from '../../../constants/E
 import { CardTypeIcons } from '../../../constants/Icons';
 import { ClosableContext } from '../../../contexts';
 import NameField from './NameField';
-import Thumbnail from './Thumbnail';
 import CustomFieldGroups from './CustomFieldGroups';
 import Communication from './Communication';
 import CreationDetailsStep from './CreationDetailsStep';
@@ -42,17 +41,12 @@ import styles from './StoryContent.module.scss';
 const StoryContent = React.memo(() => {
   const selectListById = useMemo(() => selectors.makeSelectListById(), []);
   const selectPrevListById = useMemo(() => selectors.makeSelectListById(), []);
-  const selectAttachmentById = useMemo(() => selectors.makeSelectAttachmentById(), []);
 
   const card = useSelector(selectors.selectCurrentCard);
   const board = useSelector(selectors.selectCurrentBoard);
   const userIds = useSelector(selectors.selectUserIdsForCurrentCard);
   const labelIds = useSelector(selectors.selectLabelIdsForCurrentCard);
   const attachmentIds = useSelector(selectors.selectAttachmentIdsForCurrentCard);
-
-  const imageAttachmentIdsExceptCover = useSelector(
-    selectors.selectImageAttachmentIdsExceptCoverForCurrentCard,
-  );
 
   const isJoined = useSelector(selectors.selectIsCurrentUserInCurrentCard);
 
@@ -61,10 +55,6 @@ const StoryContent = React.memo(() => {
   // TODO: check availability?
   const prevList = useSelector(
     (state) => card.prevListId && selectPrevListById(state, card.prevListId),
-  );
-
-  const coverAttachment = useSelector((state) =>
-    selectAttachmentById(state, card.coverAttachmentId),
   );
 
   const isInArchiveList = list.type === ListTypes.ARCHIVE;
@@ -327,68 +317,50 @@ const StoryContent = React.memo(() => {
             }}
             onBeforeOpen={handleBeforeGalleryOpen}
           >
-            {(board.alwaysDisplayCardCreator || labelIds.length > 0 || coverAttachment) && (
+            {(board.alwaysDisplayCardCreator || labelIds.length > 0) && (
               <div className={classNames(styles.moduleWrapper, styles.moduleWrapperAttachments)}>
-                {coverAttachment && (
-                  <div className={styles.coverWrapper}>
-                    <GalleryItem
-                      {...coverAttachment.data.image} // eslint-disable-line react/jsx-props-no-spreading
-                      original={coverAttachment.data.url}
-                      caption={coverAttachment.name}
-                    >
-                      {({ ref, open }) => (
-                        /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                                                    jsx-a11y/no-noninteractive-element-interactions */
-                        <img
-                          ref={ref}
-                          src={coverAttachment.data.thumbnailUrls.outside720}
-                          alt={coverAttachment.name}
-                          className={styles.cover}
-                          onClick={open}
-                        />
-                      )}
-                    </GalleryItem>
-                  </div>
-                )}
                 {board.alwaysDisplayCardCreator && (
                   <div className={styles.attachments}>
+                    <div className={styles.text}>
+                      {t('common.creator', {
+                        context: 'title',
+                      })}
+                    </div>
                     <span className={styles.attachment}>
                       <CreationDetailsPopup userId={card.creatorUserId}>
-                        <UserAvatar withCreatorIndicator id={card.creatorUserId} size="tiny" />
+                        <UserAvatar withCreatorIndicator id={card.creatorUserId} />
                       </CreationDetailsPopup>
                     </span>
                   </div>
                 )}
                 {labelIds.length > 0 && (
                   <div className={styles.attachments}>
+                    <div className={styles.text}>
+                      {t('common.labels', {
+                        context: 'title',
+                      })}
+                    </div>
                     {labelIds.map((labelId) => (
                       <span key={labelId} className={styles.attachment}>
-                        {canUseLabels ? (
-                          <LabelsPopup
-                            currentIds={labelIds}
-                            cardId={card.id}
-                            onSelect={handleLabelSelect}
-                            onDeselect={handleLabelDeselect}
-                          >
-                            <LabelChip id={labelId} size="small" />
-                          </LabelsPopup>
-                        ) : (
+                        <LabelsPopup
+                          cardId={card.id}
+                          currentIds={labelIds}
+                          onSelect={handleLabelSelect}
+                          onDeselect={handleLabelDeselect}
+                        >
                           <LabelChip id={labelId} size="small" />
-                        )}
+                        </LabelsPopup>
                       </span>
                     ))}
                     {canUseLabels && (
                       <LabelsPopup
-                        currentIds={labelIds}
                         cardId={card.id}
+                        currentIds={labelIds}
                         onSelect={handleLabelSelect}
                         onDeselect={handleLabelDeselect}
                       >
-                        <button
-                          type="button"
-                          className={classNames(styles.attachment, styles.dueDate)}
-                        >
-                          <Icon name="add" size="small" className={styles.addAttachment} />
+                        <button type="button" className={styles.addAttachment}>
+                          <Icon name="add" size="small" />
                         </button>
                       </LabelsPopup>
                     )}
@@ -443,13 +415,6 @@ const StoryContent = React.memo(() => {
                       <Markdown>{card.description}</Markdown>
                     </div>
                   )}
-                  {imageAttachmentIdsExceptCover.length > 0 && (
-                    <div className={styles.thumbnails}>
-                      {imageAttachmentIdsExceptCover.map((attachmentId) => (
-                        <Thumbnail key={attachmentId} attachmentId={attachmentId} />
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             )}
@@ -460,7 +425,7 @@ const StoryContent = React.memo(() => {
               <div className={styles.moduleWrapper}>
                 <Icon name="attach" className={styles.moduleIcon} />
                 <div className={styles.moduleHeader}>{t('common.attachments')}</div>
-                <Attachments hideImagesWhenNotAllVisible />
+                <Attachments />
               </div>
             </div>
           )}

@@ -530,8 +530,8 @@ const ProjectContent = React.memo(() => {
               </div>
             </div>
           )}
-          <CustomFieldGroups />
           <TaskLists />
+          <CustomFieldGroups />
           {attachmentIds.length > 0 && (
             <div className={styles.contentModule}>
               <div className={styles.moduleWrapper}>
