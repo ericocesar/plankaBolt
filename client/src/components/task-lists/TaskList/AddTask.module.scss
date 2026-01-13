@@ -7,6 +7,26 @@
   .controls {
     display: flex;
     margin-top: 6px;
+    gap: 12px;
+  }
+
+  .submitButton {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+    padding: 10px 16px !important;
+    background-color: #1ac9cc !important; // Match the screenshot color if possible, or keep positive
+  }
+
+  .submitButtonText {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .addTaskIcon {
+    width: 20px;
+    height: 20px;
   }
 
   .field {

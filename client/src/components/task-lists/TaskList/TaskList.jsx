@@ -113,6 +113,7 @@ const TaskList = React.memo(({ id, isCompletedVisible }) => {
             className={styles.taskButton}
             onClick={handleAddClick}
           >
+            <img src="/addtask.svg" alt="" className={styles.addTaskIcon} />
             <span className={styles.taskButtonText}>
               {tasks.length > 0 ? t('action.addAnotherTask') : t('action.addTask')}
             </span>

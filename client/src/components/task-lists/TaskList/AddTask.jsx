@@ -178,8 +178,11 @@ const AddTask = React.memo(({ children, taskListId, isOpened, onClose }) => {
           {...clickAwayProps} // eslint-disable-line react/jsx-props-no-spreading
           positive
           ref={handleSubmitButtonRef}
-          content={t('action.addTask')}
-        />
+          className={styles.submitButton}
+        >
+          <img src="/addtask.svg" alt="" className={styles.addTaskIcon} />
+          <span className={styles.submitButtonText}>{t('action.addTask')}</span>
+        </Button>
         <Button
           {...clickAwayProps} // eslint-disable-line react/jsx-props-no-spreading
           ref={handleToggleLinkingButtonRef}

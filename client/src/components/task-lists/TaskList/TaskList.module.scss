@@ -5,13 +5,15 @@
 
 :global(#app) {
   .count {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: #000 !important;
     font-size: 14px;
     line-height: 14px;
+    font-weight: 500;
   }
 
   .progress {
     margin: 0;
+    background: rgba(0, 0, 0, 0.1) !important;
   }
 
   .progressRow {
@@ -19,6 +21,7 @@
     gap: 12px;
     justify-content: space-between;
     margin-bottom: 16px;
+    color: #000;
   }
 
   .progressWrapper {
@@ -34,11 +37,13 @@
     background: transparent !important;
     border: none;
     border-radius: 12px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(0, 0, 0, 0.6) !important;
     cursor: pointer;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-top: 6px;
-    min-height: 54px;
+    min-height: 40px;
     outline: none;
     padding: 8px 12px;
     position: relative;
@@ -48,14 +53,19 @@
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
+      background: rgba(0, 0, 0, 0.05) !important;
+      color: #000 !important;
     }
+  }
+
+  .addTaskIcon {
+    width: 24px;
+    height: 24px;
   }
 
   .taskButtonText {
     font-size: 14px;
-    position: absolute;
-    top: 12px;
+    color: #2185d0 !important;
+    text-transform: uppercase;
   }
 }

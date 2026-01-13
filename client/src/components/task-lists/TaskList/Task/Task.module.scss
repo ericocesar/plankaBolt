@@ -26,15 +26,15 @@
     line-height: 28px;
     margin: 0;
     min-height: auto;
-    opacity: 0;
+    opacity: 1;
     padding: 0;
     width: 28px;
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: #2185d0 !important;
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
+      background: rgba(33, 133, 208, 0.1) !important;
+      color: #1678c2 !important;
     }
   }
 
@@ -52,11 +52,7 @@
   }
 
   .contentHoverable:hover {
-    background: rgba(26, 201, 204, 0.05) !important;
-
-    .button {
-      opacity: 1;
-    }
+    background: rgba(33, 133, 208, 0.05) !important;
   }
 
   .icon {
@@ -65,14 +61,24 @@
   }
 
   .name {
-    a:hover {
-      text-decoration: underline;
+    color: #000 !important;
+
+    a {
+      color: #000 !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
   .nameCompleted {
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(0, 0, 0, 0.4) !important;
     text-decoration: line-through;
+
+    a {
+      color: rgba(0, 0, 0, 0.4) !important;
+    }
   }
 
   .task {

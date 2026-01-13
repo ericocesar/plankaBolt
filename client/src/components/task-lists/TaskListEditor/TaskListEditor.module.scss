@@ -13,6 +13,10 @@
     margin-bottom: 8px;
     width: 100%;
 
+    :global(label) {
+      color: #2185d0 !important;
+    }
+
     &:last-of-type {
       margin-bottom: 16px;
     }
