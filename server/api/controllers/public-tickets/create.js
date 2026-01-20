@@ -22,6 +22,20 @@ const formatValue = (value) => {
   return String(value);
 };
 
+const resolveSelectableLabel = (field, rawValue) => {
+  if (!field || !['select', 'radio'].includes(field.type)) {
+    return rawValue;
+  }
+
+  const options = Array.isArray(field.options) ? field.options : [];
+  const match = options.find((option) => option && option.value === rawValue);
+  if (match && match.label !== undefined && match.label !== null && match.label !== '') {
+    return match.label;
+  }
+
+  return rawValue;
+};
+
 const buildValuesFromLegacy = (schema, legacy) => {
   if (!schema) {
     return {};
@@ -69,15 +83,17 @@ const buildTicketDataFromSchema = (schema, values, fallbackSubject) => {
   const extraLines = [];
 
   collectFields(schema).forEach((field) => {
-    const value = values[field.id];
-    if (value === undefined || value === null || value === '') {
+    const rawValue = values[field.id];
+    if (rawValue === undefined || rawValue === null || rawValue === '') {
       return;
     }
 
+    const displayValue = resolveSelectableLabel(field, rawValue);
+
     if (field.role && field.role in derived) {
-      derived[field.role] = value;
+      derived[field.role] = displayValue;
     } else {
-      extraLines.push(`**${field.label}:** ${formatValue(value)}`);
+      extraLines.push(`**${field.label}:** ${formatValue(displayValue)}`);
     }
   });
 
@@ -510,12 +526,18 @@ module.exports = {
            <p>Support Team</p>
          `;
 
-        await sails.helpers.utils.sendEmail.with({
-          transporter,
-          to: requesterEmail,
-          subject: `Ticket Received: ${card.name}`,
-          html,
-        });
+        try {
+          await sails.helpers.utils.sendEmail.with({
+            transporter,
+            to: requesterEmail,
+            subject: `Ticket Received: ${card.name}`,
+            html,
+          });
+        } finally {
+          if (typeof transporter.close === 'function') {
+            transporter.close();
+          }
+        }
       } else if (!smtpConfig || !smtpConfig.host) {
         sails.log.info('SMTP not configured, skipping email confirmation.');
       }

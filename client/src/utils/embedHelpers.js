@@ -4,6 +4,7 @@ export const parsePrefill = (prefillParam) => {
     const json = atob(prefillParam);
     return JSON.parse(json);
   } catch (e) {
+    console.error(e); // eslint-disable-line no-console
     return {};
   }
 };

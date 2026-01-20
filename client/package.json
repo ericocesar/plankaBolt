@@ -76,6 +76,12 @@
   "jest": {
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!nanoid)/"
+    ],
+    "moduleNameMapper": {
+      "^nanoid$": "<rootDir>/src/utils/__mocks__/nanoid.js"
     }
   },
   "dependencies": {

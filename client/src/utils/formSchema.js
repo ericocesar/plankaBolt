@@ -251,8 +251,14 @@ export const buildInitialValues = (schema, prefillData = {}) => {
       if (value === undefined && field.role) {
         value = prefillData[field.role];
       }
-      if (value === undefined) {
-        value = field.type === 'checkbox' ? false : '';
+      if (value === undefined || value === null) {
+        if (field.type === 'checkbox') {
+          value = typeof field.defaultValue === 'boolean' ? field.defaultValue : false;
+        } else if (field.defaultValue !== undefined && field.defaultValue !== null) {
+          value = field.defaultValue;
+        } else {
+          value = '';
+        }
       }
       values[field.id] = value;
     });
