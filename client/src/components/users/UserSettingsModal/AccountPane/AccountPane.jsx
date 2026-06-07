@@ -12,8 +12,8 @@ import selectors from '../../../../selectors';
 import entryActions from '../../../../entry-actions';
 import { usePopupInClosableContext } from '../../../../hooks';
 import locales from '../../../../locales';
-import EditAvatarStep from './EditAvatarStep';
 import EditUserInformation from '../../EditUserInformation';
+import EditUserAvatarStep from '../../EditUserAvatarStep';
 import EditUserUsernameStep from '../../EditUserUsernameStep';
 import EditUserEmailStep from '../../EditUserEmailStep';
 import EditUserPasswordStep from '../../EditUserPasswordStep';
@@ -34,7 +34,7 @@ const AccountPane = React.memo(() => {
     [dispatch],
   );
 
-  const EditAvatarPopup = usePopupInClosableContext(EditAvatarStep);
+  const EditUserAvatarPopup = usePopupInClosableContext(EditUserAvatarStep);
   const EditUserUsernamePopup = usePopupInClosableContext(EditUserUsernameStep);
   const EditUserEmailPopup = usePopupInClosableContext(EditUserEmailStep);
   const EditUserPasswordPopup = usePopupInClosableContext(EditUserPasswordStep);
@@ -45,9 +45,9 @@ const AccountPane = React.memo(() => {
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
-      <EditAvatarPopup>
+      <EditUserAvatarPopup id={user.id}>
         <UserAvatar id={user.id} size="massive" isDisabled={user.isAvatarUpdating} />
-      </EditAvatarPopup>
+      </EditUserAvatarPopup>
       <br />
       <br />
       <EditUserInformation id={user.id} />

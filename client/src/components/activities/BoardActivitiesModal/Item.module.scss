@@ -5,12 +5,12 @@
 
 :global(#app) {
   .author {
-    color: #17394d;
+    color: #89CFF0;
     font-weight: bold;
   }
 
   .content {
-    border-bottom: 1px solid #092d4221;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     display: inline-block;
     line-height: 20px;
     padding-bottom: 14px;
@@ -20,7 +20,7 @@
   }
 
   .date {
-    color: #6b808c;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
   }
 

@@ -270,9 +270,9 @@
   }
 
   .yfm {
-    --yfm-color-accent: #2185d0 !important;
-    --yfm-color-link: #1e70bf !important;
-    --yfm-color-text: #17394d !important;
+    --yfm-color-accent: #1ac9cc !important;
+    --yfm-color-link: #1ac9cc !important;
+    --yfm-color-text: #ffffff !important;
     --yfm-font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo,
       Consolas, Liberation Mono, monospace !important;
     --yfm-font-family-sans: "Nunitoga", "Helvetica Neue", Arial, Helvetica,
@@ -319,8 +319,8 @@
     }
 
     .mention {
-      color: #0366d6;
-      background-color: #f1f8ff;
+      color: #1ac9cc;
+      background-color: rgba(26, 201, 204, 0.1);
       border-radius: 3px;
       padding: 0 2px;
     }

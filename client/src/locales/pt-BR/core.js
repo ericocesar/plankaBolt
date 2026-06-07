@@ -449,6 +449,7 @@ export default {
       editColor_title: 'Editar cor',
       editDescription_title: 'Editar descrição',
       editDueDate_title: 'Editar data de vencimento',
+      editAvatar: 'Editar avatar',
       editEmail_title: 'Editar e-mail',
       editGroup: 'Editar grupo',
       editInformation_title: 'Editar informações',

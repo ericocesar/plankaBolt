@@ -134,6 +134,14 @@ const clearCurrentUserUsernameUpdateError = () => ({
   payload: {},
 });
 
+const updateUserAvatar = (id, data) => ({
+  type: EntryActionTypes.USER_AVATAR_UPDATE,
+  payload: {
+    id,
+    data,
+  },
+});
+
 const updateCurrentUserAvatar = (data) => ({
   type: EntryActionTypes.CURRENT_USER_AVATAR_UPDATE,
   payload: {
@@ -265,6 +273,7 @@ export default {
   updateCurrentUserUsername,
   clearUserUsernameUpdateError,
   clearCurrentUserUsernameUpdateError,
+  updateUserAvatar,
   updateCurrentUserAvatar,
   createUserApiKey,
   deleteUserApiKey,

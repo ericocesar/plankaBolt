@@ -30,12 +30,12 @@
   }
 
   .field {
-    background: transparent !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 12px !important;
-    color: #000 !important;
-    -webkit-text-fill-color: #000 !important;
-    caret-color: #000 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
     display: block;
     line-height: 1.5;
     font-size: 14px;
@@ -45,14 +45,14 @@
     transition: all 0.2s ease !important;
 
     &:focus {
-      background: rgba(0, 0, 0, 0.05) !important;
-      border-color: #2185d0 !important;
-      box-shadow: 0 0 0 2px rgba(33, 133, 208, 0.15) !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: #1ac9cc !important;
+      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
     }
 
     &::placeholder {
-      color: rgba(0, 0, 0, 0.5) !important;
-      -webkit-text-fill-color: rgba(0, 0, 0, 0.5) !important;
+      color: rgba(255, 255, 255, 0.5) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
     }
 
     :global {
@@ -71,7 +71,7 @@
   .toggleLinkingButton {
     background: transparent !important;
     box-shadow: none !important;
-    color: #2185d0 !important;
+    color: #1ac9cc !important;
     font-weight: normal !important;
     margin-left: auto;
     margin-right: 0;
