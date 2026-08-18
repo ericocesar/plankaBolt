@@ -105,12 +105,15 @@ const SecurityPane = React.memo(() => {
       ) : (
         <>
           <p className={styles.intro}>{t('common.twoFactor_intro')}</p>
-          <Button
-            primary
-            icon="shield"
-            content={t('action.enable2fa')}
-            onClick={handleEnableClick}
-          />
+          <div className={styles.buttonWrapper}>
+            <Button
+              positive
+              icon="shield"
+              content="ATIVAR 2FA"
+              className={styles.enableButton}
+              onClick={handleEnableClick}
+            />
+          </div>
         </>
       )}
 

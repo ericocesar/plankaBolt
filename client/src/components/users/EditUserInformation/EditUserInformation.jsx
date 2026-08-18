@@ -17,7 +17,7 @@ import { useForm, useNestedRef } from '../../../hooks';
 
 import styles from './EditUserInformation.module.scss';
 
-const EditUserInformation = React.memo(({ id, onUpdate }) => {
+const EditUserInformation = React.memo(({ id, avatar, onUpdate }) => {
   const selectUserById = useMemo(() => selectors.makeSelectUserById(), []);
 
   const user = useSelector((state) => selectUserById(state, id));
@@ -70,46 +70,66 @@ const EditUserInformation = React.memo(({ id, onUpdate }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div className={styles.text}>{t('common.name')}</div>
-      <Input
-        fluid
-        ref={handleNameFieldRef}
-        name="name"
-        value={data.name}
-        maxLength={128}
-        disabled={!isNameEditable}
-        className={styles.field}
-        onChange={handleFieldChange}
-      />
-      <div className={styles.text}>{t('common.phone')}</div>
-      <Input
-        fluid
-        name="phone"
-        value={data.phone}
-        maxLength={128}
-        className={styles.field}
-        onChange={handleFieldChange}
-      />
-      <div className={styles.text}>{t('common.organization')}</div>
-      <Input
-        fluid
-        name="organization"
-        value={data.organization}
-        maxLength={128}
-        className={styles.field}
-        onChange={handleFieldChange}
-      />
-      <Button positive disabled={dequal(cleanData, defaultData)} content={t('action.save')} />
+      <div className={styles.avatarAndNameRow}>
+        {avatar && <div className={styles.avatarWrapper}>{avatar}</div>}
+        <div className={styles.nameWrapper}>
+          <div className={styles.text}>{t('common.name')}</div>
+          <Input
+            fluid
+            ref={handleNameFieldRef}
+            name="name"
+            value={data.name}
+            maxLength={128}
+            disabled={!isNameEditable}
+            className={styles.field}
+            onChange={handleFieldChange}
+          />
+        </div>
+      </div>
+      <div className={styles.row}>
+        <div className={styles.column}>
+          <div className={styles.text}>{t('common.phone')}</div>
+          <Input
+            fluid
+            name="phone"
+            value={data.phone}
+            maxLength={128}
+            className={styles.field}
+            onChange={handleFieldChange}
+          />
+        </div>
+        <div className={styles.column}>
+          <div className={styles.text}>{t('common.organization')}</div>
+          <Input
+            fluid
+            name="organization"
+            value={data.organization}
+            maxLength={128}
+            className={styles.field}
+            onChange={handleFieldChange}
+          />
+        </div>
+      </div>
+      <div className={styles.saveButtonWrapper}>
+        <Button
+          positive
+          disabled={dequal(cleanData, defaultData)}
+          content={t('action.save')}
+          className={styles.saveButton}
+        />
+      </div>
     </Form>
   );
 });
 
 EditUserInformation.propTypes = {
   id: PropTypes.string.isRequired,
+  avatar: PropTypes.node,
   onUpdate: PropTypes.func,
 };
 
 EditUserInformation.defaultProps = {
+  avatar: undefined,
   onUpdate: undefined,
 };
 

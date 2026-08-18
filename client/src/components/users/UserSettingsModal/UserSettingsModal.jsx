@@ -3,7 +3,7 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Tab } from 'semantic-ui-react';
@@ -15,13 +15,20 @@ import PreferencesPane from './PreferencesPane';
 import NotificationsPane from './NotificationsPane';
 import SecurityPane from './SecurityPane';
 
+import styles from './UserSettingsModal.module.scss';
+
 const UserSettingsModal = React.memo(() => {
   const dispatch = useDispatch();
   const [t] = useTranslation();
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const handleClose = useCallback(() => {
     dispatch(entryActions.closeModal());
   }, [dispatch]);
+
+  const handleTabChange = useCallback((_, { activeIndex }) => {
+    setActiveTabIndex(activeIndex);
+  }, []);
 
   const [ClosableModal] = useClosableModal();
 
@@ -45,15 +52,20 @@ const UserSettingsModal = React.memo(() => {
       render: () => <NotificationsPane />,
     },
     {
-      menuItem: t('common.security', {
-        context: 'title',
-      }),
+      menuItem: 'SEGURANÇA',
       render: () => <SecurityPane />,
     },
   ];
 
   return (
-    <ClosableModal open closeIcon size="small" centered={false} onClose={handleClose}>
+    <ClosableModal
+      open
+      closeIcon
+      size="small"
+      centered={false}
+      onClose={handleClose}
+      className={styles.wrapper}
+    >
       <ClosableModal.Content>
         <Tab
           menu={{
@@ -61,6 +73,8 @@ const UserSettingsModal = React.memo(() => {
             pointing: true,
           }}
           panes={panes}
+          activeIndex={activeTabIndex}
+          onTabChange={handleTabChange}
         />
       </ClosableModal.Content>
     </ClosableModal>

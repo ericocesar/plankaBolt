@@ -45,12 +45,14 @@ const AccountPane = React.memo(() => {
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
-      <EditUserAvatarPopup id={user.id}>
-        <UserAvatar id={user.id} size="massive" isDisabled={user.isAvatarUpdating} />
-      </EditUserAvatarPopup>
-      <br />
-      <br />
-      <EditUserInformation id={user.id} />
+      <EditUserInformation
+        id={user.id}
+        avatar={
+          <EditUserAvatarPopup id={user.id}>
+            <UserAvatar id={user.id} size="massive" isDisabled={user.isAvatarUpdating} />
+          </EditUserAvatarPopup>
+        }
+      />
       <Divider horizontal section>
         <Header as="h4">
           {t('common.language', {

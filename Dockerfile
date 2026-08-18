@@ -13,9 +13,9 @@ RUN npm ci --ignore-scripts
 COPY server .
 
 RUN npx patch-package \
-  && npm install \
   && npm run build \
-  && npm prune --production
+  && npm prune --production \
+  && npm rebuild
 
 # Stage 2: Client build
 FROM node:24 AS client

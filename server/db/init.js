@@ -17,6 +17,6 @@ const knex = initKnex(knexfile);
     process.exitCode = 1;
     throw error;
   } finally {
-    knex.destroy();
+    await knex.destroy();
   }
 })();

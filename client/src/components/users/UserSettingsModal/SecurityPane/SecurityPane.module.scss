@@ -10,12 +10,14 @@
   }
 
   .intro {
-    color: #444444;
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .enabledMeta {
-    color: #444444;
+    color: rgba(255, 255, 255, 0.6);
     font-weight: normal;
   }
 
@@ -28,5 +30,28 @@
 
   .recoverySection {
     margin-top: 20px;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+
+  .enableButton {
+    color: #ffffff !important;
+    background: #1ac9cc !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+
+    &:hover {
+      background: #16b4b7 !important;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+    }
   }
 }

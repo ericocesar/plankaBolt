@@ -483,8 +483,8 @@ echo "    ✓ Dockerfile de release sem falhas de configuração HIGH/CRITICAL."
 echo ""
 echo ">>> Build baseado no commit atual; o script não altera nem publica o repositório Git."
 
-HISTORY_DIR="$(resolve_history_dir)"
-TAG_FILE="${HISTORY_DIR}/latest-tag"
+TAG_DIR="docs/builds"
+TAG_FILE="${TAG_DIR}/latest-tag"
 
 echo ""
 echo "    TAG_SHA atualizada para: ${TAG_SHA}"
@@ -554,7 +554,8 @@ echo ""
 echo "Para fazer deploy no Portainer, use a tag: ${TAG_SHA}"
 echo "============================================="
 
-echo "${TAG_SHA}" > "${TAG_FILE}"
+mkdir -p "${TAG_DIR}"
+printf '%s\n' "${TAG_SHA}" > "${TAG_FILE}"
 echo "Tag salva em ${TAG_FILE}: ${TAG_SHA}"
 
 echo ""

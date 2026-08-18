@@ -26,7 +26,7 @@
       background: transparent !important;
       padding: 1.5rem !important;
       flex: 1 !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       display: flex !important;
       flex-direction: column !important;
       box-shadow: none !important;
@@ -42,6 +42,7 @@
       box-shadow: none !important;
       padding: 0 !important;
       margin: 0 !important;
+      overflow: visible !important;
     }
 
     :global(.close) {
@@ -59,42 +60,63 @@
     /* Tab Menu Styling - Secondary Pointing */
     :global(.ui.menu) {
       background: transparent !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 0 !important;
       margin-bottom: 2rem !important;
       box-shadow: none !important;
+      padding: 0 !important;
 
       :global(.item) {
         color: rgba(255, 255, 255, 0.6) !important;
         font-family: 'Oswald', sans-serif !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
-        padding: 1rem 1.5rem !important;
+        letter-spacing: 0.08em !important;
+        padding: 0.8rem 1.4rem !important;
         border: none !important;
-        border-bottom: 2px solid transparent !important;
         background: transparent !important;
-        transition: all 0.2s ease !important;
-        border-radius: 0 !important;
+        border-radius: 8px 8px 0 0 !important;
+        font-size: 0.85rem !important;
+        margin-right: 4px !important;
         box-shadow: none !important;
+        transition: none !important;
 
         &:after {
           display: none !important;
         }
 
         &:hover {
-          color: #fff !important;
+          color: #ffffff !important;
+          background: #1e2736 !important;
         }
 
-        &.active {
-          color: #1ac9cc !important;
-          border-color: #1ac9cc !important;
+        &.active,
+        &:global(.active),
+        :global(.active) {
+          color: #000000 !important;
+          background: #1ac9cc !important;
           font-weight: 700 !important;
-          background: transparent !important;
           box-shadow: none !important;
+          border: none !important;
         }
       }
     }
 
-    /* Form Fields Styling */
+    /* Target EditInformation custom structure & field labels */
+    div[class*="text"] {
+      color: #1ac9cc !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 8px !important;
+      margin-top: 1rem !important;
+
+      &:first-child {
+        margin-top: 0 !important;
+      }
+    }
+
+    /* Form Fields & Direct Inputs Styling */
     :global(.ui.form) {
       :global(.field) {
         margin-bottom: 1.5rem !important;
@@ -107,35 +129,107 @@
           font-weight: 700 !important;
           margin-bottom: 8px !important;
         }
+      }
+    }
 
-        :global(input:not([type='checkbox'])),
-        :global(textarea),
-        :global(.ui.dropdown) {
-          background: rgba(0, 0, 0, 0.3) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
-          border-radius: 14px !important;
-          color: #fff !important;
-          padding: 14px 18px !important;
-          transition: all 0.2s ease !important;
+    :global(.ui.input) input,
+    :global(input:not([type='checkbox'])),
+    :global(textarea) {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 14px !important;
+      color: #ffffff !important;
+      padding: 14px 18px !important;
+      transition: all 0.2s ease !important;
 
-          &:focus {
-            border-color: #1ac9cc !important;
-            background: rgba(0, 0, 0, 0.5) !important;
-            box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+      }
+
+      &:focus {
+        border-color: #1ac9cc !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.25) !important;
+      }
+    }
+
+    /* Dropdowns (Language, AutoLogout, etc.) */
+    :global(.ui.dropdown) {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 14px !important;
+      color: #ffffff !important;
+      padding: 12px 18px !important;
+
+      :global(.text),
+      :global(.default.text) {
+        color: #ffffff !important;
+      }
+
+      :global(.dropdown.icon) {
+        color: #1ac9cc !important;
+      }
+
+      :global(.menu) {
+        z-index: 10000 !important;
+        background: rgba(18, 18, 28, 0.98) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7) !important;
+        margin-top: 6px !important;
+
+        :global(.item) {
+          color: rgba(255, 255, 255, 0.85) !important;
+          padding: 12px 18px !important;
+
+          &:hover,
+          &.selected,
+          &.active {
+            background: rgba(26, 201, 204, 0.2) !important;
+            color: #1ac9cc !important;
+            font-weight: 600 !important;
           }
         }
       }
+    }
+
+    /* Messages (Apprise Notification intro info box, etc.) */
+    :global(.ui.message) {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 14px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      box-shadow: none !important;
+      padding: 14px 18px !important;
+      margin-bottom: 20px !important;
+
+      :global(a),
+      :global(b),
+      :global(strong) {
+        color: #1ac9cc !important;
+      }
+    }
+
+    /* Headers */
+    :global(h1),
+    :global(h2),
+    :global(h3),
+    :global(h4),
+    :global(h5),
+    :global(.ui.header) {
+      color: #ffffff !important;
     }
 
     /* Dividers and Headers - Force Colors */
     :global(.ui.divider),
     :global(.ui.horizontal.divider) {
       border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-bottom: none !important;
 
       :global(.header) {
         background: transparent !important;
         color: #1ac9cc !important;
-        /* Teal as requested */
+        /* Teal */
         font-family: 'Oswald', sans-serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
@@ -146,7 +240,7 @@
 
     /* Checkboxes / Radios */
     :global(.ui.radio.checkbox),
-    :global(.ui.checkbox) {
+    :global(.ui.checkbox:not(.toggle)) {
       margin-top: 1rem !important;
       margin-bottom: 1rem !important;
       display: flex !important;
@@ -154,8 +248,7 @@
       min-height: 2.5rem !important;
 
       :global(label) {
-        color: #fff !important;
-        /* White as requested */
+        color: #ffffff !important;
         font-weight: 500 !important;
         padding-left: 2rem !important;
         padding-right: 3rem !important;
@@ -163,22 +256,35 @@
         line-height: 1.5 !important;
 
         &:before {
-          background: rgba(0, 0, 0, 0.3) !important;
+          background: rgba(0, 0, 0, 0.4) !important;
           border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
 
         &:after {
           color: #1ac9cc !important;
-          /* Teal check/dot */
         }
       }
 
       :global(input:checked ~ label) {
-        color: #fff !important;
+        color: #ffffff !important;
 
         &:before {
           border-color: #1ac9cc !important;
         }
+      }
+    }
+
+    /* Toggle Switches - Force 60px left padding so text never overlaps switch pill */
+    :global(.ui.toggle.checkbox) {
+      margin-top: 1rem !important;
+      margin-bottom: 1rem !important;
+
+      :global(label) {
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        padding-left: 60px !important;
+        display: inline-block !important;
+        line-height: 24px !important;
       }
     }
 
@@ -188,20 +294,21 @@
       text-transform: uppercase !important;
       font-weight: 600 !important;
       letter-spacing: 0.5px !important;
-      color: #fff !important;
+      color: #ffffff !important;
     }
 
     :global(.ui.button.positive),
     :global(.ui.button.green) {
       background: #1ac9cc !important;
-      color: #000 !important;
+      color: #ffffff !important;
       box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
       border: none !important;
 
       &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
-        background: #fff !important;
+        background: #16b4b7 !important;
+        color: #ffffff !important;
       }
     }
   }

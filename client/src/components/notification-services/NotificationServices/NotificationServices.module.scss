@@ -8,34 +8,48 @@
     display: flex;
     gap: 12px;
     margin-bottom: 24px;
-    align-items: stretch;
+    align-items: center;
   }
 
   .button {
-    margin: 0;
+    margin: 0 !important;
     background: #1ac9cc !important;
     border-radius: 12px !important;
-    color: #000 !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
-    padding: 10px 20px !important;
+    padding: 10px 18px !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     flex-shrink: 0;
+
+    &:hover {
+      background: #16b4b7 !important;
+      color: #ffffff !important;
+    }
   }
 
   .field {
     flex: 1 1 auto;
     display: flex !important;
     align-items: stretch !important;
+    min-width: 0;
 
+    :global(.ui.labeled.input),
     :global(.ui.input) {
       flex: 1 1 auto;
       display: flex !important;
+      position: relative;
+      width: 100%;
     }
 
     :global(input) {
-      background: rgba(0, 0, 0, 0.2) !important;
-      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      flex: 1 1 auto !important;
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 12px 0 0 12px !important;
-      color: #fff !important;
+      color: #ffffff !important;
       padding: 10px 15px !important;
       width: 100% !important;
       border-right: none !important;
@@ -46,13 +60,14 @@
       }
     }
 
-    /* Dropdown label on the right */
+    /* Dropdown label on the right - position: static overrides Semantic UI absolute positioning */
     :global(.ui.label) {
-      background: rgba(0, 0, 0, 0.3) !important;
-      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      position: static !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-left: none !important;
       border-radius: 0 12px 12px 0 !important;
-      padding: 10px 15px !important;
+      padding: 0 14px !important;
       display: flex !important;
       align-items: center !important;
       margin: 0 !important;
@@ -61,25 +76,32 @@
       :global(.ui.dropdown) {
         background: transparent !important;
         border: none !important;
-        color: #fff !important;
+        color: #ffffff !important;
         padding: 0 !important;
-        min-width: 100px;
 
         :global(.text) {
-          color: #fff !important;
+          color: #ffffff !important;
+          font-weight: 600;
+          font-size: 0.8rem;
+        }
+
+        :global(.dropdown.icon) {
+          color: #1ac9cc !important;
+          margin-left: 4px !important;
         }
 
         :global(.menu) {
-          background: rgba(10, 10, 15, 0.95) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          z-index: 10000 !important;
+          background: rgba(18, 18, 28, 0.98) !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
           border-radius: 12px !important;
 
           :global(.item) {
-            color: #fff !important;
+            color: #ffffff !important;
             background: transparent !important;
 
             &:hover {
-              background: rgba(26, 201, 204, 0.1) !important;
+              background: rgba(26, 201, 204, 0.2) !important;
               color: #1ac9cc !important;
             }
           }
