@@ -296,6 +296,7 @@ export default {
       searchMembers: 'Search members...',
       searchProjects: 'Search projects...',
       searchUsers: 'Search users...',
+      security_title: 'Security',
       seconds: 'Seconds',
       selectAssignee_title: 'Select Assignee',
       selectBoard: 'Select board',

@@ -275,6 +275,7 @@ export default {
       searchMembers: '搜索成员...',
       searchProjects: '搜索项目...',
       searchUsers: '搜索用户...',
+      security_title: '安全',
       seconds: '秒',
       selectAssignee_title: '选择负责人',
       selectBoard: '选择面板',

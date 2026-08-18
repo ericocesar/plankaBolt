@@ -291,6 +291,7 @@ export default {
       searchMembers: 'Tagok keresése...',
       searchProjects: 'Projektek keresése...',
       searchUsers: 'Felhasználók keresése...',
+      security_title: 'Biztonság',
       seconds: 'Másodpercek',
       selectAssignee_title: 'Felelős kiválasztása',
       selectBoard: 'Válassza ki a táblát',

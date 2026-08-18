@@ -302,6 +302,7 @@ export default {
       searchMembers: 'Buscar miembros...',
       searchProjects: 'Buscar proyectos...',
       searchUsers: 'Buscar usuarios...',
+      security_title: 'Seguridad',
       seconds: 'Segundos',
       selectAssignee_title: 'Seleccionar asignado',
       selectBoard: 'Seleccionar tablero',

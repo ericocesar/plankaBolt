@@ -24,7 +24,7 @@
 
     &:hover {
       background: rgba(255, 255, 255, 0.08);
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 }

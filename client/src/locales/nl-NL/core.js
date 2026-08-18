@@ -297,6 +297,7 @@ export default {
       searchMembers: 'Leden zoeken...',
       searchProjects: 'Projecten zoeken...',
       searchUsers: 'Gebruikers zoeken...',
+      security_title: 'Beveiliging',
       seconds: 'Seconden',
       selectAssignee_title: 'Toegewezene selecteren',
       selectBoard: 'Bord selecteren',

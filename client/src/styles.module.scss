@@ -3,14 +3,25 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
+:root {
+  --bp-bg-deep: oklch(0.16 0.008 240);
+  --bp-bg-surface: oklch(0.2 0.008 240);
+  --bp-bg-input: oklch(0.17 0.008 240);
+  --bp-bg-hover: oklch(0.22 0.008 240);
+  --bp-text-primary: oklch(0.96 0.005 240);
+  --bp-text-secondary: oklch(0.65 0.008 240);
+  --bp-text-placeholder: oklch(0.45 0.008 240);
+  --bp-border-subtle: oklch(0.3 0.008 240);
+  --bp-border-focus: oklch(0.7 0.06 160);
+  --bp-accent: oklch(0.75 0.12 160);
+  --bp-radius-md: 12px;
+  --bp-radius-lg: 20px;
+  --bp-shadow-modal: 0 24px 50px oklch(0.1 0 0 / 0.5);
+}
+
 :global {
   #app {
-    background: radial-gradient(
-        circle at 50% -20%,
-        rgba(26, 201, 204, 0.2) 0%,
-        rgba(0, 0, 0, 1) 80%
-      ),
-      #000000;
+    background: var(--bp-bg-deep);
     background-attachment: fixed;
     overflow-x: auto;
 
@@ -18,26 +29,27 @@
       height: auto;
     }
 
-    /* Global UI Overrides to match layout.jpg */
+    *:focus-visible {
+      outline: 2px solid var(--bp-border-focus, oklch(0.7 0.06 160));
+      outline-offset: 2px;
+    }
+
     :global {
       .ui.button.primary {
-        background: #ffffff !important;
-        color: #000000 !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        text-transform: none !important;
-        padding: 12px 24px !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.1) !important;
+        background: var(--bp-accent);
+        color: var(--bp-bg-deep);
+        border-radius: var(--bp-radius-md);
+        font-weight: 600;
+        text-transform: none;
+        padding: 12px 24px;
+        transition: background-color 0.15s ease-out;
 
         &:hover {
-          background: #f0f0f0 !important;
-          transform: translateY(-1px) !important;
-          box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15) !important;
+          background: oklch(0.8 0.12 160);
         }
 
         &:active {
-          transform: translateY(0) !important;
+          background: oklch(0.7 0.12 160);
         }
       }
 
@@ -54,54 +66,49 @@
       .ui.form input[type="url"],
       .ui.form input[type="number"],
       .ui.form textarea {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 12px !important;
-        color: #ffffff !important;
-        padding: 12px 16px !important;
-        transition: all 0.3s ease !important;
+        background: var(--bp-bg-input);
+        border: 1px solid var(--bp-border-subtle);
+        border-radius: var(--bp-radius-md);
+        color: var(--bp-text-primary);
+        padding: 12px 16px;
+        transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
 
         &:focus {
-          background: rgba(255, 255, 255, 0.05) !important;
-          border-color: rgba(26, 201, 204, 0.4) !important;
-          box-shadow: 0 0 0 1px rgba(26, 201, 204, 0.2) !important;
+          background: var(--bp-bg-hover);
+          border-color: var(--bp-border-focus);
+          box-shadow: 0 0 0 2px oklch(0.75 0.12 160 / 0.25);
         }
 
         &::placeholder {
-          color: rgba(255, 255, 255, 0.3) !important;
+          color: var(--bp-text-placeholder);
         }
       }
 
       .ui.modal {
-        background: rgba(15, 15, 15, 0.8) !important;
-        backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 24px !important;
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5) !important;
+        background: var(--bp-bg-surface);
+        border: 1px solid var(--bp-border-subtle);
+        border-radius: var(--bp-radius-lg);
+        box-shadow: var(--bp-shadow-modal);
 
         > .header {
-          background: transparent !important;
-          color: #ffffff !important;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-          font-family: "Oswald", sans-serif !important;
-          text-transform: uppercase !important;
-          letter-spacing: 1px !important;
+          background: transparent;
+          color: var(--bp-text-primary);
+          border-bottom: 1px solid var(--bp-border-subtle);
         }
 
         > .content {
-          background: transparent !important;
-          color: #ffffff !important;
+          background: transparent;
+          color: var(--bp-text-primary);
         }
 
         > .actions {
-          background: transparent !important;
-          border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+          background: transparent;
+          border-top: 1px solid var(--bp-border-subtle);
         }
       }
 
       .ui.dimmer {
-        background-color: rgba(0, 0, 0, 0.6) !important;
-        backdrop-filter: blur(4px) !important;
+        background-color: oklch(0.1 0 0 / 0.6);
       }
     }
 
@@ -194,7 +201,7 @@
 
     .react-datepicker__navigation--previous,
     .react-datepicker__navigation--next {
-      outline: none;
+      outline: none; /* datepicker has its own focus management */
     }
 
     .react-datepicker__navigation--previous {

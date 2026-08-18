@@ -16,8 +16,8 @@
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
+      background: oklch(0.75 0.1 195 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 

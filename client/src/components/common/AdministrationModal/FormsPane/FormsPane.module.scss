@@ -50,7 +50,7 @@
       color: #fff !important;
       border-radius: 12px !important;
       padding: 10px 15px 10px 35px !important;
-      transition: all 0.3s ease !important;
+      transition: background-color 0.15s ease-out, border-color 0.15s ease-out !important;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.4) !important;
@@ -58,7 +58,7 @@
 
       &:focus {
         background: rgba(255, 255, 255, 0.1) !important;
-        border-color: rgba(26, 201, 204, 0.5) !important;
+        border-color: oklch(0.75 0.1 195 / 0.5) !important;
         color: #fff !important;
       }
     }
@@ -71,21 +71,20 @@
   }
 
   .addButton {
-    background: #1ac9cc !important;
+    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     border-radius: 12px !important;
     color: #000 !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     padding: 12px 24px !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 20px rgba(26, 201, 204, 0.3) !important;
+    transition: background-color 0.15s ease-out, border-color 0.15s ease-out !important;
+    box-shadow: 0 4px 20px oklch(0.75 0.1 195 / 0.3) !important;
     letter-spacing: 1px !important;
     white-space: nowrap;
 
     &:hover {
       background: #fff !important;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(26, 201, 204, 0.5) !important;
+      box-shadow: 0 8px 30px oklch(0.75 0.1 195 / 0.5) !important;
     }
   }
 
@@ -95,24 +94,22 @@
   }
 
   .formItem {
-    background: rgba(30, 30, 35, 0.6) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
     border-radius: 16px !important;
     /* Slightly reduced radius */
     padding: 0.75rem 1.5rem !important;
     /* Reduced padding for compact view */
     margin-bottom: 0.5rem !important;
     /* Reduced margin */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: background-color 0.15s ease-out, border-color 0.15s ease-out !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
 
     &:hover {
       background: rgba(40, 40, 45, 0.8) !important;
-      border-color: rgba(26, 201, 204, 0.5) !important;
-      transform: translateX(5px) scale(1.005);
+      border-color: oklch(0.75 0.1 195 / 0.5) !important;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
     }
   }
@@ -157,9 +154,9 @@
   }
 
   .public {
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: oklch(0.75 0.1 195 / 0.15);
+    color: var(--bp-accent, oklch(0.75 0.1 195));
+    border: 1px solid oklch(0.75 0.1 195 / 0.2);
   }
 
   .unpublished {
@@ -186,7 +183,7 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: all 0.2s ease !important;
+    transition: background-color 0.15s ease-out !important;
     border: 1px solid transparent !important;
 
     :global(i.icon) {
@@ -194,10 +191,9 @@
     }
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
-      border-color: rgba(26, 201, 204, 0.3) !important;
-      transform: translateY(-2px);
+      background: oklch(0.75 0.1 195 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      border-color: oklch(0.75 0.1 195 / 0.3) !important;
     }
 
     &.delete:hover {

@@ -123,7 +123,7 @@ export default {
       cardsOnThisListAreReadyToBeWorkedOn:
         'Os cartões nesta lista estão prontos para serem trabalhados.',
       clickHereOrRefreshPageToUpdate: '<0>Clique aqui</0> ou atualize a página para atualizar.',
-      clientHostnameInEhlo: 'Nome do host do cliente no EHLO',
+      clientHostnameInEhlo: 'Nome do host do cliente',
       closed: 'Fechado',
       color: 'Cor',
       comments: 'Comentários',
@@ -300,6 +300,7 @@ export default {
       searchMembers: 'Pesquisar membros...',
       searchProjects: 'Pesquisar projetos...',
       searchUsers: 'Pesquisar usuários...',
+      security_title: 'Segurança',
       seconds: 'Segundos',
       selectAssignee_title: 'Selecionar responsável',
       selectBoard: 'Selecionar quadro',

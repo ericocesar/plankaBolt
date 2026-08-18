@@ -300,6 +300,7 @@ export default {
       searchMembers: 'جستجوی اعضا...',
       searchProjects: 'جستجوی پروژه‌ها...',
       searchUsers: 'جستجوی کاربران...',
+      security_title: 'امنیت',
       seconds: 'ثانیه‌ها',
       selectAssignee_title: 'انتخاب مسئول',
       selectBoard: 'انتخاب برد',

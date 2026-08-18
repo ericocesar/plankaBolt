@@ -297,6 +297,7 @@ export default {
       searchMembers: 'Tìm kiếm thành viên...',
       searchProjects: 'Tìm kiếm dự án...',
       searchUsers: 'Tìm kiếm người dùng...',
+      security_title: 'Bảo mật',
       seconds: 'Giây',
       selectAssignee_title: 'Chọn người thực hiện',
       selectBoard: 'Chọn bảng',

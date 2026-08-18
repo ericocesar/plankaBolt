@@ -13,7 +13,7 @@
 
   .button {
     margin: 0 !important;
-    background: #1ac9cc !important;
+    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     border-radius: 12px !important;
     color: #ffffff !important;
     font-weight: 600 !important;
@@ -55,7 +55,7 @@
       border-right: none !important;
 
       &:focus {
-        border-color: #1ac9cc !important;
+        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         border-right: none !important;
       }
     }
@@ -86,7 +86,7 @@
         }
 
         :global(.dropdown.icon) {
-          color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
           margin-left: 4px !important;
         }
 
@@ -101,8 +101,8 @@
             background: transparent !important;
 
             &:hover {
-              background: rgba(26, 201, 204, 0.2) !important;
-              color: #1ac9cc !important;
+              background: oklch(0.75 0.1 195 / 0.2) !important;
+              color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
             }
           }
         }

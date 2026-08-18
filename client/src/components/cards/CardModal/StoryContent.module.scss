@@ -22,7 +22,7 @@
   }
 
   .actionIcon {
-    color: #1ac9cc;
+    color: var(--bp-accent, oklch(0.75 0.1 195));
     margin-right: 8px;
   }
 
@@ -115,7 +115,6 @@
     cursor: pointer;
     font-size: 12px;
     line-height: 20px;
-    outline: none;
     padding: 2px 11px;
     text-align: left;
     text-decoration: underline;
@@ -136,7 +135,6 @@
     color: rgba(255, 255, 255, 0.6) !important;
     cursor: pointer;
     min-height: 54px;
-    outline: none;
     padding: 8px 12px;
     position: relative;
     text-align: left;
@@ -224,7 +222,6 @@
     color: rgba(255, 255, 255, 0.8) !important;
     display: flex;
     line-height: 20px;
-    outline: none;
     padding: 6px 12px;
     transition: background 0.3s ease;
   }
@@ -235,7 +232,6 @@
     cursor: pointer;
     display: inline-block;
     max-width: 100%;
-    outline: none;
     padding: 0;
     width: 100%;
   }
@@ -266,7 +262,7 @@
   }
 
   .moduleIcon {
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-size: 17px;
     height: 32px;
     left: -40px;

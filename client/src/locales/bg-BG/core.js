@@ -302,6 +302,7 @@ export default {
       searchMembers: 'Търсене на членове...',
       searchProjects: 'Търсене на проекти...',
       searchUsers: 'Търсене на потребители...',
+      security_title: 'Сигурност',
       seconds: 'секунди',
       selectAssignee_title: 'Избор на изпълнител',
       selectBoard: 'Изберете табло',

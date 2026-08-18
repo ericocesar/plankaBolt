@@ -290,6 +290,7 @@ export default {
       searchMembers: 'البحث عن الأعضاء...',
       searchProjects: 'البحث عن المشاريع...',
       searchUsers: 'البحث عن المستخدمين...',
+      security_title: 'الأمان',
       seconds: 'ثواني',
       selectAssignee_title: 'اختيار المكلف',
       selectBoard: 'اختر لوحة',

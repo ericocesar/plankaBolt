@@ -294,6 +294,7 @@ export default {
       searchMembers: 'メンバーから探す…',
       searchProjects: 'プロジェクトを検索...',
       searchUsers: 'ユーザーから探す…',
+      security_title: 'セキュリティ',
       seconds: '秒',
       selectAssignee_title: '担当者を選択',
       selectBoard: 'ボードを選択',

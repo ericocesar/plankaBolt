@@ -16,7 +16,7 @@
     gap: 8px !important;
     border-radius: 12px !important;
     padding: 10px 16px !important;
-    background-color: #1ac9cc !important; // Match the screenshot color if possible, or keep positive
+    background-color: var(--bp-accent, oklch(0.75 0.1 195)) !important; // Match the screenshot color if possible, or keep positive
   }
 
   .submitButtonText {
@@ -46,8 +46,8 @@
 
     &:focus {
       background: rgba(255, 255, 255, 0.06) !important;
-      border-color: #1ac9cc !important;
-      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+      border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
     }
 
     &::placeholder {
@@ -71,7 +71,7 @@
   .toggleLinkingButton {
     background: transparent !important;
     box-shadow: none !important;
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-weight: normal !important;
     margin-left: auto;
     margin-right: 0;
@@ -82,8 +82,8 @@
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
+      background: oklch(0.75 0.1 195 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 

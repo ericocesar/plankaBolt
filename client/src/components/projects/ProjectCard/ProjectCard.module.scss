@@ -82,7 +82,7 @@
     background: #eb5a46;
     border: none;
     border-radius: 3px;
-    outline: none;
+    // outline managed by global :focus-visible rule
     padding: 0px 6px;
     position: absolute;
     transition: background 0.3s ease;

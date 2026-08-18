@@ -19,7 +19,7 @@
     flex: 1;
     font-weight: 500 !important;
     height: 40px !important;
-    outline: none;
+    // outline managed by global :focus-visible rule
     padding: 8px 12px !important;
     text-align: left;
     transition: all 0.2s ease !important;
@@ -94,7 +94,7 @@
   }
 
   .header {
-    outline: none;
+    // outline managed by global :focus-visible rule
     padding: 6px 36px 6px 8px;
     position: relative;
 
@@ -147,7 +147,7 @@
     letter-spacing: 0.5px !important;
     line-height: 20px;
     max-height: 256px;
-    outline: none;
+    // outline managed by global :focus-visible rule
     overflow: hidden;
     overflow-wrap: break-word;
     padding: 6px 10px !important;
@@ -167,15 +167,13 @@
   }
 
   .outerWrapper {
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 20px !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 198px);
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
   }
 
   .outerWrapperTransitioning {

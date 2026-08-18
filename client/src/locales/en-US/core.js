@@ -125,7 +125,7 @@ export default {
         'Cards on this list are complete and ready to be archived.',
       cardsOnThisListAreReadyToBeWorkedOn: 'Cards on this list are ready to be worked on.',
       clickHereOrRefreshPageToUpdate: '<0>Click here</0> or refresh the page to update.',
-      clientHostnameInEhlo: 'Client hostname in EHLO',
+      clientHostnameInEhlo: 'Client host name',
       closed: 'Closed',
       color: 'Color',
       comments: 'Comments',

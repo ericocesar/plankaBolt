@@ -293,6 +293,7 @@ export default {
       searchMembers: 'Etsi jäseniä...',
       searchProjects: 'Etsi projekteja...',
       searchUsers: 'Etsi käyttäjiä...',
+      security_title: 'Turvallisuus',
       seconds: 'Sekunnit',
       selectAssignee_title: 'Valitse vastuuhenkilö',
       selectBoard: 'Valitse taulu',

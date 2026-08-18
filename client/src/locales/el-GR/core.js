@@ -311,6 +311,7 @@ export default {
       searchMembers: 'Αναζήτηση μελών...',
       searchProjects: 'Αναζήτηση έργων...',
       searchUsers: 'Αναζήτηση χρηστών...',
+      security_title: 'Ασφάλεια',
       seconds: 'Δευτερόλεπτα',
       selectAssignee_title: 'Επιλογή υπευθύνου',
       selectBoard: 'Επιλογή πίνακα',

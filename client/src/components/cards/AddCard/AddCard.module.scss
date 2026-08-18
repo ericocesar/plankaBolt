@@ -30,15 +30,14 @@
     -webkit-text-fill-color: #ffffff !important;
     caret-color: #ffffff !important;
     margin-bottom: 4px;
-    outline: none;
     overflow: hidden;
     resize: none;
     width: 100%;
 
     &:focus {
-      border-color: #1ac9cc !important;
+      border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       background: rgba(0, 0, 0, 0.5) !important;
-      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+      box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
     }
 
     &::placeholder {
@@ -72,7 +71,7 @@
 
     &:hover {
       background: rgba(255, 255, 255, 0.08) !important;
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 
@@ -87,14 +86,14 @@
 
   /* Positive Button Styling */
   :global(.ui.button.positive) {
-    background: #1ac9cc !important;
+    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     color: #000 !important;
-    box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+    box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
     border: none !important;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+      box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
       background: #fff !important;
     }
   }

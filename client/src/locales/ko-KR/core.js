@@ -288,6 +288,7 @@ export default {
       searchMembers: '멤버 검색...',
       searchProjects: '프로젝트 검색...',
       searchUsers: '사용자 검색...',
+      security_title: '보안',
       seconds: '초',
       selectAssignee_title: '담당자 선택',
       selectBoard: '보드 선택',

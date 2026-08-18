@@ -298,6 +298,7 @@ export default {
       searchMembers: 'Поиск участников...',
       searchProjects: 'Поиск проектов...',
       searchUsers: 'Поиск пользователей...',
+      security_title: 'Безопасность',
       seconds: 'Секунды',
       selectAssignee_title: 'Выбрать исполнителя',
       selectBoard: 'Выберите доску',

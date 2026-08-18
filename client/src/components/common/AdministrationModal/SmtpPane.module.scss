@@ -15,7 +15,34 @@
     }
 
     :global(input:checked ~ label:after) {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    }
+  }
+
+  .row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    width: 100%;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  .fieldGroup {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fieldGroupPort {
+    flex: 0 0 130px;
+    min-width: 0;
+
+    @media (max-width: 640px) {
+      flex: 1;
+      width: 100%;
     }
   }
 
@@ -40,9 +67,9 @@
       transition: all 0.2s ease !important;
       
       &:focus {
-        border-color: #1ac9cc !important;
+        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.1) !important;
+        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.1) !important;
       }
 
       &::placeholder {
@@ -63,10 +90,10 @@
     border: none !important;
 
     &:hover {
-      background: #1ac9cc !important;
+      background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       color: #fff !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.3) !important;
+      box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.3) !important;
     }
 
     &:disabled {
@@ -98,7 +125,7 @@
     background: rgba(0, 0, 0, 0.4) !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     border-radius: 16px !important;
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-family: 'Fira Code', 'Monaco', 'Menlo', monospace !important;
     font-size: 12px !important;
     line-height: 1.6;
@@ -109,7 +136,7 @@
   }
 
   .text {
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-family: 'Oswald', sans-serif !important;
     font-size: 11px !important;
     font-weight: 600 !important;

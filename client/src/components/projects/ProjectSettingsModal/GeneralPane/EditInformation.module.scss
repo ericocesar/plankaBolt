@@ -9,7 +9,7 @@
   }
 
   .text {
-    color: #1ac9cc;
+    color: var(--bp-accent, oklch(0.75 0.1 195));
     /* Teal to match labels */
     font-size: 12px;
     font-weight: bold;

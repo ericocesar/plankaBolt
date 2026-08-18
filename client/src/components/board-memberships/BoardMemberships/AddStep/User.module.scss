@@ -35,7 +35,7 @@
 
   .menuItemTextActive:before {
     bottom: 2px;
-    color: #1ac9cc;
+    color: var(--bp-accent, oklch(0.75 0.1 195));
     content: "Г";
     font-size: 18px;
     font-weight: normal;

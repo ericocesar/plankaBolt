@@ -22,8 +22,8 @@
 
     &:focus {
       background: rgba(0, 0, 0, 0.4) !important;
-      border-color: #1ac9cc !important;
-      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+      border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
       outline: 0;
     }
 

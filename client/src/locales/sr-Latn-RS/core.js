@@ -296,6 +296,7 @@ export default {
       searchMembers: 'Pretraži članove...',
       searchProjects: 'Pretraži projekte...',
       searchUsers: 'Pretraži korisnike...',
+      security_title: 'Bezbednost',
       seconds: 'Sekunde',
       selectAssignee_title: 'Izaberi izvršioca',
       selectBoard: 'Izaberi tablu',

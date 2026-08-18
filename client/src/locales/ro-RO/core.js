@@ -295,6 +295,7 @@ export default {
       searchMembers: 'Căutați membri...',
       searchProjects: 'Caută proiecte...',
       searchUsers: 'Căutați utilizatori...',
+      security_title: 'Securitate',
       seconds: 'Secunde',
       selectAssignee_title: 'Selectează persoana atribuită',
       selectBoard: 'Selectați tabla',

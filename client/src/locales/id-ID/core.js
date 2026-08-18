@@ -298,6 +298,7 @@ export default {
       searchMembers: 'Cari anggota...',
       searchProjects: 'Cari proyek...',
       searchUsers: 'Cari pengguna...',
+      security_title: 'Keamanan',
       seconds: 'Detik',
       selectAssignee_title: 'Pilih penerima tugas',
       selectBoard: 'Pilih papan',

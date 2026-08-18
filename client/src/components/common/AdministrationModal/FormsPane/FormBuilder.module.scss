@@ -1,18 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;700&display=swap');
-
-/* Bolt Premium Design System Variables */
-$bp-bg-deep: #050505;
-$bp-bg-surface: #121212;
-$bp-accent-primary: #10b981; // Emerald
-$bp-accent-secondary: #059669;
-$bp-accent-error: #ef4444;
-$bp-text-primary: #ffffff;
-$bp-text-secondary: #9ca3af;
-$bp-border-subtle: rgba(255, 255, 255, 0.08);
-$bp-radius-lg: 24px;
+/* Bolt Design System Variables */
+$bp-bg-deep: oklch(0.16 0.008 240);
+$bp-bg-surface: oklch(0.2 0.008 240);
+$bp-accent-primary: oklch(0.75 0.1 195);
+$bp-accent-secondary: oklch(0.7 0.1 195);
+$bp-accent-error: oklch(0.65 0.2 25);
+$bp-text-primary: oklch(0.96 0.005 240);
+$bp-text-secondary: oklch(0.65 0.008 240);
+$bp-border-subtle: oklch(0.3 0.008 240);
+$bp-radius-lg: 20px;
 $bp-radius-md: 12px;
 $bp-radius-sm: 8px;
-$bp-blur: 24px;
 
 .builderWrapper {
   display: flex;
@@ -37,14 +34,13 @@ $bp-blur: 24px;
 /* --- Left Column: Tool Box --- */
 .toolBoxColumn {
   width: 192px !important;
-  flex: 0 0 192px !important;
-  background: rgba(20, 20, 25, 0.6);
+  flex: 0 0 192px;
+  background: var(--bp-bg-surface, oklch(0.2 0.008 240));
   border: 1px solid $bp-border-subtle;
   border-radius: $bp-radius-lg;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  backdrop-filter: blur($bp-blur);
   padding: 20px 0;
   margin-left: 0 !important;
 }
@@ -247,8 +243,7 @@ $bp-blur: 24px;
   border-radius: $bp-radius-md;
   padding: 24px;
   position: relative;
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-  backdrop-filter: blur(10px);
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out;
   flex-grow: 0;
   flex-shrink: 0;
 
@@ -312,8 +307,7 @@ $bp-blur: 24px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  backdrop-filter: blur($bp-blur);
-  margin-right: 0 !important;
+  margin-right: 0;
 }
 
 .settingsForm {

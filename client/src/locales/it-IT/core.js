@@ -298,6 +298,7 @@ export default {
       searchMembers: 'Cerca membri...',
       searchProjects: 'Cerca progetti...',
       searchUsers: 'Cerca utenti...',
+      security_title: 'Sicurezza',
       seconds: 'Secondi',
       selectAssignee_title: 'Seleziona assegnatario',
       selectBoard: 'Seleziona bacheca',

@@ -47,7 +47,7 @@
   }
 
   .nameIcon {
-    color: #1ac9cc;
+    color: var(--bp-accent, oklch(0.75 0.1 195));
     font-size: 12px;
     margin: 0 8px 0 0;
     width: 14px;

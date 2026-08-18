@@ -293,6 +293,7 @@ export default {
       searchMembers: "A'zolarni qidirish...",
       searchProjects: 'Loyihalarni qidirish...',
       searchUsers: 'Foydalanuvchilarni qidirish...',
+      security_title: 'Xavfsizlik',
       seconds: 'Sekund',
       selectAssignee_title: 'Ijrochini tanlash',
       selectBoard: 'Doskani tanlash',

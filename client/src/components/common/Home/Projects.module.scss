@@ -21,9 +21,9 @@
     &:hover {
       .addButtonCover {
         background: rgba(255, 255, 255, 0.05) !important;
-        border-color: rgba(26, 201, 204, 0.3) !important;
+        border-color: oklch(0.75 0.1 195 / 0.3) !important;
       }
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 
@@ -62,7 +62,6 @@
 
   .card {
     background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(10px) !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     border-radius: 20px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;

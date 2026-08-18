@@ -9,7 +9,7 @@
     border: none;
     cursor: pointer;
     display: inline-block;
-    outline: none;
+    // outline managed by global :focus-visible rule
     padding: 0;
   }
 

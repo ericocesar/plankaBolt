@@ -275,6 +275,7 @@ export default {
       searchMembers: '搜尋成員...',
       searchProjects: '搜尋專案...',
       searchUsers: '搜尋使用者...',
+      security_title: '安全性',
       seconds: '秒',
       selectAssignee_title: '選擇受派者',
       selectBoard: '選擇看板',

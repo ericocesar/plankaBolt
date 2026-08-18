@@ -107,43 +107,45 @@ const SmtpPane = React.memo(() => {
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
       <Form onSubmit={handleSubmit}>
-        <div className={styles.text}>{t('common.host')}</div>
-        <Input
-          fluid
-          name="smtpHost"
-          value={data.smtpHost}
-          maxLength={256}
-          className={styles.field}
-          onChange={handleFieldChange}
-        />
-        <div className={styles.text}>{t('common.port')}</div>
-        <Input
-          fluid
-          type="number"
-          name="smtpPort"
-          value={data.smtpPort}
-          placeholder={data.smtpSecure ? '465' : '587'}
-          min={0}
-          max={65535}
-          step={1}
-          className={styles.field}
-          onChange={handleFieldChange}
-        />
-        <div className={styles.text}>
-          {t('common.clientHostnameInEhlo')} (
-          {t('common.optional', {
-            context: 'inline',
-          })}
-          )
+        <div className={styles.row}>
+          <div className={styles.fieldGroup}>
+            <div className={styles.text}>{t('common.host')}</div>
+            <Input
+              fluid
+              name="smtpHost"
+              value={data.smtpHost}
+              maxLength={256}
+              className={styles.field}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div className={styles.fieldGroupPort}>
+            <div className={styles.text}>{t('common.port')}</div>
+            <Input
+              fluid
+              type="number"
+              name="smtpPort"
+              value={data.smtpPort}
+              placeholder={data.smtpSecure ? '465' : '587'}
+              min={0}
+              max={65535}
+              step={1}
+              className={styles.field}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div className={styles.fieldGroup}>
+            <div className={styles.text}>{t('common.clientHostnameInEhlo')}</div>
+            <Input
+              fluid
+              name="smtpName"
+              value={data.smtpName}
+              maxLength={256}
+              className={styles.field}
+              onChange={handleFieldChange}
+            />
+          </div>
         </div>
-        <Input
-          fluid
-          name="smtpName"
-          value={data.smtpName}
-          maxLength={256}
-          className={styles.field}
-          onChange={handleFieldChange}
-        />
         <Checkbox
           name="smtpSecure"
           checked={data.smtpSecure}
@@ -158,39 +160,45 @@ const SmtpPane = React.memo(() => {
           className={classNames(styles.field, styles.checkbox)}
           onChange={handleFieldChange}
         />
-        <div className={styles.text}>
-          {t('common.username')} (
-          {t('common.optional', {
-            context: 'inline',
-          })}
-          )
+        <div className={styles.row}>
+          <div className={styles.fieldGroup}>
+            <div className={styles.text}>
+              {t('common.username')} (
+              {t('common.optional', {
+                context: 'inline',
+              })}
+              )
+            </div>
+            <Input
+              fluid
+              name="smtpUser"
+              value={data.smtpUser}
+              maxLength={256}
+              className={styles.field}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div className={styles.fieldGroup}>
+            <div className={styles.text}>
+              {t('common.password')} (
+              {t('common.optional', {
+                context: 'inline',
+              })}
+              )
+            </div>
+            <Input.Password
+              fluid
+              ref={handlePasswordFieldRef}
+              name="smtpPassword"
+              value={data.smtpPassword}
+              placeholder={isPasswordSet ? t('common.passwordIsSet') : undefined}
+              maxLength={256}
+              className={styles.field}
+              onClear={!data.smtpPassword && isPasswordSet ? handlePasswordClear : undefined}
+              onChange={handlePasswordChange}
+            />
+          </div>
         </div>
-        <Input
-          fluid
-          name="smtpUser"
-          value={data.smtpUser}
-          maxLength={256}
-          className={styles.field}
-          onChange={handleFieldChange}
-        />
-        <div className={styles.text}>
-          {t('common.password')} (
-          {t('common.optional', {
-            context: 'inline',
-          })}
-          )
-        </div>
-        <Input.Password
-          fluid
-          ref={handlePasswordFieldRef}
-          name="smtpPassword"
-          value={data.smtpPassword}
-          placeholder={isPasswordSet ? t('common.passwordIsSet') : undefined}
-          maxLength={256}
-          className={styles.field}
-          onClear={!data.smtpPassword && isPasswordSet ? handlePasswordClear : undefined}
-          onChange={handlePasswordChange}
-        />
         <div className={styles.text}>
           {t('common.defaultFrom')} (
           {t('common.optional', {

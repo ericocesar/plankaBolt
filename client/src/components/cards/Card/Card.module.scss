@@ -14,7 +14,6 @@
     margin: 0;
     min-height: auto;
     opacity: 0;
-    outline: none;
     padding: 6px !important;
     position: absolute;
     right: 6px !important;
@@ -49,21 +48,20 @@
   }
 
   .wrapper {
-    background: rgba(255, 255, 255, 0.04) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
-    transition: all 0.25s ease !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 8px;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: border-color 0.15s ease-out;
+    }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.08) !important;
-      transform: translateY(-2px) !important;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25) !important;
-      border-color: rgba(26, 201, 204, 0.3) !important;
+      background: oklch(0.22 0.008 240);
+      border-color: var(--bp-border-focus, oklch(0.7 0.06 160));
 
       .actionsButton {
         opacity: 1;

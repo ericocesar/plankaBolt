@@ -297,6 +297,7 @@ export default {
       searchMembers: 'Liikmete otsimine...',
       searchProjects: 'Projektide otsimine...',
       searchUsers: 'Kasutajate otsimine...',
+      security_title: 'Turvalisus',
       seconds: 'Sekundid',
       selectAssignee_title: 'Vali vastutaja',
       selectBoard: 'Vali tahvel',

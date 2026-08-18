@@ -301,6 +301,7 @@ export default {
       searchMembers: 'Pesquisar membros...',
       searchProjects: 'Pesquisar projetos...',
       searchUsers: 'Pesquisar utilizadores...',
+      security_title: 'Segurança',
       seconds: 'Segundos',
       selectAssignee_title: 'Selecionar responsável',
       selectBoard: 'Selecionar quadro',

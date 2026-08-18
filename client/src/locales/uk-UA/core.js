@@ -297,6 +297,7 @@ export default {
       searchMembers: 'Пошук учасників...',
       searchProjects: 'Пошук проектів...',
       searchUsers: 'Пошук користувачів...',
+      security_title: 'Безпека',
       seconds: 'Секунди',
       selectAssignee_title: 'Вибрати виконавця',
       selectBoard: 'Вибрати дошку',

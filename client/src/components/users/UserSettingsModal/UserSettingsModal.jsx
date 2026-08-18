@@ -52,7 +52,9 @@ const UserSettingsModal = React.memo(() => {
       render: () => <NotificationsPane />,
     },
     {
-      menuItem: 'SEGURANÇA',
+      menuItem: t('common.security', {
+        context: 'title',
+      }),
       render: () => <SecurityPane />,
     },
   ];

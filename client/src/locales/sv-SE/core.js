@@ -302,6 +302,7 @@ export default {
       searchMembers: 'Sök medlemmar...',
       searchProjects: 'Sök projekt...',
       searchUsers: 'Sök användare...',
+      security_title: 'Säkerhet',
       seconds: 'Sekunder',
       selectAssignee_title: 'Välj tilldelad',
       selectBoard: 'Välj tavla',

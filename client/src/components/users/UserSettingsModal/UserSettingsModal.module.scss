@@ -12,11 +12,10 @@
   .wrapper {
     margin: 2rem auto;
     margin-top: 5vh;
-    background: rgba(10, 10, 15, 0.95) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 24px !important;
-    backdrop-filter: blur(24px) !important;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 20px;
+    box-shadow: 0 30px 60px oklch(0.1 0 0 / 0.5);
     width: 800px !important;
     max-width: 95vw !important;
 
@@ -93,7 +92,7 @@
         &:global(.active),
         :global(.active) {
           color: #000000 !important;
-          background: #1ac9cc !important;
+          background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
           font-weight: 700 !important;
           box-shadow: none !important;
           border: none !important;
@@ -103,7 +102,7 @@
 
     /* Target EditInformation custom structure & field labels */
     div[class*="text"] {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       text-transform: uppercase !important;
       letter-spacing: 1px !important;
       font-size: 0.75rem !important;
@@ -122,7 +121,7 @@
         margin-bottom: 1.5rem !important;
 
         :global(label) {
-          color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
           text-transform: uppercase !important;
           letter-spacing: 1px !important;
           font-size: 0.75rem !important;
@@ -147,9 +146,9 @@
       }
 
       &:focus {
-        border-color: #1ac9cc !important;
+        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         background: rgba(0, 0, 0, 0.6) !important;
-        box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.25) !important;
+        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.25) !important;
       }
     }
 
@@ -167,7 +166,7 @@
       }
 
       :global(.dropdown.icon) {
-        color: #1ac9cc !important;
+        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       }
 
       :global(.menu) {
@@ -185,8 +184,8 @@
           &:hover,
           &.selected,
           &.active {
-            background: rgba(26, 201, 204, 0.2) !important;
-            color: #1ac9cc !important;
+            background: oklch(0.75 0.1 195 / 0.2) !important;
+            color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
             font-weight: 600 !important;
           }
         }
@@ -206,7 +205,7 @@
       :global(a),
       :global(b),
       :global(strong) {
-        color: #1ac9cc !important;
+        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       }
     }
 
@@ -228,7 +227,7 @@
 
       :global(.header) {
         background: transparent !important;
-        color: #1ac9cc !important;
+        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         /* Teal */
         font-family: 'Oswald', sans-serif !important;
         text-transform: uppercase !important;
@@ -261,7 +260,7 @@
         }
 
         &:after {
-          color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         }
       }
 
@@ -269,7 +268,7 @@
         color: #ffffff !important;
 
         &:before {
-          border-color: #1ac9cc !important;
+          border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         }
       }
     }
@@ -299,14 +298,14 @@
 
     :global(.ui.button.positive),
     :global(.ui.button.green) {
-      background: #1ac9cc !important;
+      background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       color: #ffffff !important;
-      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+      box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
       border: none !important;
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+        box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
         background: #16b4b7 !important;
         color: #ffffff !important;
       }

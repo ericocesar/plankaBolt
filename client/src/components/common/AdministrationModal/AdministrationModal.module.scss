@@ -23,11 +23,10 @@
     margin: 2rem auto;
     /* Move dialog higher up as requested */
     margin-top: 2vh;
-    background: rgba(10, 10, 15, 0.9) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 24px !important;
-    backdrop-filter: blur(24px) !important;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 20px;
+    box-shadow: 0 30px 60px oklch(0.1 0 0 / 0.5);
 
     @media (width < 926px) {
       margin: 1rem auto;
@@ -82,9 +81,9 @@
         }
 
         &.active {
-          background: #1ac9cc !important;
+          background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
           color: #000 !important;
-          box-shadow: 0 4px 20px rgba(26, 201, 204, 0.25) !important;
+          box-shadow: 0 4px 20px oklch(0.75 0.1 195 / 0.25) !important;
           font-weight: 700 !important;
         }
       }
@@ -95,7 +94,7 @@
         margin-bottom: 1.5rem !important;
 
         :global(label) {
-          color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
           text-transform: uppercase !important;
           letter-spacing: 1px !important;
           font-size: 0.75rem !important;
@@ -114,9 +113,9 @@
           transition: all 0.2s ease !important;
 
           &:focus {
-            border-color: #1ac9cc !important;
+            border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
             background: rgba(0, 0, 0, 0.5) !important;
-            box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+            box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
           }
 
           :global(input.search) {
@@ -144,14 +143,14 @@
               border-top: 1px solid rgba(255, 255, 255, 0.03) !important;
 
               &:hover {
-                background: rgba(26, 201, 204, 0.1) !important;
-                color: #1ac9cc !important;
+                background: oklch(0.75 0.1 195 / 0.1) !important;
+                color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
               }
 
               & :global(.active),
               &.active {
-                background: rgba(26, 201, 204, 0.1) !important;
-                color: #1ac9cc !important;
+                background: oklch(0.75 0.1 195 / 0.1) !important;
+                color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
               }
             }
           }
@@ -171,7 +170,7 @@
         }
 
         :global(input:checked ~ label:after) {
-          color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         }
       }
     }
@@ -213,7 +212,7 @@
               margin-top: 4px !important;
 
               :global(a) {
-                color: #1ac9cc !important;
+                color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
 
                 &:hover {
                   text-decoration: underline !important;
@@ -284,8 +283,8 @@
         }
 
         &.active {
-          color: #1ac9cc !important;
-          border-color: #1ac9cc !important;
+          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         }
       }
     }
@@ -295,10 +294,9 @@
     margin: 2rem auto;
     margin-top: 4vh;
     width: min(1400px, 94vw);
-    background: rgba(255, 255, 255, 0.02) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 24px !important;
-    backdrop-filter: blur(10px) !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 20px;
 
     @media (width < 926px) {
       margin: 1rem auto;

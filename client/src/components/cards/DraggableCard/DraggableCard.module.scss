@@ -6,6 +6,6 @@
 :global(#app) {
   .wrapper {
     cursor: auto;
-    outline: none;
+    // outline managed by global :focus-visible rule
   }
 }

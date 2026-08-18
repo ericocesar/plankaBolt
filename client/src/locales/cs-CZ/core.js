@@ -293,6 +293,7 @@ export default {
       searchMembers: 'Hledat členy...',
       searchProjects: 'Hledat projekty...',
       searchUsers: 'Hledat uživatele...',
+      security_title: 'Zabezpečení',
       seconds: 'Vteřin',
       selectAssignee_title: 'Vybrat přiřazení',
       selectBoard: 'Vybrat nástěnku',

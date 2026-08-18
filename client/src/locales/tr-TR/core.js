@@ -298,6 +298,7 @@ export default {
       searchMembers: 'Üyeleri ara...',
       searchProjects: 'Projeleri ara...',
       searchUsers: 'Kullanıcıları ara...',
+      security_title: 'Güvenlik',
       seconds: 'saniye',
       selectAssignee_title: 'Atanan kişiyi seç',
       selectBoard: 'Pano seç',

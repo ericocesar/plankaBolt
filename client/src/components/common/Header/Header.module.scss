@@ -5,10 +5,10 @@
 
 :global(#app) {
   .editButton {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 8px !important;
-    color: #fff;
+    background: oklch(0.25 0.008 240);
+    border: 1px solid oklch(0.3 0.008 240);
+    border-radius: 8px;
+    color: var(--bp-text-primary, oklch(0.96 0.005 240));
     font-size: 15px;
     line-height: 34px;
     margin-left: 8px;
@@ -16,19 +16,22 @@
     padding: 0;
     width: 34px;
     height: 34px;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.3s ease !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.15s ease-out;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: opacity 0.15s ease-out;
+    }
 
     :global(.icon) {
-      font-size: 16px !important;
-      margin: 0 !important;
+      font-size: 16px;
+      margin: 0;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      transform: scale(1.05) !important;
+      background: oklch(0.3 0.008 240);
     }
   }
 
@@ -57,31 +60,29 @@
   }
 
   .itemIconEnabled {
-    color: #bdff22;
+    color: var(--bp-accent, oklch(0.75 0.1 195));
   }
 
   .wrapper {
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(15px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 50px !important;
+    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+    border-radius: 24px;
     display: flex;
     flex: 0 0 auto;
-    margin: 20px auto !important;
-    padding: 0 10px !important;
-    width: fit-content !important;
+    margin: 20px auto;
+    padding: 0 10px;
+    width: fit-content;
     min-width: 400px;
     max-width: 95%;
     position: sticky;
     top: 20px;
     z-index: 1000;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
 
     @media only screen and (width < 768px) {
       min-width: auto;
       width: 90%;
-      border-radius: 20px !important;
-      margin: 10px auto !important;
+      border-radius: 16px;
+      margin: 10px auto;
       top: 10px;
     }
   }
@@ -113,7 +114,7 @@
     }
 
     &:hover {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195));
     }
   }
 
@@ -130,8 +131,8 @@
 
     &:active,
     &:hover {
-      background: transparent !important;
-      color: #1ac9cc !important;
+      background: transparent;
+      color: var(--bp-accent, oklch(0.75 0.1 195));
 
       .editButton {
         opacity: 1;
@@ -141,7 +142,7 @@
 
   .itemHoverable:hover {
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border-radius: 30px !important;
+    background: oklch(0.25 0.008 240);
+    border-radius: 16px;
   }
 }

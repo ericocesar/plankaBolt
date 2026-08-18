@@ -10,7 +10,7 @@
   }
 
   .icon {
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     margin: 0 0.5rem 0 0 !important;
   }
 
@@ -38,7 +38,7 @@
 
   .roleCell {
     white-space: nowrap !important;
-    color: #1ac9cc !important;
+    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-weight: 500 !important;
   }
 

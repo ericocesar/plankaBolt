@@ -40,18 +40,18 @@
 
   .enableButton {
     color: #ffffff !important;
-    background: #1ac9cc !important;
+    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
     border-radius: 12px !important;
-    box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+    box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
 
     &:hover {
       background: #16b4b7 !important;
       color: #ffffff !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+      box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
     }
   }
 }

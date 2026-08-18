@@ -25,7 +25,7 @@
     }
 
     &:hover :global(.icon) {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 

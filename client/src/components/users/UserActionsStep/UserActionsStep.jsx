@@ -40,11 +40,6 @@ const UserActionsStep = React.memo(({ onClose }) => {
     onClose();
   }, [onClose, dispatch]);
 
-  const handleAboutClick = useCallback(() => {
-    dispatch(entryActions.openAboutModal());
-    onClose();
-  }, [onClose, dispatch]);
-
   const handleLogoutClick = useCallback(() => {
     dispatch(entryActions.logout());
   }, [dispatch]);
@@ -98,12 +93,6 @@ const UserActionsStep = React.memo(({ onClose }) => {
               )}
             </>
           )}
-          <Menu.Item className={styles.menuItem} onClick={handleAboutClick}>
-            <Icon name="info circle" className={styles.menuItemIcon} />
-            {t('common.aboutApp', {
-              context: 'title',
-            })}
-          </Menu.Item>
           <Menu.Item
             href="https://planka.app/pro?ref=app-menu"
             target="_blank"

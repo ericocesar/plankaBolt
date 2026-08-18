@@ -297,6 +297,7 @@ export default {
       searchMembers: 'Søg efter medlemmer...',
       searchProjects: 'Søg efter projekter...',
       searchUsers: 'Søg efter brugere...',
+      security_title: 'Sikkerhed',
       seconds: 'Sekunder',
       selectAssignee_title: 'Vælg ansvarlig',
       selectBoard: 'Vælg tavle',

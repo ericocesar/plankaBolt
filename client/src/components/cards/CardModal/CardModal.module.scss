@@ -3,12 +3,10 @@
 .wrapperStory {
   margin: 2rem auto;
   margin-top: 5vh;
-  background: rgba(10, 10, 15, 0.95) !important;
-  /* Dark Neural Bg */
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 24px !important;
-  backdrop-filter: blur(24px) !important;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
+  background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+  border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
+  border-radius: 20px;
+  box-shadow: 0 30px 60px oklch(0.1 0 0 / 0.5);
   overflow: hidden;
   max-width: 95vw !important;
 
@@ -79,9 +77,9 @@
     padding-left: 1rem !important;
 
     &:hover {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
-      border-color: rgba(26, 201, 204, 0.3) !important;
+      background: oklch(0.75 0.1 195 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      border-color: oklch(0.75 0.1 195 / 0.3) !important;
     }
   }
 
@@ -100,9 +98,9 @@
       background: transparent !important;
 
       &.active {
-        color: #1ac9cc !important;
+        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
         background: transparent !important;
-        border-bottom-color: #1ac9cc !important;
+        border-bottom-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
       }
 
       &:hover {
@@ -123,7 +121,7 @@
     color: rgba(255, 255, 255, 0.7) !important;
 
     &:hover {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 
@@ -191,12 +189,12 @@
     }
 
     :global(a) {
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
 
     :global(code) {
       background: rgba(255, 255, 255, 0.1) !important;
-      color: #1ac9cc !important;
+      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
     }
   }
 }

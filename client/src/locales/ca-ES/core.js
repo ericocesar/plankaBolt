@@ -301,6 +301,7 @@ export default {
       searchMembers: 'Cercar membres...',
       searchProjects: 'Cercar projectes...',
       searchUsers: 'Cercar usuaris...',
+      security_title: 'Seguretat',
       seconds: 'Segons',
       selectAssignee_title: 'Seleccionar assignat',
       selectBoard: 'Seleccionar tauler',

@@ -292,6 +292,7 @@ export default {
       searchMembers: 'Hľadať členov...',
       searchProjects: 'Hľadať projekty...',
       searchUsers: 'Hľadať používateľov...',
+      security_title: 'Bezpečnosť',
       seconds: 'Sekúnd',
       selectAssignee_title: 'Vybrať pridelenú osobu',
       selectBoard: 'Vybrať tabuľu',

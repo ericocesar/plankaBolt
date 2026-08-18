@@ -296,6 +296,7 @@ export default {
       searchMembers: 'Szukaj członków...',
       searchProjects: 'Szukaj projektów...',
       searchUsers: 'Szukaj użytkowników...',
+      security_title: 'Bezpieczeństwo',
       seconds: 'Sekund',
       selectAssignee_title: 'Wybierz osobę przypisaną',
       selectBoard: 'Wybierz tablicę',
