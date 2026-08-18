@@ -5,6 +5,11 @@
 
 import EntryActionTypes from '../constants/EntryActionTypes';
 
+const handleUsersReset = () => ({
+  type: EntryActionTypes.USERS_RESET_HANDLE,
+  payload: {},
+});
+
 const createUser = (data) => ({
   type: EntryActionTypes.USER_CREATE,
   payload: {
@@ -134,6 +139,14 @@ const clearCurrentUserUsernameUpdateError = () => ({
   payload: {},
 });
 
+const updateUserAvatar = (id, data) => ({
+  type: EntryActionTypes.USER_AVATAR_UPDATE,
+  payload: {
+    id,
+    data,
+  },
+});
+
 const updateCurrentUserAvatar = (data) => ({
   type: EntryActionTypes.CURRENT_USER_AVATAR_UPDATE,
   payload: {
@@ -159,6 +172,64 @@ const clearUserApiKeyValue = (id) => ({
   type: EntryActionTypes.USER_API_KEY_VALUE_CLEAR,
   payload: {
     id,
+  },
+});
+
+const setupCurrentUserTotp = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_SETUP,
+  payload: {
+    data,
+  },
+});
+
+const clearCurrentUserTotpSetupValue = () => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_SETUP_VALUE_CLEAR,
+  payload: {},
+});
+
+const enableCurrentUserTotp = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_ENABLE,
+  payload: {
+    data,
+  },
+});
+
+const disableCurrentUserTotp = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_DISABLE,
+  payload: {
+    data,
+  },
+});
+
+const disableUserTotp = (id, data) => ({
+  type: EntryActionTypes.USER_TOTP_DISABLE,
+  payload: {
+    id,
+    data,
+  },
+});
+
+const regenerateCurrentUserTotpRecoveryCodes = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_RECOVERY_CODES_REGENERATE,
+  payload: {
+    data,
+  },
+});
+
+const clearCurrentUserTotpRecoveryCodes = () => ({
+  type: EntryActionTypes.CURRENT_USER_TOTP_RECOVERY_CODES_CLEAR,
+  payload: {},
+});
+
+const fetchCurrentUserTrustedDevices = () => ({
+  type: EntryActionTypes.CURRENT_USER_TRUSTED_DEVICES_FETCH,
+  payload: {},
+});
+
+const deleteCurrentUserTrustedDevice = (deviceId) => ({
+  type: EntryActionTypes.CURRENT_USER_TRUSTED_DEVICE_DELETE,
+  payload: {
+    deviceId,
   },
 });
 
@@ -246,6 +317,7 @@ const removeUserFromFilterInCurrentBoard = (id) => ({
 });
 
 export default {
+  handleUsersReset,
   createUser,
   handleUserCreate,
   clearUserCreateError,
@@ -265,10 +337,20 @@ export default {
   updateCurrentUserUsername,
   clearUserUsernameUpdateError,
   clearCurrentUserUsernameUpdateError,
+  updateUserAvatar,
   updateCurrentUserAvatar,
   createUserApiKey,
   deleteUserApiKey,
   clearUserApiKeyValue,
+  setupCurrentUserTotp,
+  clearCurrentUserTotpSetupValue,
+  enableCurrentUserTotp,
+  disableCurrentUserTotp,
+  disableUserTotp,
+  regenerateCurrentUserTotpRecoveryCodes,
+  clearCurrentUserTotpRecoveryCodes,
+  fetchCurrentUserTrustedDevices,
+  deleteCurrentUserTrustedDevice,
   deleteUser,
   handleUserDelete,
   addUserToCard,

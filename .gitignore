@@ -16,3 +16,10 @@ yarn.lock
 
 # Chart dependencies
 **/charts/*.tgz
+
+# dotcontext runtime state
+.context/plans/
+.context/cache/semantic/
+.context/runtime/
+.context/**/archive/
+

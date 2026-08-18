@@ -6,7 +6,6 @@ export default {
         'Se requiere inicio de sesión de administrador para inicializar la instancia',
       emailAlreadyInUse: 'Correo electrónico ya en uso',
       emailOrUsername: 'Correo electrónico o nombre de usuario',
-      iHaveReadAndAgreeToTheseTerms: 'He leído y acepto estos términos',
       invalidCredentials: 'Credenciales no válidas',
       invalidEmailOrUsername: 'Correo electrónico o nombre de usuario no válido',
       invalidPassword: 'Contraseña no válida',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Desarrollado con <1>PLANKA</1>',
       serverConnectionFailed: 'Error de conexión con el servidor',
       unknownError: 'Error desconocido, inténtalo más tarde',
-      useSingleSignOn: 'Usar inicio de sesión único',
       usernameAlreadyInUse: 'Nombre de usuario ya en uso',
       whoops_title: '¡Ups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Volver',
       goHome: 'Ir al inicio',
       logIn: 'Iniciar sesión',
-      logInWithSso: 'Iniciar sesión con SSO',
     },
   },
 };

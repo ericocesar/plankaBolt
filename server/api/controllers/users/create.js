@@ -58,7 +58,7 @@
  *                 maxLength: 128
  *                 nullable: true
  *                 description: Contact phone number
- *                 example: +1234567890
+ *                 example: "+1234567890"
  *               organization:
  *                 type: string
  *                 maxLength: 128
@@ -199,10 +199,6 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
-
-    if (sails.config.custom.oidcEnforced) {
-      throw Errors.NOT_ENOUGH_RIGHTS;
-    }
 
     const values = _.pick(inputs, [
       'email',

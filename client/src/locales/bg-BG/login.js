@@ -6,7 +6,6 @@ export default {
         'Необходимо е влизане на администратор за инициализиране на инстанцията',
       emailAlreadyInUse: 'Имейлът вече се използва',
       emailOrUsername: 'Имейл или потребителско име',
-      iHaveReadAndAgreeToTheseTerms: 'Прочетох и се съгласявам с тези условия',
       invalidCredentials: 'Невалидни данни за вход',
       invalidEmailOrUsername: 'Невалиден имейл или потребителско име',
       invalidPassword: 'Невалидна парола',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Задвижвано от <1>PLANKA</1>',
       serverConnectionFailed: 'Неуспешна връзка със сървъра',
       unknownError: 'Неизвестна грешка, опитайте отново по-късно',
-      useSingleSignOn: 'Използване на single sign-on',
       usernameAlreadyInUse: 'Потребителското име вече се използва',
       whoops_title: 'Опа!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Назад',
       goHome: 'Към началото',
       logIn: 'Вход',
-      logInWithSso: 'Вход чрез SSO',
     },
   },
 };

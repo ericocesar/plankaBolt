@@ -5,7 +5,6 @@ export default {
       adminLoginRequiredToInitializeInstance: 'ورود مدیر برای راه‌اندازی نمونه مورد نیاز است',
       emailAlreadyInUse: 'ایمیل قبلا استفاده شده است',
       emailOrUsername: 'ایمیل یا نام کاربری',
-      iHaveReadAndAgreeToTheseTerms: 'این شرایط را خوانده‌ام و با آن موافقم',
       invalidCredentials: 'اطلاعات ورود نامعتبر',
       invalidEmailOrUsername: 'ایمیل یا نام کاربری نامعتبر است',
       invalidPassword: 'رمز عبور نامعتبر است',
@@ -17,7 +16,6 @@ export default {
       poweredByPlanka: 'قدرت گرفته از <1>PLANKA</1>',
       serverConnectionFailed: 'اتصال به سرور ناموفق بود',
       unknownError: 'خطای ناشناخته، بعداً دوباره تلاش کنید',
-      useSingleSignOn: 'استفاده از ورود یکپارچه',
       usernameAlreadyInUse: 'نام کاربری قبلا استفاده شده است',
       whoops_title: 'اوه!',
     },
@@ -28,7 +26,6 @@ export default {
       goBack: 'بازگشت',
       goHome: 'رفتن به خانه',
       logIn: 'ورود',
-      logInWithSso: 'ورود با SSO',
     },
   },
 };

@@ -6,7 +6,6 @@ export default {
         'Potrebna je administratorska prijava za inicijalizaciju instance',
       emailAlreadyInUse: 'E-pošta je već u upotrebi',
       emailOrUsername: 'E-pošta ili korisničko ime',
-      iHaveReadAndAgreeToTheseTerms: 'Pročitao sam i slažem se sa ovim uslovima',
       invalidCredentials: 'Neispravni akreditivi',
       invalidEmailOrUsername: 'Neispravna e-pošta ili korisničko ime',
       invalidPassword: 'Neispravna lozinka',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Pokreće <1>PLANKA</1>',
       serverConnectionFailed: 'Neuspešna konekcija sa serverom',
       unknownError: 'Nepoznata greška, pokušajte ponovo kasnije',
-      useSingleSignOn: 'Koristi univerzalnu prijavu',
       usernameAlreadyInUse: 'Korisničko ime je već u upotrebi',
       whoops_title: 'Ups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Nazad',
       goHome: 'Idi kući',
       logIn: 'Prijava',
-      logInWithSso: 'Prijava sa UP',
     },
   },
 };

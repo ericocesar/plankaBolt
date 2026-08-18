@@ -7,11 +7,29 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
 const { pipeline } = require('stream/promises');
+const mime = require('mime-types');
 const { rimraf } = require('rimraf');
 
-const PATH_SEGMENT_TO_URL_REPLACE_REGEX = /(public|private)\//;
+// const PATH_SEGMENT_TO_URL_REPLACE_REGEX = /(public|private)\//;
 
-const buildPath = (pathSegment) => path.join(sails.config.custom.uploadsBasePath, pathSegment);
+// Reject a path unless it is the uploads root itself or lives strictly
+// beneath it. Callers must pass an already-absolute path.
+const assertWithinRoot = (rootPath, filePath) => {
+  if (filePath !== rootPath && !filePath.startsWith(`${rootPath}${path.sep}`)) {
+    throw new Error('Path is outside of the uploads directory');
+  }
+};
+
+const buildPath = (pathSegment) => {
+  const { uploadsBasePath } = sails.config.custom;
+  const filePath = path.resolve(uploadsBasePath, pathSegment);
+
+  // Ensure the resolved path stays within the uploads root, so that
+  // attacker-controlled path segments (e.g. `../`) cannot escape it.
+  assertWithinRoot(uploadsBasePath, filePath);
+
+  return filePath;
+};
 
 class LocalFileManager {
   // eslint-disable-next-line class-methods-use-this
@@ -21,7 +39,7 @@ class LocalFileManager {
     const dirPath = buildPath(dir);
     const filePath = path.join(dirPath, base);
 
-    await fs.promises.mkdir(dirPath);
+    await fs.promises.mkdir(dirPath, { recursive: true });
     await fse.move(sourceFilePath, filePath);
 
     return filePath;
@@ -37,27 +55,55 @@ class LocalFileManager {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async read(filePathSegment) {
+  async read(filePathSegment, { withHeaders = false } = {}) {
     const filePath = buildPath(filePathSegment);
-    const isFileExists = await fse.pathExists(filePath);
 
-    if (!isFileExists) {
+    // Resolve symlinks and re-check containment, so that a symlink placed
+    // inside the uploads root cannot be used to read files outside of it.
+    let realFilePath;
+    try {
+      realFilePath = await fs.promises.realpath(filePath);
+    } catch (error) {
+      throw new Error('File does not exist');
+    }
+    const realBasePath = await fs.promises.realpath(sails.config.custom.uploadsBasePath);
+    assertWithinRoot(realBasePath, realFilePath);
+
+    let stat;
+    try {
+      stat = await fs.promises.stat(realFilePath);
+    } catch (error) {
       throw new Error('File does not exist');
     }
 
-    return fs.createReadStream(filePath);
+    const readStream = fs.createReadStream(realFilePath);
+
+    if (withHeaders) {
+      return [
+        readStream,
+        {
+          'Content-Type': mime.lookup(filePathSegment) || 'application/octet-stream',
+          'Content-Length': stat.size,
+          'Last-Modified': stat.mtime.toUTCString(),
+          ETag: `W/"${stat.size.toString(16)}-${stat.mtime.getTime().toString(16)}"`,
+          'Accept-Ranges': 'bytes',
+        },
+      ];
+    }
+
+    return readStream;
   }
 
   // eslint-disable-next-line class-methods-use-this
   async getSize(filePathSegment) {
-    let result;
+    let stat;
     try {
-      result = await fs.promises.stat(buildPath(filePathSegment));
+      stat = await fs.promises.stat(buildPath(filePathSegment));
     } catch (error) {
       return null;
     }
 
-    return result.size;
+    return stat.size;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -111,10 +157,10 @@ class LocalFileManager {
     return fse.pathExists(buildPath(pathSegment));
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  /* // eslint-disable-next-line class-methods-use-this
   buildUrl(filePathSegment) {
     return `${sails.config.custom.baseUrl}/${filePathSegment.replace(PATH_SEGMENT_TO_URL_REPLACE_REGEX, '')}`;
-  }
+  } */
 }
 
 module.exports = LocalFileManager;

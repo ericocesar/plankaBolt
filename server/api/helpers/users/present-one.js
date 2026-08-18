@@ -17,7 +17,7 @@ module.exports = {
   },
 
   fn(inputs) {
-    const fileManager = sails.hooks['file-manager'].getInstance();
+    const recoveryCodes = inputs.record.totpRecoveryCodes;
 
     const data = {
       ..._.omit(inputs.record, [
@@ -28,15 +28,17 @@ module.exports = {
         'passwordChangedAt',
         'apiKeyCreatedAt',
         'termsAcceptedAt',
+        'totpSecret',
+        'totpRecoveryCodes',
       ]),
       avatar: inputs.record.avatar && {
-        url: `${fileManager.buildUrl(`${sails.config.custom.userAvatarsPathSegment}/${inputs.record.avatar.uploadedFileId}/original.${inputs.record.avatar.extension}`)}`,
+        url: `${sails.config.custom.baseUrl}/user-avatars/${inputs.record.avatar.uploadedFileId}/original.${inputs.record.avatar.extension}`,
         thumbnailUrls: {
-          cover180: `${fileManager.buildUrl(`${sails.config.custom.userAvatarsPathSegment}/${inputs.record.avatar.uploadedFileId}/cover-180.${inputs.record.avatar.extension}`)}`,
+          cover180: `${sails.config.custom.baseUrl}/user-avatars/${inputs.record.avatar.uploadedFileId}/cover-180.${inputs.record.avatar.extension}`,
         },
       },
       language: inputs.record.language || sails.config.i18n.defaultLocale,
-      termsType: sails.hooks.terms.getTypeByUserRole(inputs.record.role),
+      totpRecoveryCodesRemaining: Array.isArray(recoveryCodes) ? recoveryCodes.length : 0,
     };
 
     const gravatarUrl = sails.helpers.users.buildGravatarUrl(inputs.record);
@@ -53,19 +55,10 @@ module.exports = {
         const isDefaultAdmin = inputs.record.email === sails.config.custom.defaultAdminEmail;
 
         const lockedFieldNames = [];
-        if (isDefaultAdmin || inputs.record.isSsoUser) {
-          lockedFieldNames.push('email', 'password', 'name');
-
-          if (isDefaultAdmin) {
-            lockedFieldNames.push('role', 'username');
-          } else if (inputs.record.isSsoUser) {
-            if (!sails.config.custom.oidcIgnoreRoles) {
-              lockedFieldNames.push('role');
-            }
-            if (!sails.config.custom.oidcIgnoreUsername) {
-              lockedFieldNames.push('username');
-            }
-          }
+        if (sails.config.custom.demoMode) {
+          lockedFieldNames.push('email', 'password', 'role', 'name', 'username');
+        } else if (isDefaultAdmin) {
+          lockedFieldNames.push('email', 'password', 'name', 'role', 'username');
         }
 
         Object.assign(data, {
@@ -80,7 +73,11 @@ module.exports = {
         return _.omit(data, User.PERSONAL_FIELD_NAMES);
       }
 
-      return _.omit(data, [...User.PRIVATE_FIELD_NAMES, ...User.PERSONAL_FIELD_NAMES]);
+      return _.omit(data, [
+        ...User.PRIVATE_FIELD_NAMES,
+        ...User.PERSONAL_FIELD_NAMES,
+        ...User.TWO_FACTOR_VISIBLE_FIELD_NAMES,
+      ]);
     }
 
     return data;

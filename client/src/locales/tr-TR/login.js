@@ -5,7 +5,6 @@ export default {
       adminLoginRequiredToInitializeInstance: 'Örneği başlatmak için yönetici girişi gerekli',
       emailAlreadyInUse: 'E-posta adresi zaten kullanımda',
       emailOrUsername: 'E-posta adresi veya kullanıcı adı',
-      iHaveReadAndAgreeToTheseTerms: 'Bu şartları okudum ve kabul ediyorum',
       invalidCredentials: 'Geçersiz kimlik bilgileri',
       invalidEmailOrUsername: 'Geçersiz e-posta adresi veya kullanıcı adı',
       invalidPassword: 'Hatalı şifre',
@@ -17,7 +16,6 @@ export default {
       poweredByPlanka: 'PLANKA tarafından desteklenmektedir',
       serverConnectionFailed: 'Sunucu bağlantı hatası',
       unknownError: 'Bilinmeyen hata, daha sonra tekrar deneyin',
-      useSingleSignOn: 'Tek oturum açma kullan',
       usernameAlreadyInUse: 'Kullanıcı adı zaten kullanımda',
       whoops_title: 'Hata!',
     },
@@ -28,7 +26,6 @@ export default {
       goBack: 'Geri dön',
       goHome: 'Ana sayfaya git',
       logIn: 'Giriş yap',
-      logInWithSso: 'SSO ile giriş yap',
     },
   },
 };

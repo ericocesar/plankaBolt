@@ -5,7 +5,6 @@ export default {
       adminLoginRequiredToInitializeInstance: 'مطلوب تسجيل دخول المدير لتهيئة المثيل',
       emailAlreadyInUse: 'البريد الإلكتروني مستخدم بالفعل',
       emailOrUsername: 'البريد الإلكتروني أو اسم المستخدم',
-      iHaveReadAndAgreeToTheseTerms: 'لقد قرأت ووافقت على هذه الشروط',
       invalidCredentials: 'بيانات الاعتماد غير صالحة',
       invalidEmailOrUsername: 'البريد الإلكتروني أو اسم المستخدم غير صالح',
       invalidPassword: 'كلمة المرور غير صالحة',
@@ -17,7 +16,6 @@ export default {
       poweredByPlanka: 'مدعوم بواسطة <1>PLANKA</1>',
       serverConnectionFailed: 'فشل الاتصال بالخادم',
       unknownError: 'خطأ غير معروف، يرجى المحاولة لاحقاً',
-      useSingleSignOn: 'استخدم تسجيل الدخول الموحد',
       usernameAlreadyInUse: 'اسم المستخدم تم استخدامه بالفعل',
       whoops_title: 'عفواً!',
     },
@@ -28,7 +26,6 @@ export default {
       goBack: 'العودة',
       goHome: 'الذهاب للرئيسية',
       logIn: 'تسجيل الدخول',
-      logInWithSso: 'تسجيل الدخول باستخدام SSO',
     },
   },
 };

@@ -18,6 +18,14 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         bootstrap: payload.bootstrap,
       };
+    case ActionTypes.BOOTSTRAP_UPDATE_HANDLE:
+      return {
+        ...state,
+        bootstrap: {
+          ...state.bootstrap,
+          ...payload.bootstrap,
+        },
+      };
     case ActionTypes.LOGIN_INITIALIZE:
       return {
         ...state,
@@ -25,7 +33,7 @@ export default (state = initialState, { type, payload }) => {
         bootstrap: payload.bootstrap,
       };
     case ActionTypes.AUTHENTICATE__SUCCESS:
-    case ActionTypes.WITH_OIDC_AUTHENTICATE__SUCCESS:
+    case ActionTypes.TOTP_VERIFY__SUCCESS:
     case ActionTypes.TERMS_ACCEPT__SUCCESS:
       return {
         ...state,

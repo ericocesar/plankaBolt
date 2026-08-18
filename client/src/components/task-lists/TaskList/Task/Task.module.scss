@@ -29,12 +29,12 @@
     opacity: 1;
     padding: 0;
     width: 28px;
-    color: #2185d0 !important;
+    color: #1ac9cc !important;
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: rgba(33, 133, 208, 0.1) !important;
-      color: #1678c2 !important;
+      background: rgba(26, 201, 204, 0.1) !important;
+      color: #1ac9cc !important;
     }
   }
 
@@ -52,7 +52,7 @@
   }
 
   .contentHoverable:hover {
-    background: rgba(33, 133, 208, 0.05) !important;
+    background: rgba(26, 201, 204, 0.05) !important;
   }
 
   .icon {
@@ -61,10 +61,10 @@
   }
 
   .name {
-    color: #000 !important;
+    color: #ffffff !important;
 
     a {
-      color: #000 !important;
+      color: #ffffff !important;
 
       &:hover {
         text-decoration: underline;
@@ -73,11 +73,11 @@
   }
 
   .nameCompleted {
-    color: rgba(0, 0, 0, 0.4) !important;
+    color: rgba(255, 255, 255, 0.4) !important;
     text-decoration: line-through;
 
     a {
-      color: rgba(0, 0, 0, 0.4) !important;
+      color: rgba(255, 255, 255, 0.4) !important;
     }
   }
 
@@ -94,7 +94,7 @@
   .text {
     background: transparent !important;
     border-radius: 3px;
-    color: #000 !important;
+    color: #ffffff !important;
     display: inline-block;
     font-size: 15px;
     line-height: 1.5;

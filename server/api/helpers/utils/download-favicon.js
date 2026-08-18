@@ -4,6 +4,8 @@
  */
 
 const { URL } = require('url');
+const { ProxyAgent } = require('undici');
+const icoToPng = require('ico-to-png');
 const sharp = require('sharp');
 
 const FETCH_TIMEOUT = 4000;
@@ -19,6 +21,9 @@ const fetchWithTimeout = (url) => {
 
   return fetch(url, {
     signal: abortController.signal,
+    dispatcher: sails.config.custom.outgoingProxy
+      ? new ProxyAgent(sails.config.custom.outgoingProxy)
+      : undefined,
   });
 };
 
@@ -148,7 +153,14 @@ module.exports = {
     }
 
     if (!metadata || metadata.format === 'magick') {
-      return;
+      try {
+        const buffer = await icoToPng(readedResponse.buffer, 32);
+
+        image = sharp(buffer);
+        metadata = await image.metadata();
+      } catch (error) {
+        return;
+      }
     }
 
     const fileManager = sails.hooks['file-manager'].getInstance();

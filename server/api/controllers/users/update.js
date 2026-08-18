@@ -47,7 +47,7 @@
  *                 maxLength: 128
  *                 nullable: true
  *                 description: Contact phone number
- *                 example: +1234567890
+ *                 example: "+1234567890"
  *               organization:
  *                 type: string
  *                 maxLength: 128
@@ -79,7 +79,7 @@
  *               enableFavoritesByDefault:
  *                 type: boolean
  *                 description: Whether favorites are enabled by default
- *                 example: false
+ *                 example: true
  *               defaultEditorMode:
  *                 type: string
  *                 enum: [wysiwyg, markup]
@@ -95,6 +95,11 @@
  *                 enum: [byDefault, alphabetically, byCreationTime]
  *                 description: Default sort order for projects display
  *                 example: byDefault
+ *               autoLogoutMode:
+ *                 type: string
+ *                 enum: [never, 2m, 5m, 10m, 30m, 12h]
+ *                 description: Auto-logout behavior on inactivity
+ *                 example: 30m
  *               isDeactivated:
  *                 type: boolean
  *                 description: Whether the user account is deactivated and cannot log in (for admins)
@@ -200,6 +205,10 @@ module.exports = {
       type: 'string',
       isIn: Object.values(User.ProjectOrders),
     },
+    autoLogoutMode: {
+      type: 'string',
+      isIn: Object.values(User.AutoLogoutModes),
+    },
     isDeactivated: {
       type: 'boolean',
     },
@@ -244,16 +253,8 @@ module.exports = {
     }
 
     // TODO: refactor
-    if (user.email === sails.config.custom.defaultAdminEmail) {
+    if (user.email === sails.config.custom.defaultAdminEmail || sails.config.custom.demoMode) {
       if (inputs.role || inputs.name) {
-        throw Errors.NOT_ENOUGH_RIGHTS;
-      }
-    } else if (user.isSsoUser) {
-      if (!sails.config.custom.oidcIgnoreRoles && inputs.role) {
-        throw Errors.NOT_ENOUGH_RIGHTS;
-      }
-
-      if (inputs.name) {
         throw Errors.NOT_ENOUGH_RIGHTS;
       }
     }
@@ -274,6 +275,7 @@ module.exports = {
         'defaultEditorMode',
         'defaultHomeView',
         'defaultProjectsOrder',
+        'autoLogoutMode',
         'isDeactivated',
       ]),
     };

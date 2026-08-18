@@ -19,17 +19,17 @@
   }
 
   .wrapper {
-    background: #dce0e4;
-    border-radius: 3px;
-    color: #6a808b;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
     display: inline-block;
     transition: background 0.3s ease;
     white-space: nowrap;
   }
 
   .wrapperHoverable:hover {
-    background: #d2d8dc;
-    color: #17394d;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
   }
 
   /* Sizes */
@@ -54,17 +54,17 @@
   /* Statuses */
 
   .wrapperDueSoon {
-    background: #f2711c;
-    color: #fff;
+    background: rgba(242, 113, 28, 0.3);
+    color: #ff9a4a;
   }
 
   .wrapperOverdue {
-    background: #db2828;
-    color: #fff;
+    background: rgba(219, 40, 40, 0.3);
+    color: #ff6b6b;
   }
 
   .wrapperCompleted {
-    background: #21ba45;
-    color: #fff;
+    background: rgba(33, 186, 69, 0.3);
+    color: #4cdf6e;
   }
 }

@@ -5,10 +5,9 @@
 
 :global(#app) {
   .field {
-    border: none;
-    border-color: #bbb;
-    border-radius: 3px;
-    color: #17394d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: #ffffff;
     display: block;
     font-weight: bold;
     line-height: 20px;
@@ -18,11 +17,12 @@
     padding: 4px 8px;
     resize: none;
     width: 100%;
+    background: rgba(0, 0, 0, 0.3);
 
     &:focus {
-      background: #fff;
-      border-color: #5ba4cf;
-      box-shadow: 0 0 0 1px #5ba4cf;
+      background: rgba(0, 0, 0, 0.5);
+      border-color: #1ac9cc;
+      box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15);
     }
   }
 }

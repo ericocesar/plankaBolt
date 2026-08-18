@@ -3,7 +3,7 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-const { AccessTokenSteps } = require('../../../constants');
+const { AccessTokenSteps, TRUST_DEVICE_COOKIE_NAME } = require('../../../constants');
 
 const Errors = {
   ADMIN_LOGIN_REQUIRED_TO_INITIALIZE_INSTANCE: {
@@ -39,15 +39,16 @@ module.exports = {
   exits: {
     adminLoginRequiredToInitializeInstance: {},
     termsAcceptanceRequired: {},
+    totpVerificationRequired: {},
   },
 
   async fn(inputs) {
-    const config = await Config.qm.getOneMain();
+    const internalConfig = await InternalConfig.qm.getOneMain();
 
-    if (!config.isInitialized) {
+    if (!internalConfig.isInitialized) {
       if (inputs.user.role === User.Roles.ADMIN) {
         if (inputs.user.termsSignature) {
-          await Config.qm.updateOneMain({
+          await InternalConfig.qm.updateOneMain({
             isInitialized: true,
           });
         }
@@ -56,7 +57,7 @@ module.exports = {
       }
     }
 
-    if (!sails.hooks.terms.hasSignature(inputs.user.termsSignature)) {
+    if (!sails.hooks.terms.isSignatureValid(inputs.user.termsSignature)) {
       const { token: pendingToken, payload: pendingTokenPayload } =
         sails.helpers.utils.createJwtToken(
           AccessTokenSteps.ACCEPT_TERMS,
@@ -82,16 +83,60 @@ module.exports = {
         );
       }
 
-      const termsType = sails.hooks.terms.getTypeByUserRole(inputs.user.role);
-
       throw {
         termsAcceptanceRequired: {
           pendingToken,
-          termsType,
           message: 'Terms acceptance required',
           step: AccessTokenSteps.ACCEPT_TERMS,
         },
       };
+    }
+
+    if (inputs.user.isTotpEnabled) {
+      const trustCookie =
+        inputs.request.cookies && inputs.request.cookies[TRUST_DEVICE_COOKIE_NAME];
+
+      const isDeviceTrusted = trustCookie
+        ? await sails.helpers.trustedDevices.checkToken.with({
+            userId: inputs.user.id,
+            plainToken: trustCookie,
+          })
+        : false;
+
+      if (!isDeviceTrusted) {
+        const { token: pendingToken, payload: pendingTokenPayload } =
+          sails.helpers.utils.createJwtToken(
+            AccessTokenSteps.VERIFY_TOTP,
+            undefined,
+            PENDING_TOKEN_EXPIRES_IN,
+          );
+
+        const session = await sails.helpers.sessions.createOne.with({
+          values: {
+            pendingToken,
+            userId: inputs.user.id,
+            remoteAddress: inputs.remoteAddress,
+            userAgent: inputs.request.headers['user-agent'],
+          },
+          withHttpOnlyToken: inputs.withHttpOnlyToken,
+        });
+
+        if (session.httpOnlyToken && !inputs.request.isSocket) {
+          sails.helpers.utils.setHttpOnlyTokenCookie(
+            session.httpOnlyToken,
+            pendingTokenPayload,
+            inputs.response,
+          );
+        }
+
+        throw {
+          totpVerificationRequired: {
+            pendingToken,
+            message: 'TOTP verification required',
+            step: AccessTokenSteps.VERIFY_TOTP,
+          },
+        };
+      }
     }
 
     const { token: accessToken, payload: accessTokenPayload } = sails.helpers.utils.createJwtToken(

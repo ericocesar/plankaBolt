@@ -6,7 +6,6 @@ export default {
         'Na inicializáciu inštancie je potrebné prihlásenie správcu',
       emailAlreadyInUse: 'E-mail je už použitý',
       emailOrUsername: 'E-mail alebo používateľské meno',
-      iHaveReadAndAgreeToTheseTerms: 'Prečítal som si a súhlasím s týmito podmienkami',
       invalidCredentials: 'Neplatné prihlasovacie údaje',
       invalidEmailOrUsername: 'Nesprávny e-mail alebo používateľské meno',
       invalidPassword: 'Nesprávne heslo',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Poháňané <1>PLANKA</1>',
       serverConnectionFailed: 'Pripojenie k serveru zlyhalo',
       unknownError: 'Neznáma chyba, skúste to neskôr',
-      useSingleSignOn: 'Použiť jednotné prihlásenie',
       usernameAlreadyInUse: 'Používateľské meno je zabrané',
       whoops_title: 'Ups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Ísť späť',
       goHome: 'Ísť domov',
       logIn: 'Prihlásiť sa',
-      logInWithSso: 'Prihlásiť sa cez SSO',
     },
   },
 };

@@ -12,6 +12,21 @@
   .menuItem {
     margin: 0;
     padding-left: 14px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #fff !important;
+    }
+
+    :global(.icon) {
+      color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    &:hover :global(.icon) {
+      color: #1ac9cc !important;
+    }
   }
 
   .menuItemIcon {

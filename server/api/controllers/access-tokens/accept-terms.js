@@ -31,7 +31,7 @@
  *                 type: string
  *                 minLength: 64
  *                 maxLength: 64
- *                 description: Terms signature hash based on user role
+ *                 description: Terms signature hash
  *                 example: 940226c4c41f51afe3980ceb63704e752636526f4c52a4ea579e85b247493d94
  *               initialLanguage:
  *                 type: string
@@ -175,6 +175,10 @@ module.exports = {
       throw Errors.INVALID_PENDING_TOKEN;
     }
 
+    if (!sails.hooks.terms.isSignatureValid(inputs.signature)) {
+      throw Errors.INVALID_SIGNATURE;
+    }
+
     let user = await User.qm.getOneById(session.userId, {
       withDeactivated: false,
     });
@@ -183,30 +187,22 @@ module.exports = {
       throw Errors.INVALID_PENDING_TOKEN; // TODO: introduce separate error?
     }
 
-    if (!user.termsSignature) {
-      const termsSignature = sails.hooks.terms.getSignatureByUserRole(user.role);
+    const values = {
+      termsSignature: inputs.signature,
+      termsAcceptedAt: new Date().toISOString(),
+    };
 
-      if (inputs.signature !== termsSignature) {
-        throw Errors.INVALID_SIGNATURE;
-      }
-
-      const values = {
-        termsSignature,
-        termsAcceptedAt: new Date().toISOString(),
-      };
-
-      if (!user.language && inputs.initialLanguage) {
-        values.language = inputs.initialLanguage;
-      }
-
-      ({ user } = await User.qm.updateOne(user.id, values));
+    if (!user.language && inputs.initialLanguage) {
+      values.language = inputs.initialLanguage;
     }
 
-    const config = await Config.qm.getOneMain();
+    ({ user } = await User.qm.updateOne(user.id, values));
 
-    if (!config.isInitialized) {
+    const internalConfig = await InternalConfig.qm.getOneMain();
+
+    if (!internalConfig.isInitialized) {
       if (user.role === User.Roles.ADMIN) {
-        await Config.qm.updateOneMain({
+        await InternalConfig.qm.updateOneMain({
           isInitialized: true,
         });
       } else {

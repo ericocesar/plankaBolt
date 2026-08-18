@@ -1,11 +1,5 @@
 :global(#app) {
 
-  /* DEBUG: Check if this file is being used */
-  .name,
-  .value {
-    border: 1px solid red !important;
-  }
-
   .copyButton {
     background: rgba(255, 255, 255, 0.1);
     box-shadow: none;
@@ -36,6 +30,7 @@
     font-size: 13px;
     line-height: 1;
     margin-bottom: 6px;
+    padding: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
