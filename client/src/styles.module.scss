@@ -3,20 +3,57 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap');
+
 :root {
+  /* surfaces */
   --bp-bg-deep: oklch(0.16 0.008 240);
-  --bp-bg-surface: oklch(0.2 0.008 240);
+  --bp-bg-surface: oklch(0.20 0.008 240);
   --bp-bg-input: oklch(0.17 0.008 240);
   --bp-bg-hover: oklch(0.22 0.008 240);
+
+  /* text */
   --bp-text-primary: oklch(0.96 0.005 240);
-  --bp-text-secondary: oklch(0.65 0.008 240);
+  --bp-text-secondary: oklch(0.62 0.008 240);
   --bp-text-placeholder: oklch(0.45 0.008 240);
-  --bp-border-subtle: oklch(0.3 0.008 240);
-  --bp-border-focus: oklch(0.7 0.06 160);
-  --bp-accent: oklch(0.75 0.12 160);
+
+  /* borders */
+  --bp-border-subtle: oklch(0.28 0.008 240);
+  --bp-border-focus: oklch(0.78 0.10 80);
+
+  /* accent — logo gold (hue 80), warm against blue-gray surfaces */
+  --bp-accent: oklch(0.83 0.16 80);
+  --bp-accent-hover: oklch(0.78 0.14 80);
+  --bp-accent-active: oklch(0.73 0.12 80);
+
+  /* semantic */
+  --bp-error: oklch(0.58 0.20 25);
+  --bp-warning: oklch(0.78 0.15 75);
+  --bp-success: oklch(0.70 0.15 155);
+  --bp-info: oklch(0.70 0.10 230);
+
+  /* shape */
   --bp-radius-md: 12px;
   --bp-radius-lg: 20px;
   --bp-shadow-modal: 0 24px 50px oklch(0.1 0 0 / 0.5);
+
+  /* typography */
+  --bp-font-display: 'Oswald', sans-serif;
+  --bp-font-body: 'Nunitoga', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  --bp-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+  --bp-text-xs: 0.75rem;
+  --bp-text-sm: 0.875rem;
+  --bp-text-base: 1rem;
+  --bp-text-lg: 1.125rem;
+  --bp-text-xl: 1.25rem;
+  --bp-text-2xl: 1.5rem;
+  --bp-text-3xl: 2rem;
+  --bp-leading-tight: 1.2;
+  --bp-leading-normal: 1.5;
+  --bp-leading-relaxed: 1.6;
+  --bp-tracking-tight: 0.02em;
+  --bp-tracking-normal: 0.04em;
+  --bp-tracking-wide: 0.08em;
 }
 
 :global {
@@ -30,7 +67,7 @@
     }
 
     *:focus-visible {
-      outline: 2px solid var(--bp-border-focus, oklch(0.7 0.06 160));
+      outline: 2px solid var(--bp-border-focus, oklch(0.78 0.10 80));
       outline-offset: 2px;
     }
 
@@ -45,11 +82,11 @@
         transition: background-color 0.15s ease-out;
 
         &:hover {
-          background: oklch(0.8 0.12 160);
+          background: var(--bp-accent-hover);
         }
 
         &:active {
-          background: oklch(0.7 0.12 160);
+          background: var(--bp-accent-active);
         }
       }
 
@@ -76,7 +113,7 @@
         &:focus {
           background: var(--bp-bg-hover);
           border-color: var(--bp-border-focus);
-          box-shadow: 0 0 0 2px oklch(0.75 0.12 160 / 0.25);
+          box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.2);
         }
 
         &::placeholder {
@@ -249,10 +286,8 @@
   }
 
   .g-root {
-    --g-font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo,
-      Consolas, Liberation Mono, monospace !important;
-    --g-font-family-sans: "Nunitoga", "Helvetica Neue", Arial, Helvetica,
-      sans-serif !important;
+    --g-font-family-monospace: var(--bp-font-mono) !important;
+    --g-font-family-sans: var(--bp-font-body) !important;
 
     .g-md-settings-content__separator,
     .g-md-settings-content__toolbar,
@@ -262,13 +297,11 @@
   }
 
   .yfm {
-    --yfm-color-accent: #1ac9cc !important;
-    --yfm-color-link: #1ac9cc !important;
+    --yfm-color-accent: var(--bp-accent) !important;
+    --yfm-color-link: var(--bp-accent) !important;
     --yfm-color-text: #ffffff !important;
-    --yfm-font-family-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo,
-      Consolas, Liberation Mono, monospace !important;
-    --yfm-font-family-sans: "Nunitoga", "Helvetica Neue", Arial, Helvetica,
-      sans-serif !important;
+    --yfm-font-family-monospace: var(--bp-font-mono) !important;
+    --yfm-font-family-sans: var(--bp-font-body) !important;
 
     font-size: 1em !important;
 
@@ -311,8 +344,8 @@
     }
 
     .mention {
-      color: #1ac9cc;
-      background-color: rgba(26, 201, 204, 0.1);
+      color: var(--bp-accent);
+      background-color: oklch(0.83 0.16 80 / 0.1);
       border-radius: 3px;
       padding: 0 2px;
     }

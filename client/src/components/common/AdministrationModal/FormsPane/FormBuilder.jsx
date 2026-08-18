@@ -409,11 +409,11 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                     style={{
                       background:
                         selectedField.defaultValue === option.value
-                          ? 'rgba(26, 201, 204, 0.2)'
+                          ? 'oklch(0.83 0.16 80 / 0.2)'
                           : 'rgba(255,255,255,0.05)',
                       color:
                         selectedField.defaultValue === option.value
-                          ? '#1ac9cc'
+                          ? 'var(--bp-accent)'
                           : 'rgba(255,255,255,0.4)',
                     }}
                   />
@@ -443,7 +443,7 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                 style={{
                   marginTop: '10px',
                   background: 'rgba(26, 201, 204, 0.1)',
-                  color: '#1ac9cc',
+                  color: 'var(--bp-accent)',
                   borderRadius: '12px',
                   textTransform: 'uppercase',
                   fontSize: '0.75rem',
@@ -542,7 +542,7 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                 marginTop: '1rem',
                 background: 'rgba(26, 201, 204, 0.05)',
                 border: '1px solid rgba(26, 201, 204, 0.2)',
-                color: '#1ac9cc',
+                color: 'var(--bp-accent)',
               }}
             >
               <p>{FIELD_TYPE_DETAILS[hoveredPaletteType]?.hint}</p>
@@ -598,7 +598,11 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
             <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.1)', borderRadius: '16px' }}>
               <Header
                 as="h5"
-                style={{ color: '#1ac9cc', textTransform: 'uppercase', fontSize: '0.8rem' }}
+                style={{
+                  color: 'var(--bp-accent)',
+                  textTransform: 'uppercase',
+                  fontSize: '0.8rem',
+                }}
               >
                 Preview: Etapa {previewStepIndex + 1}
               </Header>
@@ -713,7 +717,7 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
             >
               <div
                 className={styles.sectionTitle}
-                style={{ fontSize: '0.85rem', marginBottom: '1rem', color: '#1ac9cc' }}
+                style={{ fontSize: '0.85rem', marginBottom: '1rem', color: 'var(--bp-accent)' }}
               >
                 Mapeamento do Campo
               </div>
@@ -815,7 +819,7 @@ function FormBuilder({ schema, customFields, labels, onChange }) {
                                   width: '8px',
                                   height: '8px',
                                   borderRadius: '50%',
-                                  background: '#1ac9cc',
+                                  background: 'var(--bp-accent)',
                                   opacity: 0.7,
                                 }}
                               />

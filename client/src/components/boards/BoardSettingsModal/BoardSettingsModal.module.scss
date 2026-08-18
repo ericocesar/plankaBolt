@@ -79,8 +79,8 @@
         }
 
         &.active {
-          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
-          border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
+          border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           font-weight: 700 !important;
           background: transparent !important;
           box-shadow: none !important;
@@ -94,7 +94,7 @@
         margin-bottom: 1.5rem !important;
 
         :global(label) {
-          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           text-transform: uppercase !important;
           letter-spacing: 1px !important;
           font-size: 0.75rem !important;
@@ -115,16 +115,16 @@
         transition: all 0.2s ease !important;
 
         &:focus {
-          border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           background: rgba(0, 0, 0, 0.5) !important;
-          box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
+          box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.15) !important;
         }
       }
     }
 
     /* Target EditInformation custom structure */
     div[class*="text"] {
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       text-transform: uppercase !important;
       letter-spacing: 1px !important;
       font-size: 0.75rem !important;
@@ -147,14 +147,14 @@
 
     :global(.ui.button.positive),
     :global(.ui.button.green) {
-      background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       color: #000 !important;
-      box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
+      box-shadow: 0 4px 15px oklch(0.83 0.16 80 / 0.2) !important;
       border: none !important;
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
+        box-shadow: 0 8px 25px oklch(0.83 0.16 80 / 0.4) !important;
         background: #fff !important;
       }
     }
@@ -195,7 +195,7 @@
         color: #fff !important;
 
         &:after {
-          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         }
       }
     }
@@ -215,7 +215,7 @@
 
       :global(.header) {
         background: transparent !important;
-        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         /* Teal as requested */
         font-family: 'Oswald', sans-serif !important;
         text-transform: uppercase !important;
@@ -242,7 +242,7 @@
         }
 
         &:after {
-          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           /* Teal check/dot */
         }
       }
@@ -251,7 +251,7 @@
         color: #fff !important;
 
         &:before {
-          border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         }
       }
     }

@@ -60,7 +60,7 @@
   }
 
   .itemIconEnabled {
-    color: var(--bp-accent, oklch(0.75 0.1 195));
+    color: var(--bp-accent, oklch(0.83 0.16 80));
   }
 
   .wrapper {
@@ -114,7 +114,7 @@
     }
 
     &:hover {
-      color: var(--bp-accent, oklch(0.75 0.1 195));
+      color: var(--bp-accent, oklch(0.83 0.16 80));
     }
   }
 
@@ -132,7 +132,7 @@
     &:active,
     &:hover {
       background: transparent;
-      color: var(--bp-accent, oklch(0.75 0.1 195));
+      color: var(--bp-accent, oklch(0.83 0.16 80));
 
       .editButton {
         opacity: 1;

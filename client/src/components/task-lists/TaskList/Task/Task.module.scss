@@ -29,12 +29,12 @@
     opacity: 1;
     padding: 0;
     width: 28px;
-    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     transition: all 0.2s ease !important;
 
     &:hover {
-      background: oklch(0.75 0.1 195 / 0.1) !important;
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      background: oklch(0.83 0.16 80 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     }
   }
 
@@ -52,7 +52,7 @@
   }
 
   .contentHoverable:hover {
-    background: oklch(0.75 0.1 195 / 0.05) !important;
+    background: oklch(0.83 0.16 80 / 0.05) !important;
   }
 
   .icon {
@@ -129,6 +129,6 @@
   }
 
   .wrapperDragging {
-    background: oklch(0.75 0.1 195 / 0.15) !important;
+    background: oklch(0.83 0.16 80 / 0.15) !important;
   }
 }

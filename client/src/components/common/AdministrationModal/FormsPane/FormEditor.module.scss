@@ -22,7 +22,7 @@
 
   .headerTitle {
     color: #fff !important;
-    font-family: 'Oswald', sans-serif !important;
+    font-family: var(--bp-font-display);
     font-size: 1.6rem !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
@@ -50,9 +50,9 @@
     }
 
     &:hover {
-      background: var(--bp-accent, oklch(0.75 0.1 195));
+      background: var(--bp-accent, oklch(0.83 0.16 80));
       color: var(--bp-bg-deep, oklch(0.16 0.008 240));
-      border-color: var(--bp-accent, oklch(0.75 0.1 195));
+      border-color: var(--bp-accent, oklch(0.83 0.16 80));
     }
   }
 
@@ -63,7 +63,7 @@
   }
 
   .saveButton {
-    background: var(--bp-accent, oklch(0.75 0.1 195));
+    background: var(--bp-accent, oklch(0.83 0.16 80));
     border-radius: 16px;
     color: var(--bp-bg-deep, oklch(0.16 0.008 240));
     font-weight: 700;
@@ -79,7 +79,7 @@
     }
 
     &:hover {
-      background: oklch(0.8 0.1 195);
+      background: oklch(0.78 0.14 80);
       color: var(--bp-bg-deep, oklch(0.16 0.008 240));
     }
   }
@@ -104,7 +104,7 @@
   }
 
   .publishButton {
-    background: var(--bp-accent, oklch(0.75 0.1 195));
+    background: var(--bp-accent, oklch(0.83 0.16 80));
     color: var(--bp-bg-deep, oklch(0.16 0.008 240));
     border: none;
     font-weight: 700;
@@ -123,7 +123,7 @@
     }
 
     &:hover {
-      background: oklch(0.8 0.1 195);
+      background: oklch(0.78 0.14 80);
     }
   }
 
@@ -133,7 +133,7 @@
     margin-bottom: 2rem !important;
 
     label {
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       text-transform: uppercase !important;
       letter-spacing: 1px !important;
       font-size: 11px !important;
@@ -154,9 +154,9 @@
       transition: all 0.2s ease !important;
 
       &:focus-within {
-        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.1) !important;
+        box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.1) !important;
       }
 
       :global(.text) {
@@ -176,8 +176,8 @@
           padding: 12px 16px !important;
 
           &:hover {
-            background: oklch(0.75 0.1 195 / 0.1) !important;
-            color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+            background: oklch(0.83 0.16 80 / 0.1) !important;
+            color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           }
 
           :global(.label) {
@@ -201,15 +201,15 @@
 
       /* Style for multiple selection labels (tokens) */
       :global(.label) {
-        background: oklch(0.75 0.1 195 / 0.2) !important;
-        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        background: oklch(0.83 0.16 80 / 0.2) !important;
+        color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         border-radius: 8px !important;
         font-weight: 600 !important;
         padding: 6px 10px !important;
-        border: 1px solid oklch(0.75 0.1 195 / 0.3) !important;
+        border: 1px solid oklch(0.83 0.16 80 / 0.3) !important;
 
         :global(.delete.icon) {
-          color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+          color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           opacity: 0.7;
 
           &:hover {
@@ -229,9 +229,9 @@
       transition: all 0.2s ease !important;
 
       &:focus {
-        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.1) !important;
+        box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.1) !important;
       }
     }
   }

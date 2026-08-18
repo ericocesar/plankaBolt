@@ -1,12 +1,12 @@
 /* Bolt Design System Variables */
 $bp-bg-deep: oklch(0.16 0.008 240);
 $bp-bg-surface: oklch(0.2 0.008 240);
-$bp-accent-primary: oklch(0.75 0.1 195);
-$bp-accent-secondary: oklch(0.7 0.1 195);
-$bp-accent-error: oklch(0.65 0.2 25);
+$bp-accent-primary: oklch(0.83 0.16 80);
+$bp-accent-secondary: oklch(0.78 0.14 80);
+$bp-accent-error: oklch(0.58 0.20 25);
 $bp-text-primary: oklch(0.96 0.005 240);
-$bp-text-secondary: oklch(0.65 0.008 240);
-$bp-border-subtle: oklch(0.3 0.008 240);
+$bp-text-secondary: oklch(0.62 0.008 240);
+$bp-border-subtle: oklch(0.28 0.008 240);
 $bp-radius-lg: 20px;
 $bp-radius-md: 12px;
 $bp-radius-sm: 8px;
@@ -46,10 +46,10 @@ $bp-radius-sm: 8px;
 }
 
 .sectionTitle {
-  font-family: 'Oswald', sans-serif !important;
-  font-size: 0.9rem !important;
+  font-family: var(--bp-font-display);
+  font-size: var(--bp-text-sm);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: var(--bp-tracking-wide);
   color: $bp-text-primary;
   margin: 0 24px 10px 24px;
   font-weight: 700;
@@ -123,7 +123,7 @@ $bp-radius-sm: 8px;
 }
 
 .addButton {
-  background: rgba(16, 185, 129, 0.1) !important;
+  background: oklch(0.83 0.16 80 / 0.1) !important;
   color: $bp-accent-primary !important;
   padding: 0 !important;
   width: 24px !important;
@@ -184,9 +184,9 @@ $bp-radius-sm: 8px;
   color: $bp-text-secondary;
   padding: 8px 20px;
   border-radius: 50px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+  font-family: var(--bp-font-body);
+  font-size: var(--bp-text-sm);
+  letter-spacing: var(--bp-tracking-wide);
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -204,7 +204,7 @@ $bp-radius-sm: 8px;
     background: $bp-accent-primary;
     color: white;
     border-color: $bp-accent-primary;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px oklch(0.83 0.16 80 / 0.3);
     font-weight: 700;
   }
 }
@@ -365,11 +365,11 @@ $bp-radius-sm: 8px;
   transform: translateY(-5px);
   transition: all 0.2s ease;
   background: rgba(239, 68, 68, 0.1) !important;
-  color: #ef4444 !important;
+  color: oklch(0.58 0.20 25) !important;
   border-radius: 6px !important;
 
   &:hover {
-    background: #ef4444 !important;
+    background: oklch(0.58 0.20 25) !important;
     color: white !important;
   }
 }

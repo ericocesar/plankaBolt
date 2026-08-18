@@ -54,8 +54,8 @@
 
     :global(input:checked ~ label) {
       &::before {
-        background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
-        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
+        border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       }
 
       &::after {
@@ -69,7 +69,7 @@
   }
 
   .label {
-    color: var(--bp-accent, oklch(0.75 0.1 195));
+    color: var(--bp-accent, oklch(0.83 0.16 80));
     display: block;
     font-size: 0.75rem;
     font-weight: 700;

@@ -77,9 +77,9 @@
     padding-left: 1rem !important;
 
     &:hover {
-      background: oklch(0.75 0.1 195 / 0.1) !important;
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
-      border-color: oklch(0.75 0.1 195 / 0.3) !important;
+      background: oklch(0.83 0.16 80 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
+      border-color: oklch(0.83 0.16 80 / 0.3) !important;
     }
   }
 
@@ -98,9 +98,9 @@
       background: transparent !important;
 
       &.active {
-        color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         background: transparent !important;
-        border-bottom-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        border-bottom-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       }
 
       &:hover {
@@ -121,7 +121,7 @@
     color: rgba(255, 255, 255, 0.7) !important;
 
     &:hover {
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     }
   }
 
@@ -189,12 +189,12 @@
     }
 
     :global(a) {
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     }
 
     :global(code) {
       background: rgba(255, 255, 255, 0.1) !important;
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     }
   }
 }

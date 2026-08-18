@@ -9,7 +9,7 @@
   }
 
   .text {
-    color: var(--bp-accent, oklch(0.75 0.1 195));
+    color: var(--bp-accent, oklch(0.83 0.16 80));
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -55,18 +55,18 @@
 
   .saveButton {
     color: #ffffff !important;
-    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
     border-radius: 12px !important;
-    box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
+    box-shadow: 0 4px 15px oklch(0.83 0.16 80 / 0.2) !important;
 
     &:hover {
       background: #16b4b7 !important;
       color: #ffffff !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
+      box-shadow: 0 8px 25px oklch(0.83 0.16 80 / 0.4) !important;
     }
   }
 }

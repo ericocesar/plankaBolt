@@ -39,9 +39,9 @@
       caret-color: #ffffff !important;
 
       &:focus {
-        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         background: rgba(0, 0, 0, 0.5) !important;
-        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.15) !important;
+        box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.15) !important;
       }
 
       &::placeholder {
@@ -66,7 +66,7 @@
 
     &:hover {
       background: rgba(255, 255, 255, 0.08) !important;
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     }
   }
 
@@ -77,7 +77,7 @@
 
   /* Teal Label Text */
   .text {
-    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     text-transform: uppercase !important;
     letter-spacing: 1px !important;
     font-size: 0.75rem !important;
@@ -88,14 +88,14 @@
 
   /* Positive Button Styling */
   :global(.ui.button.positive) {
-    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     color: #000 !important;
-    box-shadow: 0 4px 15px oklch(0.75 0.1 195 / 0.2) !important;
+    box-shadow: 0 4px 15px oklch(0.83 0.16 80 / 0.2) !important;
     border: none !important;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px oklch(0.75 0.1 195 / 0.4) !important;
+      box-shadow: 0 8px 25px oklch(0.83 0.16 80 / 0.4) !important;
       background: #fff !important;
     }
   }

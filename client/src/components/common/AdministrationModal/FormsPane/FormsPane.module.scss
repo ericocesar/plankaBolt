@@ -58,7 +58,7 @@
 
       &:focus {
         background: rgba(255, 255, 255, 0.1) !important;
-        border-color: oklch(0.75 0.1 195 / 0.5) !important;
+        border-color: oklch(0.83 0.16 80 / 0.5) !important;
         color: #fff !important;
       }
     }
@@ -71,20 +71,20 @@
   }
 
   .addButton {
-    background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     border-radius: 12px !important;
     color: #000 !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     padding: 12px 24px !important;
     transition: background-color 0.15s ease-out, border-color 0.15s ease-out !important;
-    box-shadow: 0 4px 20px oklch(0.75 0.1 195 / 0.3) !important;
+    box-shadow: 0 4px 20px oklch(0.83 0.16 80 / 0.3) !important;
     letter-spacing: 1px !important;
     white-space: nowrap;
 
     &:hover {
       background: #fff !important;
-      box-shadow: 0 8px 30px oklch(0.75 0.1 195 / 0.5) !important;
+      box-shadow: 0 8px 30px oklch(0.83 0.16 80 / 0.5) !important;
     }
   }
 
@@ -109,7 +109,7 @@
 
     &:hover {
       background: rgba(40, 40, 45, 0.8) !important;
-      border-color: oklch(0.75 0.1 195 / 0.5) !important;
+      border-color: oklch(0.83 0.16 80 / 0.5) !important;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
     }
   }
@@ -154,9 +154,9 @@
   }
 
   .public {
-    background: oklch(0.75 0.1 195 / 0.15);
-    color: var(--bp-accent, oklch(0.75 0.1 195));
-    border: 1px solid oklch(0.75 0.1 195 / 0.2);
+    background: oklch(0.83 0.16 80 / 0.15);
+    color: var(--bp-accent, oklch(0.83 0.16 80));
+    border: 1px solid oklch(0.83 0.16 80 / 0.2);
   }
 
   .unpublished {
@@ -191,9 +191,9 @@
     }
 
     &:hover {
-      background: oklch(0.75 0.1 195 / 0.1) !important;
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
-      border-color: oklch(0.75 0.1 195 / 0.3) !important;
+      background: oklch(0.83 0.16 80 / 0.1) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
+      border-color: oklch(0.83 0.16 80 / 0.3) !important;
     }
 
     &.delete:hover {

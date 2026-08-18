@@ -10,7 +10,7 @@
     border-radius: 0.28571429rem;
     display: block;
     margin: 0;
-    outline: 0;
+    // outline managed by global :focus-visible rule
     overflow: hidden;
     padding: 4px;
     text-align: left;

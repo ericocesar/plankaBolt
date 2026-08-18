@@ -18,9 +18,9 @@
 
       &:focus,
       &:focus-within {
-        border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         background: rgba(0, 0, 0, 0.3) !important;
-        box-shadow: 0 0 0 2px oklch(0.75 0.1 195 / 0.1) !important;
+        box-shadow: 0 0 0 2px oklch(0.83 0.16 80 / 0.1) !important;
       }
 
       &::placeholder {
@@ -48,8 +48,8 @@
           color: rgba(255, 255, 255, 0.7) !important;
 
           &:hover {
-            background: oklch(0.75 0.1 195 / 0.1) !important;
-            color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+            background: oklch(0.83 0.16 80 / 0.1) !important;
+            color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
           }
         }
       }
@@ -77,13 +77,13 @@
   }
 
   .text {
-    color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
-    font-family: 'Oswald', sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    padding-bottom: 10px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 2px !important;
-    display: block !important;
+    color: var(--bp-text-secondary, oklch(0.62 0.008 240)) !important;
+    font-family: var(--bp-font-body);
+    font-size: var(--bp-text-xs);
+    font-weight: 600;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: var(--bp-tracking-wide);
+    display: block;
   }
 }

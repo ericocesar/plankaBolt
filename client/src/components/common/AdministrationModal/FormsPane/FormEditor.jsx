@@ -507,7 +507,7 @@ function FormEditor({ form, onSave, onCancel }) {
                 border: '1px solid rgba(16, 185, 129, 0.2)',
                 padding: '4px 10px',
                 borderRadius: '8px',
-                fontSize: '0.8.5rem',
+                fontSize: '0.85rem',
                 fontWeight: '700',
               }}
             >

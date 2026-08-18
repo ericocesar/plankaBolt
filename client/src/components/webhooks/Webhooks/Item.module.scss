@@ -17,7 +17,7 @@
 
     &:hover {
       background: rgba(255, 255, 255, 0.05) !important;
-      border-color: oklch(0.75 0.1 195 / 0.2) !important;
+      border-color: oklch(0.83 0.16 80 / 0.2) !important;
     }
   }
 
@@ -44,7 +44,7 @@
     font-size: 14px !important;
     
     :global(a) {
-      color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       &:hover {
         text-decoration: underline !important;
       }

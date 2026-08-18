@@ -26,8 +26,8 @@
 
   .nameActive {
     opacity: 0.6;
-    background: oklch(0.75 0.1 195 / 0.1) !important;
-    border-color: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+    background: oklch(0.83 0.16 80 / 0.1) !important;
+    border-color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
 
     &:before {
       bottom: 1px;
@@ -40,12 +40,12 @@
       text-align: center;
       transform: rotate(-135deg);
       width: 36px;
-      color: var(--bp-accent, oklch(0.75 0.1 195));
+      color: var(--bp-accent, oklch(0.83 0.16 80));
     }
   }
 
   .nameIcon {
-    color: var(--bp-accent, oklch(0.75 0.1 195));
+    color: var(--bp-accent, oklch(0.83 0.16 80));
     font-size: 12px;
     margin: 0 8px 0 0;
     width: 14px;

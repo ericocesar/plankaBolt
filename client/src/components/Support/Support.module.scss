@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :global(body) {
   background-color: #050505 !important;
@@ -438,7 +438,7 @@
 }
 
 .protocol {
-  font-family: 'Monaco', 'Consolas', monospace;
+  font-family: var(--bp-font-mono);
   background: #f3f4f6;
   padding: 0.5rem 1rem;
   border-radius: 6px;

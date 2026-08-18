@@ -73,11 +73,11 @@
       &:hover {
         background: rgba(255, 255, 255, 0.1) !important;
         color: #ffffff !important;
-        border-color: oklch(0.75 0.1 195 / 0.4) !important;
+        border-color: oklch(0.83 0.16 80 / 0.4) !important;
       }
 
       &.active {
-        background: var(--bp-accent, oklch(0.75 0.1 195)) !important;
+        background: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         color: #062e53 !important;
       }
     }
