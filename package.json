@@ -10,6 +10,7 @@
     "docker:build": "docker build -t planka .",
     "gv": "npm i --package-lock-only --ignore-scripts && genversion --source . --template server/version-template.ejs server/version.js && genversion --source . --template client/version-template.ejs client/src/version.js",
     "postinstall": "npm i --prefix server && npm i --prefix client",
+    "push": "bash scripts/build-and-push-ghcr.sh",
     "lint": "npm run server:lint && npm run client:lint",
     "prepare": "husky",
     "server:build": "npm run build --prefix server",
