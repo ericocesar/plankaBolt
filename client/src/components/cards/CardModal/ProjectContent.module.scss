@@ -27,6 +27,9 @@
   }
 
   .actions {
+    background: rgba(180, 190, 210, 0.08);
+    border-radius: 12px;
+    padding: 12px;
     margin-bottom: 24px;
 
     @media only screen and (width < 768px) {
@@ -183,7 +186,7 @@
     font-weight: bold;
     line-height: 24px;
     word-wrap: break-word;
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Cinzel', serif !important;
   }
 
   .headerTitleWrapper {
@@ -245,7 +248,7 @@
     margin: 0 0 4px;
     padding: 6px 0;
     word-wrap: break-word;
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Cinzel', serif !important;
     text-transform: uppercase !important;
   }
 
@@ -309,8 +312,7 @@
   }
 
   .text {
-    color: #89CFF0 !important;
-    /* Light blue for labels */
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.3px;
@@ -324,8 +326,7 @@
   }
 
   .wrapper {
-    background: rgba(255, 255, 255, 0.04) !important;
-    /* Same as card background */
+    background: rgba(180, 190, 210, 0.08) !important;
     border-radius: 12px;
     padding: 16px;
     margin: 0;

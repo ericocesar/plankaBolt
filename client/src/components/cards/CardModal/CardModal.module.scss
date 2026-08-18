@@ -38,7 +38,7 @@
   /* Headers (Card Title etc) */
   :global(.ui.header) {
     color: #ffffff !important;
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Cinzel', serif !important;
     text-transform: uppercase !important;
     letter-spacing: 0.05em !important;
     margin-bottom: 5px !important;
@@ -85,7 +85,7 @@
 
   /* Labels/Chips within Card */
   :global(.ui.label) {
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Cinzel', serif !important;
   }
 
   /* Tab Navigation (Comentários / Ações) */
@@ -127,7 +127,7 @@
 
   /* Anchored selectors for Custom Fields (Real components) */
   :global([data-role="custom-field-name"]) {
-    color: #89CFF0 !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
   }
 
   :global([data-role="custom-field-value"]) {
@@ -139,7 +139,7 @@
     color: #ffffff !important;
 
     :global(strong) {
-      color: #89CFF0 !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       /* Bold text acts as Label */
     }
 
@@ -167,14 +167,14 @@
 
   /* Generic Header Styling (kept for consistency) */
   :global(.header) {
-    color: #89CFF0 !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     font-weight: bold !important;
     text-transform: uppercase !important;
   }
 
   /* Form Labels */
   :global(label) {
-    color: #89CFF0 !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
   }
 
   /* Markdown content - Re-enforce */

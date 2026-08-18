@@ -3,7 +3,7 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&display=swap');
 
 :root {
   /* surfaces */
@@ -38,7 +38,7 @@
   --bp-shadow-modal: 0 24px 50px oklch(0.1 0 0 / 0.5);
 
   /* typography */
-  --bp-font-display: 'Oswald', sans-serif;
+  --bp-font-display: 'Cinzel', serif;
   --bp-font-body: 'Nunitoga', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   --bp-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
   --bp-text-xs: 0.75rem;
@@ -106,7 +106,7 @@
         background: var(--bp-bg-input);
         border: 1px solid var(--bp-border-subtle);
         border-radius: var(--bp-radius-md);
-        color: var(--bp-text-primary);
+        color: #ffffff;
         padding: 12px 16px;
         transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
 

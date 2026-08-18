@@ -68,7 +68,7 @@
         text-transform: uppercase !important;
         letter-spacing: 1.5px !important;
         font-size: 0.9rem !important;
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
         &:after {
@@ -182,9 +182,18 @@
 
       :global(.ui.header) {
         color: #fff !important;
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
+      }
+
+      :global(table) :global(th) {
+        color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
+        font-family: 'Cinzel', serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
       }
 
       :global(.ui.segment) {
@@ -273,7 +282,7 @@
 
       :global(.item) {
         color: rgba(255, 255, 255, 0.6) !important;
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.1em !important;
         padding: 1rem 1.5rem !important;

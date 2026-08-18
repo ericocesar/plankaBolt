@@ -5,16 +5,22 @@
 
 :global(#app) {
   .cover {
-    background-color: #020202;
-    /* Match very dark background */
+    background-color: #0a0a0f;
     background-image: url("/back-login.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
   }
 
   .coverOverlay {
-    background: transparent;
+    background: linear-gradient(
+      to right,
+      #0a0a0f 0%,
+      rgba(10, 10, 15, 0.9) 12%,
+      rgba(10, 10, 15, 0.4) 30%,
+      rgba(10, 10, 15, 0) 60%
+    );
     bottom: 0;
     height: 100%;
     left: 0;
@@ -22,6 +28,7 @@
     right: 0;
     top: 0;
     width: 100%;
+    pointer-events: none;
   }
 
   .debugLog {
@@ -49,7 +56,7 @@
   .formTitle {
     font-size: 36px;
     font-weight: 700 !important;
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Cinzel', serif !important;
     text-transform: uppercase !important;
     letter-spacing: 0.05em !important;
     color: #ffffff !important;
@@ -57,11 +64,13 @@
   }
 
   .formSubtitle {
-    font-size: 18px !important;
-    font-weight: 300 !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    font-family: 'Cinzel', serif !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2.5px !important;
     margin-bottom: 40px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-    letter-spacing: 0.5px !important;
+    color: #ffffff !important;
   }
 
   .grid {
@@ -75,36 +84,35 @@
   }
 
   .inputLabel {
-    font-size: 12px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
+    font-family: 'Cinzel', serif !important;
     line-height: 20px;
     margin-bottom: 8px !important;
-    color: #1ac9cc !important;
+    color: #f3b229 !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 1.5px !important;
   }
 
   .inputWrapper {
     margin-bottom: 16px;
   }
 
-  /* Login Sidebar - Neural Interface Style */
+  /* Login Sidebar - Seamless Neural Style */
   .login {
-    background: rgba(10, 10, 15, 0.95) !important;
-    /* Dark Neural Bg */
-    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: #0a0a0f !important;
+    border-right: none !important;
     backdrop-filter: blur(24px) !important;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     max-width: none;
-    /* Let grid handle width */
     width: 100%;
     min-height: 100vh;
     padding: 60px 40px !important;
     row-gap: 40px;
     color: #ffffff !important;
-    box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: none !important;
     position: relative;
     z-index: 10;
 
@@ -112,8 +120,8 @@
       width: 100%;
 
       input {
-        background: rgba(0, 0, 0, 0.3) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
         border-radius: 12px !important;
         color: #fff !important;
         padding: 14px 16px !important;
@@ -124,39 +132,42 @@
         }
 
         &:focus {
-          border-color: #1ac9cc !important;
-          background: rgba(0, 0, 0, 0.5) !important;
-          box-shadow: 0 0 0 2px rgba(26, 201, 204, 0.15) !important;
+          border-color: #f3b229 !important;
+          background: rgba(0, 0, 0, 0.6) !important;
+          box-shadow: 0 0 0 2px rgba(243, 178, 41, 0.25) !important;
         }
       }
     }
 
     :global(.ui.button) {
       border-radius: 12px !important;
+      font-family: 'Cinzel', serif !important;
       text-transform: uppercase !important;
-      font-weight: 600 !important;
-      letter-spacing: 1px !important;
+      font-weight: 700 !important;
+      letter-spacing: 2px !important;
       padding: 16px !important;
       transition: all 0.2s ease !important;
     }
 
     :global(.ui.button.primary) {
-      background: #1ac9cc !important;
+      background: #f3b229 !important;
       color: #000000 !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(26, 201, 204, 0.2) !important;
+      box-shadow: 0 4px 20px rgba(243, 178, 41, 0.3) !important;
 
       &:hover {
-        background: #ffffff !important;
+        background: #ffe082 !important;
+        color: #000000 !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 25px rgba(26, 201, 204, 0.4) !important;
+        box-shadow: 0 8px 30px rgba(243, 178, 41, 0.5) !important;
       }
     }
   }
 
   .logo {
-    max-height: 144px;
-    max-width: 80%;
+    max-height: 288px;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .logoWrapper {

@@ -10,7 +10,7 @@
 
     /* Custom field labels */
     :global(.text) {
-      color: #89CFF0 !important;
+      color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
       /* Light blue for labels */
       font-size: 12px;
       font-weight: bold;

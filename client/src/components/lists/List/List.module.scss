@@ -140,9 +140,9 @@
   }
 
   .headerName {
-    color: #ffffff !important;
+    color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
     font-weight: 600 !important;
-    font-family: "Oswald", sans-serif !important;
+    font-family: "Cinzel", serif !important;
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
     line-height: 20px;
@@ -167,7 +167,7 @@
   }
 
   .outerWrapper {
-    background: var(--bp-bg-surface, oklch(0.2 0.008 240));
+    background: rgba(180, 190, 210, 0.08);
     border: 1px solid var(--bp-border-subtle, oklch(0.3 0.008 240));
     border-radius: 16px;
     display: flex;

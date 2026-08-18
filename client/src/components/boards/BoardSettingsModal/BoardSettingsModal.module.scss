@@ -59,7 +59,7 @@
 
       :global(.item) {
         color: rgba(255, 255, 255, 0.6) !important;
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.1em !important;
         padding: 1rem 1.5rem !important;
@@ -167,7 +167,7 @@
       :global(.header) {
         background: transparent !important;
         color: rgba(255, 255, 255, 0.9) !important;
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         font-size: 1rem !important;
@@ -217,7 +217,7 @@
         background: transparent !important;
         color: var(--bp-accent, oklch(0.83 0.16 80)) !important;
         /* Teal as requested */
-        font-family: 'Oswald', sans-serif !important;
+        font-family: 'Cinzel', serif !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         font-size: 0.8rem !important;

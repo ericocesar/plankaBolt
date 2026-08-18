@@ -26,7 +26,7 @@
       color: rgba(255, 255, 255, 0.72) !important;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--bp-accent, oklch(0.83 0.16 80));
       }
     }
   }
