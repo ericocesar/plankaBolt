@@ -12,12 +12,12 @@ import { Icon } from 'semantic-ui-react';
 import selectors from '../../../selectors';
 import entryActions from '../../../entry-actions';
 import { startStopwatch, stopStopwatch } from '../../../utils/stopwatch';
-import markdownToText from '../../../utils/markdown-to-text';
 import { isListArchiveOrTrash } from '../../../utils/record-helpers';
 import { BoardMembershipRoles, BoardViews } from '../../../constants/Enums';
 import TaskList from './TaskList';
 import DueDateChip from '../DueDateChip';
 import StopwatchChip from '../StopwatchChip';
+import TimeAgo from '../../common/TimeAgo';
 import UserAvatar from '../../users/UserAvatar';
 import LabelChip from '../../labels/LabelChip';
 import CustomFieldValueChip from '../../custom-field-values/CustomFieldValueChip';
@@ -76,17 +76,13 @@ const ProjectContent = React.memo(({ cardId }) => {
     return attachment && attachment.data.thumbnailUrls.outside360;
   });
 
-  const descriptionText = useMemo(
-    () => card.description && markdownToText(card.description),
-    [card.description],
-  );
-
-  const { listName, withCreator } = useSelector((state) => {
+  const { listName, withCreator, withAge } = useSelector((state) => {
     const board = selectors.selectCurrentBoard(state);
 
     return {
       listName: list.name && (board.view === BoardViews.KANBAN ? null : list.name),
       withCreator: board.alwaysDisplayCardCreator,
+      withAge: board.displayCardAges,
     };
   }, shallowEqual);
 
@@ -121,6 +117,7 @@ const ProjectContent = React.memo(({ cardId }) => {
     card.dueDate ||
     card.stopwatch ||
     card.commentsTotal > 0 ||
+    withAge ||
     attachmentsTotal > 0 ||
     notificationsTotal > 0 ||
     listName;
@@ -151,19 +148,12 @@ const ProjectContent = React.memo(({ cardId }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={classNames(styles.headerWrapper, coverUrl && styles.headerWrapperWithCover)}>
-        {coverUrl && (
-          <div className={styles.coverWrapper}>
-            <img src={coverUrl} alt="" className={styles.cover} />
-          </div>
-        )}
-        <div className={styles.headerContent}>
-          <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>
-            {card.name}
-          </div>
-          {card.description && <div className={styles.descriptionText}>{descriptionText}</div>}
+      <div className={classNames(styles.name, card.isClosed && styles.nameClosed)}>{card.name}</div>
+      {coverUrl && (
+        <div className={styles.coverWrapper}>
+          <img src={coverUrl} alt="" className={styles.cover} />
         </div>
-      </div>
+      )}
       {labelIds.length > 0 && (
         <span className={classNames(styles.labels, !isCompact && styles.labelsFull)}>
           {labelIds.map((labelId) => (
@@ -226,7 +216,7 @@ const ProjectContent = React.memo(({ cardId }) => {
               </span>
             </span>
           )}
-          {card.description && !descriptionText && (
+          {card.description && (
             <span className={classNames(styles.attachment, styles.attachmentLeft)}>
               <span className={styles.attachmentContent}>
                 <Icon name="align left" />
@@ -246,6 +236,14 @@ const ProjectContent = React.memo(({ cardId }) => {
               <span className={styles.attachmentContent}>
                 <Icon name="comment outline" />
                 {card.commentsTotal}
+              </span>
+            </span>
+          )}
+          {withAge && card.createdAt && (
+            <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+              <span className={styles.attachmentContent}>
+                <Icon name="history" />
+                <TimeAgo date={card.createdAt} />
               </span>
             </span>
           )}

@@ -3,15 +3,17 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-const ROOT = '/';
-const LOGIN = '/login';
-const OIDC_CALLBACK = '/oidc-callback';
-const PROJECTS = '/projects/:id';
-const BOARDS = '/boards/:id';
-const CARDS = '/cards/:id';
-const SUPPORT = '/support/:formId';
-const SUPPORT_EMBED = '/support/:formId/embed';
-const SUPPORT_EMBED_CODE = '/support/:formId/embed-code';
+import Config from './Config';
+
+const ROOT = `${Config.BASE_PATH}/`;
+const LOGIN = `${Config.BASE_PATH}/login`;
+const OIDC_CALLBACK = `${Config.BASE_PATH}/oidc-callback`;
+const PROJECTS = `${Config.BASE_PATH}/projects/:id`;
+const BOARDS = `${Config.BASE_PATH}/boards/:id`;
+const CARDS = `${Config.BASE_PATH}/cards/:id`;
+const SUPPORT = `${Config.BASE_PATH}/support/:formId`;
+const SUPPORT_EMBED = `${Config.BASE_PATH}/support/:formId/embed`;
+const SUPPORT_EMBED_CODE = `${Config.BASE_PATH}/support/:formId/embed-code`;
 
 export default {
   ROOT,

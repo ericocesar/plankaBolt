@@ -13,7 +13,7 @@ import entryActions from '../../../entry-actions';
 import { usePopupInClosableContext } from '../../../hooks';
 import ConfirmationStep from '../../common/ConfirmationStep';
 
-import apiKeyStyles from '../../common/AdministrationModal/UsersPane/ApiKeyStep.module.scss';
+import apiKeyStyles from '../../common/AdministrationModal/UserEditModal/ApiKeyPane.module.scss';
 import styles from './PreferencesPane.module.scss';
 
 const ApiPane = React.memo(() => {

@@ -6,25 +6,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button, Tab, Table } from 'semantic-ui-react';
+import { Button, Divider, Tab, Table } from 'semantic-ui-react';
 import { Input } from '../../../../lib/custom-ui';
 
 import selectors from '../../../../selectors';
 import { useField, useNestedRef, usePopupInClosableContext } from '../../../../hooks';
 import Item from './Item';
 import AddStep from './AddStep';
+import UserEditModal from '../UserEditModal';
 
 import styles from './UsersPane.module.scss';
 
 const UsersPane = React.memo(() => {
-  const activeUsersTotal = useSelector(selectors.selectActiveUsersTotal);
   const activeUsersLimit = useSelector(selectors.selectActiveUsersLimit);
+  const activeUsersTotal = useSelector(selectors.selectActiveUsersTotal);
   const users = useSelector(selectors.selectUsers);
-
-  const canAdd = useSelector((state) => {
-    const oidcBootstrap = selectors.selectOidcBootstrap(state);
-    return !oidcBootstrap || !oidcBootstrap.isEnforced;
-  });
 
   const [t] = useTranslation();
 
@@ -33,6 +29,7 @@ const UsersPane = React.memo(() => {
   const [isDeactivatedVisible, setIsDeactivatedVisible] = useState(false); // TODO: refactor?
 
   const [searchFieldRef, handleSearchFieldRef] = useNestedRef('inputRef');
+  const [editingUserId, setEditingUserId] = useState(null);
 
   const filteredUsers = useMemo(
     () =>
@@ -60,6 +57,10 @@ const UsersPane = React.memo(() => {
     setIsDeactivatedVisible(!isDeactivatedVisible);
   }, [isDeactivatedVisible]);
 
+  const handleEditClose = useCallback(() => {
+    setEditingUserId(null);
+  }, []);
+
   useEffect(() => {
     searchFieldRef.current.focus();
   }, [searchFieldRef]);
@@ -68,43 +69,16 @@ const UsersPane = React.memo(() => {
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
-      <div className={styles.headerContainer}>
-        <Input
-          fluid
-          ref={handleSearchFieldRef}
-          value={search}
-          placeholder={t('common.searchUsers')}
-          maxLength={256}
-          icon="search"
-          onChange={handleSearchChange}
-          className={styles.searchInput}
-        />
-        <Button
-          content={isDeactivatedVisible ? t('action.showActive') : t('action.showDeactivated')}
-          className={styles.toggleDeactivatedButton}
-          onClick={handleToggleDeactivatedClick}
-        />
-        {canAdd && (
-          <AddPopup>
-            <Button
-              positive
-              disabled={activeUsersLimit !== null && activeUsersTotal >= activeUsersLimit}
-              className={styles.addButton}
-              icon="plus"
-              content={
-                <>
-                  Novo Usuário
-                  {activeUsersLimit !== null && (
-                    <span className={styles.addButtonCounter}>
-                      {activeUsersTotal}/{activeUsersLimit}
-                    </span>
-                  )}
-                </>
-              }
-            />
-          </AddPopup>
-        )}
-      </div>
+      <Input
+        fluid
+        ref={handleSearchFieldRef}
+        value={search}
+        placeholder={t('common.searchUsers')}
+        maxLength={256}
+        icon="search"
+        onChange={handleSearchChange}
+      />
+      <Divider />
       <div className={styles.tableWrapper}>
         <Table unstackable basic="very">
           <Table.Header>
@@ -118,11 +92,33 @@ const UsersPane = React.memo(() => {
           </Table.Header>
           <Table.Body>
             {filteredUsers.map((user) => (
-              <Item key={user.id} id={user.id} />
+              <Item key={user.id} id={user.id} onEdit={setEditingUserId} />
             ))}
           </Table.Body>
         </Table>
       </div>
+      <div className={styles.actions}>
+        <Button
+          content={isDeactivatedVisible ? t('action.showActive') : t('action.showDeactivated')}
+          className={styles.toggleDeactivatedButton}
+          onClick={handleToggleDeactivatedClick}
+        />
+        <AddPopup>
+          <Button
+            positive
+            disabled={activeUsersLimit !== null && activeUsersTotal >= activeUsersLimit}
+            className={styles.addButton}
+          >
+            {t('action.addUser')}
+            {activeUsersLimit !== null && (
+              <span className={styles.addButtonCounter}>
+                {activeUsersTotal}/{activeUsersLimit}
+              </span>
+            )}
+          </Button>
+        </AddPopup>
+      </div>
+      {editingUserId && <UserEditModal userId={editingUserId} onClose={handleEditClose} />}
     </Tab.Pane>
   );
 });

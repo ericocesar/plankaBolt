@@ -5,112 +5,45 @@
 
 :global(#app) {
   .actions {
-    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-    padding-top: 2rem;
-    margin-top: 1rem;
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
+    padding-top: 1rem;
     text-align: right;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     &:after {
-      display: none;
+      clear: both;
+      content: "";
+      display: table;
     }
-  }
-
-  .headerContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    gap: 12px;
-  }
-
-  .searchInput {
-    flex: none !important;
-    width: 300px !important;
   }
 
   .addButton {
     margin-right: 0;
-    background: #1ac9cc !important;
-    border-radius: 12px !important;
-    color: #000 !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    padding: 12px 24px !important;
-    box-shadow: 0 4px 20px rgba(26, 201, 204, 0.3) !important;
-    letter-spacing: 1px !important;
-    transition: all 0.3s ease !important;
-
-    &:hover {
-      background: #fff !important;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(26, 201, 204, 0.5) !important;
-    }
   }
 
   .addButtonCounter {
-    margin-left: 8px;
-    opacity: 0.8;
-    color: #062e53 !important;
-    font-weight: 700 !important;
-    background: rgba(0, 0, 0, 0.1);
-    padding: 2px 6px;
-    border-radius: 6px;
+    margin-left: 6px;
+    opacity: 0.5;
   }
 
   .tableWrapper {
-    margin-right: -1rem;
-    max-height: calc(100vh - 350px);
+    container-type: inline-size;
+    margin-right: -2.5rem;
+    max-height: calc(100vh - 338px);
     overflow: auto;
-    padding-right: 1rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding-right: 2.5rem;
 
-    :global(table) {
-      background: transparent !important;
-      color: #fff !important;
-      border: none !important;
-
-      :global(thead th) {
-        background: rgba(0, 0, 0, 0.2) !important;
-        color: #1ac9cc !important;
-        font-family: 'Oswald', sans-serif !important;
-        text-transform: uppercase !important;
-        letter-spacing: 2px !important;
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-        padding: 1rem !important;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-      }
-
-      :global(tbody td) {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
-        padding: 1rem !important;
-        color: rgba(255, 255, 255, 0.8) !important;
-        font-size: 13px !important;
-        vertical-align: middle !important;
-        font-family: 'Oswald', sans-serif !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
-      }
-
-      :global(tbody tr:hover) {
-        background: rgba(255, 255, 255, 0.03) !important;
-      }
-
-      :global(tbody tr:last-child td) {
-        border-bottom: none !important;
-      }
+    @media (width < 768px) {
+      margin-right: -2rem;
+      max-height: calc(100vh - 296px);
+      padding-right: 2rem;
     }
 
-    &::-webkit-scrollbar {
-      width: 8px;
+    @media (768px <= width < 926px) {
+      max-height: calc(100vh - 310px);
+    }
+
+    @supports (-moz-appearance: none) {
+      scrollbar-color: rgba(0, 0, 0, 0.32) transparent;
     }
 
     &::-webkit-scrollbar-track {
@@ -118,43 +51,32 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
+      border-radius: 3px;
     }
   }
 
   .toggleDeactivatedButton {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 12px !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    padding: 12px 20px !important;
-    transition: all 0.2s ease !important;
-    letter-spacing: 0.5px !important;
-    white-space: nowrap !important;
+    background: transparent;
+    box-shadow: none;
+    color: #6b808c;
+    float: left;
+    font-weight: normal;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 6px 11px;
+    text-align: left;
+    text-decoration: underline;
+    transition: none;
+    white-space: nowrap;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      color: #fff !important;
-      border-color: rgba(255, 255, 255, 0.15) !important;
-    }
-
-    &.active {
-      background: rgba(26, 201, 204, 0.1) !important;
-      color: #1ac9cc !important;
-      border-color: rgba(26, 201, 204, 0.2) !important;
+      background: rgba(9, 30, 66, 0.08);
+      color: #092d42;
     }
   }
 
   .wrapper {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    border: none;
+    box-shadow: none;
   }
 }

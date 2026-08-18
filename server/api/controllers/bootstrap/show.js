@@ -20,33 +20,8 @@
  *             schema:
  *               type: object
  *               required:
- *                 - oidc
  *                 - version
  *               properties:
- *                 oidc:
- *                   type: object
- *                   required:
- *                     - authorizationUrl
- *                     - endSessionUrl
- *                     - isEnforced
- *                   nullable: true
- *                   description: OpenID Connect configuration (null if not configured)
- *                   properties:
- *                     authorizationUrl:
- *                       type: string
- *                       format: uri
- *                       description: OIDC authorization URL for initiating authentication
- *                       example: https://oidc.example.com/auth
- *                     endSessionUrl:
- *                       type: string
- *                       format: uri
- *                       nullable: true
- *                       description: OIDC end session URL for logout (null if not supported by provider)
- *                       example: https://oidc.example.com/logout
- *                     isEnforced:
- *                       type: boolean
- *                       description: Whether OIDC authentication is enforced (users must use OIDC to login)
- *                       example: false
  *                 activeUsersLimit:
  *                   type: number
  *                   nullable: true
@@ -57,6 +32,12 @@
  *                   format: uri
  *                   description: URL to the customer management panel (conditionally added for admins if configured)
  *                   example: https://panel.example.com
+ *                 termsLanguages:
+ *                   type: array
+ *                   description: List of available language codes for terms localization
+ *                   items:
+ *                     type: string
+ *                   example: [de-DE, en-US]
  *                 version:
  *                   type: string
  *                   description: Current version of the PLANKA application
@@ -68,10 +49,10 @@ module.exports = {
   async fn() {
     const { currentUser } = this.req;
 
-    const oidc = await sails.hooks.oidc.getBootstrap();
+    const internalConfig = await InternalConfig.qm.getOneMain();
 
     return {
-      item: sails.helpers.bootstrap.presentOne(oidc, currentUser),
+      item: sails.helpers.bootstrap.presentOne(internalConfig, currentUser),
     };
   },
 };

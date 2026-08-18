@@ -7,8 +7,8 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Button, Divider, Form, Grid, Header, Message } from 'semantic-ui-react';
+import { useTranslation, Trans } from 'react-i18next';
+import { Form, Grid, Header, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../../lib/hooks';
 import { Input } from '../../../lib/custom-ui';
 
@@ -18,9 +18,11 @@ import { useForm, useNestedRef } from '../../../hooks';
 import { isUsername } from '../../../utils/validator';
 import AccessTokenSteps from '../../../constants/AccessTokenSteps';
 import TermsModal from './TermsModal';
-import styles from './Content.module.scss';
+import TotpChallengeModal from './TotpChallengeModal';
 
-const logo = '/logo512.png';
+import logo from '../../../assets/images/logo.png';
+
+import styles from './Content.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -42,11 +44,6 @@ const createMessage = (error) => {
       return {
         type: 'error',
         content: 'common.invalidPassword',
-      };
-    case 'Use single sign-on':
-      return {
-        type: 'error',
-        content: 'common.useSingleSignOn',
       };
     case 'Admin login required to initialize instance':
       return {
@@ -92,7 +89,6 @@ const Content = React.memo(() => {
   const {
     data: defaultData,
     isSubmitting,
-    isSubmittingWithOidc,
     error,
     step,
   } = useSelector(selectors.selectAuthenticateForm);
@@ -101,11 +97,27 @@ const Content = React.memo(() => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange, setData] = useForm(() => ({
-    emailOrUsername: '',
-    password: '',
-    ...defaultData,
-  }));
+  const [data, handleFieldChange, setData] = useForm(() => {
+    const initialData = {
+      emailOrUsername: '',
+      password: '',
+      ...defaultData,
+    };
+
+    if (bootstrap.isDemoMode) {
+      const params = new URLSearchParams(window.location.hash.slice(1));
+
+      Object.keys(initialData).forEach((fieldName) => {
+        const value = params.get(fieldName);
+
+        if (value !== null) {
+          initialData[fieldName] = value;
+        }
+      });
+    }
+
+    return initialData;
+  });
 
   const message = useMemo(() => createMessage(error), [error]);
   const [focusPasswordFieldState, focusPasswordField] = useToggle();
@@ -132,22 +144,13 @@ const Content = React.memo(() => {
     dispatch(entryActions.authenticate(cleanData));
   }, [dispatch, data, emailOrUsernameFieldRef, passwordFieldRef]);
 
-  const handleAuthenticateWithOidcClick = useCallback(() => {
-    dispatch(entryActions.authenticateWithOidc());
-  }, [dispatch]);
-
   const handleMessageDismiss = useCallback(() => {
     dispatch(entryActions.clearAuthenticateError());
   }, [dispatch]);
 
-  const withOidc = !!bootstrap.oidc;
-  const isOidcEnforced = withOidc && bootstrap.oidc.isEnforced;
-
   useEffect(() => {
-    if (!isOidcEnforced) {
-      emailOrUsernameFieldRef.current.focus();
-    }
-  }, [emailOrUsernameFieldRef, isOidcEnforced]);
+    emailOrUsernameFieldRef.current.focus();
+  }, [emailOrUsernameFieldRef]);
 
   useDidUpdate(() => {
     if (wasSubmitting && !isSubmitting && error) {
@@ -186,7 +189,7 @@ const Content = React.memo(() => {
               <Header
                 as="h1"
                 textAlign="center"
-                content={bootstrap.instanceName || 'BOLTPROJECT'}
+                content={bootstrap.instanceName || 'PLANKA'}
                 className={styles.formTitle}
               />
               <Header
@@ -207,62 +210,53 @@ const Content = React.memo(() => {
                   onDismiss={handleMessageDismiss}
                 />
               )}
-              {!isOidcEnforced && (
-                <>
-                  <Form size="large" onSubmit={handleSubmit}>
-                    <div className={styles.inputWrapper}>
-                      <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
-                      <Input
-                        fluid
-                        ref={handleEmailOrUsernameFieldRef}
-                        name="emailOrUsername"
-                        value={data.emailOrUsername}
-                        maxLength={256}
-                        readOnly={isSubmitting}
-                        className={styles.input}
-                        onChange={handleFieldChange}
-                      />
-                    </div>
-                    <div className={styles.inputWrapper}>
-                      <div className={styles.inputLabel}>{t('common.password')}</div>
-                      <Input.Password
-                        fluid
-                        ref={handlePasswordFieldRef}
-                        name="password"
-                        value={data.password}
-                        maxLength={256}
-                        readOnly={isSubmitting}
-                        className={styles.input}
-                        onChange={handleFieldChange}
-                      />
-                    </div>
-                    <Form.Button
-                      fluid
-                      primary
-                      icon="right arrow"
-                      labelPosition="right"
-                      content={t('action.logIn')}
-                      loading={isSubmitting}
-                      disabled={isSubmitting || isSubmittingWithOidc}
-                    />
-                  </Form>
-                  {withOidc && (
-                    <Divider horizontal content={t('common.or')} className={styles.divider} />
-                  )}
-                </>
-              )}
-              {withOidc && (
-                <Button
+              <Form size="large" onSubmit={handleSubmit}>
+                <div className={styles.inputWrapper}>
+                  <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
+                  <Input
+                    fluid
+                    ref={handleEmailOrUsernameFieldRef}
+                    name="emailOrUsername"
+                    value={data.emailOrUsername}
+                    maxLength={256}
+                    readOnly={isSubmitting}
+                    className={styles.input}
+                    onChange={handleFieldChange}
+                  />
+                </div>
+                <div className={styles.inputWrapper}>
+                  <div className={styles.inputLabel}>{t('common.password')}</div>
+                  <Input.Password
+                    fluid
+                    ref={handlePasswordFieldRef}
+                    name="password"
+                    value={data.password}
+                    maxLength={256}
+                    readOnly={isSubmitting}
+                    className={styles.input}
+                    onChange={handleFieldChange}
+                  />
+                </div>
+                <Form.Button
                   fluid
-                  primary={isOidcEnforced}
-                  icon={isOidcEnforced ? 'right arrow' : undefined}
-                  labelPosition={isOidcEnforced ? 'right' : undefined}
-                  content={t('action.logInWithSso')}
-                  loading={isSubmittingWithOidc}
-                  disabled={isSubmitting || isSubmittingWithOidc}
-                  onClick={handleAuthenticateWithOidcClick}
+                  primary
+                  icon="right arrow"
+                  labelPosition="right"
+                  content={t('action.logIn')}
+                  loading={isSubmitting}
+                  disabled={isSubmitting}
                 />
-              )}
+              </Form>
+            </div>
+            <div className={styles.poweredBy}>
+              <p className={styles.poweredByText}>
+                <Trans i18nKey="common.poweredByPlanka">
+                  {'Powered by '}
+                  <a href="https://github.com/plankanban/planka" target="_blank" rel="noreferrer">
+                    PLANKA
+                  </a>
+                </Trans>
+              </p>
             </div>
           </div>
         </Grid.Column>
@@ -275,6 +269,7 @@ const Content = React.memo(() => {
         </Grid.Column>
       </Grid>
       {step === AccessTokenSteps.ACCEPT_TERMS && <TermsModal />}
+      {step === AccessTokenSteps.VERIFY_TOTP && <TotpChallengeModal />}
     </div>
   );
 });

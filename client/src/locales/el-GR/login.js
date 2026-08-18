@@ -6,7 +6,6 @@ export default {
         'Απαιτείται σύνδεση διαχειριστή για την αρχικοποίηση της εφαρμογής',
       emailAlreadyInUse: 'Το e-mail χρησιμοποιείται ήδη',
       emailOrUsername: 'E-mail ή όνομα χρήστη',
-      iHaveReadAndAgreeToTheseTerms: 'Έχω διαβάσει και συμφωνώ με αυτούς τους όρους',
       invalidCredentials: 'Μη έγκυρα στοιχεία σύνδεσης',
       invalidEmailOrUsername: 'Μη έγκυρο e-mail ή όνομα χρήστη',
       invalidPassword: 'Μη έγκυρος κωδικός',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Με την υποστήριξη του <1>PLANKA</1>',
       serverConnectionFailed: 'Αποτυχία σύνδεσης με τον διακομιστή',
       unknownError: 'Άγνωστο σφάλμα, δοκιμάστε ξανά αργότερα',
-      useSingleSignOn: 'Χρήση Single Sign-On',
       usernameAlreadyInUse: 'Το όνομα χρήστη χρησιμοποιείται ήδη',
       whoops_title: 'Ωχ!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Επιστροφή',
       goHome: 'Αρχική σελίδα',
       logIn: 'Σύνδεση',
-      logInWithSso: 'Σύνδεση με SSO',
     },
   },
 };

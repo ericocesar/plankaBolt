@@ -6,7 +6,6 @@ export default {
         "Es requereix inici de sessió d'administrador per inicialitzar la instància",
       emailAlreadyInUse: 'Correu electrònic ja en ús',
       emailOrUsername: "Correu electrònic o nom d'usuari",
-      iHaveReadAndAgreeToTheseTerms: 'He llegit i accepto aquests termes',
       invalidCredentials: 'Credencials no vàlides',
       invalidEmailOrUsername: "Correu electrònic o nom d'usuari no vàlid",
       invalidPassword: 'Contrasenya no vàlida',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Desenvolupat amb <1>PLANKA</1>',
       serverConnectionFailed: 'Error de connexió amb el servidor',
       unknownError: 'Error desconegut, torna-ho a provar més tard',
-      useSingleSignOn: 'Utilitzar inici de sessió únic',
       usernameAlreadyInUse: "Nom d'usuari ja en ús",
       whoops_title: 'Ups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Tornar',
       goHome: "Anar a l'inici",
       logIn: 'Iniciar sessió',
-      logInWithSso: 'Iniciar sessió amb SSO',
     },
   },
 };

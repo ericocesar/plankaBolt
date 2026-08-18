@@ -22,6 +22,9 @@ services:
       # - MAX_UPLOAD_FILE_SIZE=
       # - TOKEN_EXPIRES_IN=365 # In days
 
+      # - STORAGE_LIMIT=
+      # - ACTIVE_USERS_LIMIT=
+
       # related: https://github.com/knex/knex/issues/2354
       # As knex does not pass query parameters from the connection string,
       # we have to use environment variables in order to pass the desired values, e.g.
@@ -40,14 +43,16 @@ services:
       # - DEFAULT_ADMIN_NAME=Demo Demo
       # - DEFAULT_ADMIN_USERNAME=demo
 
-      # - INTERNAL_ACCESS_TOKEN=
-      # - STORAGE_LIMIT=
-      # - ACTIVE_USERS_LIMIT=
-      # - CUSTOMER_PANEL_URL=
-
       # Set to true to show more detailed authentication error messages.
       # It should not be enabled without a rate limiter for security reasons.
       # - SHOW_DETAILED_AUTH_ERRORS=false
+
+      # All outgoing HTTP requests (SMTP, webhooks, Apprise notifications, favicon fetching, etc.)
+      # will be sent through this proxy if set.
+      # - OUTGOING_PROXY=http://proxy:3128
+
+      # Set to true to expose the Swagger specification at /swagger.json
+      # - SWAGGER_EXPOSED=false
 
       # - S3_ENDPOINT=
       # - S3_REGION=
@@ -56,27 +61,6 @@ services:
       # - S3_BUCKET=
       # - S3_FORCE_PATH_STYLE=true
       # - S3_REQUEST_CHECKSUM_CALCULATION=
-
-      # - OIDC_ISSUER=
-      # - OIDC_CLIENT_ID=
-      # - OIDC_CLIENT_SECRET=
-      # - OIDC_USE_OAUTH_CALLBACK=true
-      # - OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG=
-      # - OIDC_USERINFO_SIGNED_RESPONSE_ALG=
-      # - OIDC_SCOPES=openid email profile
-      # - OIDC_RESPONSE_MODE=fragment
-      # - OIDC_USE_DEFAULT_RESPONSE_MODE=true
-      # - OIDC_ADMIN_ROLES=admin
-      # - OIDC_PROJECT_OWNER_ROLES=project_owner
-      # - OIDC_BOARD_USER_ROLES=board_user
-      # - OIDC_CLAIMS_SOURCE=userinfo
-      # - OIDC_EMAIL_ATTRIBUTE=email
-      # - OIDC_NAME_ATTRIBUTE=name
-      # - OIDC_USERNAME_ATTRIBUTE=preferred_username
-      # - OIDC_ROLES_ATTRIBUTE=groups
-      # - OIDC_IGNORE_USERNAME=true
-      # - OIDC_IGNORE_ROLES=true
-      # - OIDC_ENFORCED=true
 
       # Email Notifications (https://nodemailer.com/smtp/)
       # These values override and disable configuration in the UI if set.
@@ -105,6 +89,8 @@ services:
       - ./client:/app
     ports:
       - 3000:3000
+    environment:
+      - PROXY_TARGET=http://planka-server:1337
 
   postgres:
     image: postgres:16-alpine

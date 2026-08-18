@@ -13,9 +13,7 @@ import { useClosableModal } from '../../../hooks';
 import AccountPane from './AccountPane';
 import PreferencesPane from './PreferencesPane';
 import NotificationsPane from './NotificationsPane';
-import ApiPane from './ApiPane';
-
-import styles from './UserSettingsModal.module.scss';
+import SecurityPane from './SecurityPane';
 
 const UserSettingsModal = React.memo(() => {
   const dispatch = useDispatch();
@@ -47,22 +45,15 @@ const UserSettingsModal = React.memo(() => {
       render: () => <NotificationsPane />,
     },
     {
-      menuItem: t('common.apiKey', {
+      menuItem: t('common.security', {
         context: 'title',
       }),
-      render: () => <ApiPane />,
+      render: () => <SecurityPane />,
     },
   ];
 
   return (
-    <ClosableModal
-      open
-      closeIcon
-      size="small"
-      centered={false}
-      onClose={handleClose}
-      className={styles.wrapper}
-    >
+    <ClosableModal open closeIcon size="small" centered={false} onClose={handleClose}>
       <ClosableModal.Content>
         <Tab
           menu={{

@@ -8,6 +8,7 @@
  * https://sailsjs.com/config/custom
  */
 
+const path = require('path');
 const { URL } = require('url');
 const bytes = require('bytes');
 const sails = require('sails');
@@ -28,7 +29,6 @@ const envToBytes = (value) => bytes(value);
 const envToArray = (value) => (value ? value.split(',') : []);
 
 const baseUrl = envToArray(process.env.BASE_URL)[0];
-const normalizedBaseUrl = baseUrl.replace(/\/+$/, '');
 const parsedBasedUrl = new URL(baseUrl);
 
 module.exports.custom = {
@@ -41,32 +41,31 @@ module.exports.custom = {
   version,
 
   baseUrl,
-  baseUrlPath: parsedBasedUrl.pathname,
+  baseUrlPath: parsedBasedUrl.pathname.replace(/\/$/, ''), // Remove trailing slash
   baseUrlSecure: parsedBasedUrl.protocol === 'https:',
 
   maxUploadFileSize: envToBytes(process.env.MAX_UPLOAD_FILE_SIZE),
   tokenExpiresIn: (parseInt(process.env.TOKEN_EXPIRES_IN, 10) || 365) * 24 * 60 * 60,
 
+  storageLimit: envToBytes(process.env.STORAGE_LIMIT),
+  activeUsersLimit: envToNumber(process.env.ACTIVE_USERS_LIMIT),
+
   // Location to receive uploaded files in. Default (non-string value) is a Sails-specific location.
   uploadsTempPath: null,
-  uploadsBasePath: sails.config.appPath,
-
-  preloadedFaviconsPathSegment: 'public/preloaded-favicons',
-  faviconsPathSegment: 'public/favicons',
-  userAvatarsPathSegment: 'public/user-avatars',
-  backgroundImagesPathSegment: 'public/background-images',
+  uploadsBasePath: path.join(sails.config.appPath, 'data'),
   coverImagesPathSegment: 'public/cover-images',
+
+  faviconsPathSegment: 'protected/favicons',
+  userAvatarsPathSegment: 'protected/user-avatars',
+  backgroundImagesPathSegment: 'protected/background-images',
   attachmentsPathSegment: 'private/attachments',
 
   defaultAdminEmail:
     process.env.DEFAULT_ADMIN_EMAIL && process.env.DEFAULT_ADMIN_EMAIL.toLowerCase(),
 
-  internalAccessToken: process.env.INTERNAL_ACCESS_TOKEN,
-  storageLimit: envToBytes(process.env.STORAGE_LIMIT),
-  activeUsersLimit: envToNumber(process.env.ACTIVE_USERS_LIMIT),
-  customerPanelUrl: process.env.CUSTOMER_PANEL_URL,
-
   showDetailedAuthErrors: process.env.SHOW_DETAILED_AUTH_ERRORS === 'true',
+  outgoingProxy: process.env.OUTGOING_PROXY,
+  swaggerExposed: process.env.SWAGGER_EXPOSED === 'true',
 
   s3Endpoint: process.env.S3_ENDPOINT,
   s3Region: process.env.S3_REGION,
@@ -75,29 +74,6 @@ module.exports.custom = {
   s3Bucket: process.env.S3_BUCKET,
   s3ForcePathStyle: process.env.S3_FORCE_PATH_STYLE === 'true',
   s3RequestChecksumCalculation: process.env.S3_REQUEST_CHECKSUM_CALCULATION,
-
-  oidcIssuer: process.env.OIDC_ISSUER,
-  oidcClientId: process.env.OIDC_CLIENT_ID,
-  oidcClientSecret: process.env.OIDC_CLIENT_SECRET,
-  oidcUseOauthCallback: process.env.OIDC_USE_OAUTH_CALLBACK === 'true',
-  oidcIdTokenSignedResponseAlg: process.env.OIDC_ID_TOKEN_SIGNED_RESPONSE_ALG,
-  oidcUserinfoSignedResponseAlg: process.env.OIDC_USERINFO_SIGNED_RESPONSE_ALG,
-  oidcScopes: process.env.OIDC_SCOPES || 'openid email profile',
-  oidcResponseMode: process.env.OIDC_RESPONSE_MODE || 'fragment',
-  oidcUseDefaultResponseMode: process.env.OIDC_USE_DEFAULT_RESPONSE_MODE === 'true',
-  oidcAdminRoles: envToArray(process.env.OIDC_ADMIN_ROLES),
-  oidcProjectOwnerRoles: envToArray(process.env.OIDC_PROJECT_OWNER_ROLES),
-  oidcBoardUserRoles: envToArray(process.env.OIDC_BOARD_USER_ROLES),
-  oidcClaimsSource: process.env.OIDC_CLAIMS_SOURCE || 'userinfo',
-  oidcEmailAttribute: process.env.OIDC_EMAIL_ATTRIBUTE || 'email',
-  oidcNameAttribute: process.env.OIDC_NAME_ATTRIBUTE || 'name',
-  oidcUsernameAttribute: process.env.OIDC_USERNAME_ATTRIBUTE || 'preferred_username',
-  oidcRolesAttribute: process.env.OIDC_ROLES_ATTRIBUTE || 'groups',
-  oidcIgnoreUsername: process.env.OIDC_IGNORE_USERNAME === 'true',
-  oidcIgnoreRoles: process.env.OIDC_IGNORE_ROLES === 'true',
-  oidcEnforced: process.env.OIDC_ENFORCED === 'true',
-
-  oidcRedirectUri: `${normalizedBaseUrl}/oidc-callback`,
 
   smtpHost: process.env.SMTP_HOST,
   smtpPort: process.env.SMTP_PORT || 587,
@@ -110,5 +86,10 @@ module.exports.custom = {
 
   gravatarBaseUrl: process.env.GRAVATAR_BASE_URL,
 
-  embedAllowedOrigins: process.env.EMBED_ALLOWED_ORIGINS || 'https://bolt360.com.br',
+  /* Internal */
+
+  internalAccessToken: process.env.INTERNAL_ACCESS_TOKEN,
+  termsType: process.env.TERMS_TYPE || 'custom',
+  customerPanelUrl: process.env.CUSTOMER_PANEL_URL,
+  demoMode: process.env.DEMO_MODE === 'true',
 };

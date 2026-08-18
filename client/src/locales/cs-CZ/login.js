@@ -6,7 +6,6 @@ export default {
         'K inicializaci instance je nutné přihlášení správce.',
       emailAlreadyInUse: 'E-mail se již používá',
       emailOrUsername: 'E-mail nebo uživatelské jméno',
-      iHaveReadAndAgreeToTheseTerms: 'Přečetl jsem si tyto podmínky a souhlasím s nimi.',
       invalidCredentials: 'Neplatné přihlašovací údaje',
       invalidEmailOrUsername: 'Nesprávný e-mail nebo uživatelské jméno',
       invalidPassword: 'Nesprávné heslo',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Poháněno technologií <1>PLANKA</1>',
       serverConnectionFailed: 'Připojení k serveru selhalo',
       unknownError: 'Neznámá chyba, zkuste to později',
-      useSingleSignOn: 'Použít jednorázové přihlášení',
       usernameAlreadyInUse: 'Uživatelské jméno se již používá',
       whoops_title: 'Jejda!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Zpět',
       goHome: 'Domů',
       logIn: 'Přihlásit se',
-      logInWithSso: 'Přihlásit se pomocí SSO',
     },
   },
 };

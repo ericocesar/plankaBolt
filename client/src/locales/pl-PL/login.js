@@ -6,7 +6,6 @@ export default {
         'Wymagane logowanie administratora do inicjalizacji instancji',
       emailAlreadyInUse: 'E-mail jest już używany',
       emailOrUsername: 'E-mail lub nazwa użytkownika',
-      iHaveReadAndAgreeToTheseTerms: 'Przeczytałem i zgadzam się z tymi warunkami',
       invalidCredentials: 'Błędne dane logowania',
       invalidEmailOrUsername: 'Błędny e-mail lub nazwa użytkownika',
       invalidPassword: 'Błędne hasło',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Powered by <1>PLANKA</1>',
       serverConnectionFailed: 'Błąd połączenia z serwerem',
       unknownError: 'Nieznany błąd, spróbuj ponownie później',
-      useSingleSignOn: 'Użyj logowania SSO',
       usernameAlreadyInUse: 'Nazwa użytkownika nie jest dostępna',
       whoops_title: 'Ups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Wróć',
       goHome: 'Idź do domu',
       logIn: 'Zaloguj',
-      logInWithSso: 'Zaloguj z SSO',
     },
   },
 };

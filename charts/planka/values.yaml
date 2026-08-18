@@ -9,6 +9,10 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
+  # Optional: specify the image digest for pinning by SHA256
+  # When set, the image reference will include the digest for enhanced security
+  # Example: "abc123def456..." (without sha256: prefix)
+  digest: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -147,71 +151,6 @@ persistence:
   accessMode: ReadWriteOnce
   size: 10Gi
 
-## OpenID Identity Management configuration
-##
-## Example:
-## ---------------
-## oidc:
-##   enabled: true
-##   clientId: sxxaAIAxVXlCxTmc1YLHBbQr8NL8MqLI2DUbt42d
-##   clientSecret: om4RTMRVHRszU7bqxB7RZNkHIzA8e4sGYWxeCwIMYQXPwEBWe4SY5a0wwCe9ltB3zrq5f0dnFnp34cEHD7QSMHsKvV9AiV5Z7eqDraMnv0I8IFivmuV5wovAECAYreSI
-##   issuerUrl: https://auth.local/application/o/planka/
-##   admin:
-##     roles:
-##       - planka-admin
-##
-## ---------------
-## NOTE: A minimal configuration requires setting `clientId`, `clientSecret` and `issuerUrl`. (plus `admin.roles` for administrators)
-## ref: https://docs.planka.cloud/docs/configuration/oidc/
-##
-oidc:
-  ## @param oidc.enabled Enable single sign-on (SSO) with OpenID Connect (OIDC)
-  ##
-  enabled: false
-
-  ## OIDC credentials
-  ## @param oidc.clientId A string unique to the provider that identifies your app.
-  ## @param oidc.clientSecret A secret string that the provider uses to confirm ownership of a client ID.
-  ##
-  ## NOTE: Either specify inline `clientId` and `clientSecret` or refer to them via `existingSecret`
-  ##
-  clientId: ""
-  clientSecret: ""
-
-  ## @param oidc.existingSecret Name of an existing secret containing OIDC credentials
-  ## NOTE: Must contain key `clientId` and `clientSecret`
-  ## NOTE: When it's set, the `clientId` and `clientSecret` parameters are ignored
-  ##
-  existingSecret: ""
-
-  ## @param oidc.issuerUrl The OpenID connect metadata document endpoint
-  ##
-  issuerUrl: ""
-
-  ## @param oidc.scopes A list of scopes required for OIDC client.
-  ## If empty will default to `openid`, `profile` and `email`
-  ## NOTE: PLANKA needs the email and name claims
-  ##
-  scopes: []
-
-  ## Admin permissions configuration
-  admin:
-    ## @param oidc.admin.ignoreRoles If set to true, the admin roles will be ignored.
-    ## It is useful if you want to use OIDC for authentication but not for authorization.
-    ## If empty will default to `false`
-    ##
-    ignoreRoles: false
-
-    ## @param oidc.admin.rolesAttribute The name of a custom group claim that you have configured in your OIDC provider
-    ## If empty will default to `groups`
-    ##
-    rolesAttribute: groups
-
-    ## @param oidc.admin.roles The names of the admin groups
-    ##
-    roles: []
-      # - planka-admin
-
 ## Extra environment variables for planka deployment
 ## Supports hard coded and getting values from a k8s secret
 ## - name: test
@@ -244,6 +183,22 @@ extraEnv: []
 ##   - name: SMTP_FROM
 ##     value: "your_email@example.com"
 
+## End User Terms of Service configuration
+## Mount custom terms of service markdown files into the Planka deployment
+##
+terms:
+  enabled: false
+  # Provide individual language files as key-value pairs
+  # e.g.,
+  # customFiles:
+  #   en-US.md: |
+  #     # End User Terms of Service
+  #     ...
+  #   de-DE.md: |
+  #     # Nutzungsbedingungen
+  #     ...
+  customFiles: {}
+
 ## Extra volume mounts configuration
 ## Mount ConfigMaps, Secrets, and arbitrary volumes to the PLANKA container
 ## This allows mounting any pre-existing ConfigMaps, Secrets, or other volume types
@@ -273,16 +228,22 @@ extraMounts: []
 ##     emptyDir:
 ##       sizeLimit: 1Gi
 
-## Example configuration for OIDC with self-hosted Keycloak using custom CA
-## (Requires pre-existing ConfigMap "ca-certificates")
-## extraMounts:
-##   - name: keycloak-ca
-##     mountPath: /etc/ssl/certs/keycloak-ca.crt
-##     subPath: ca.crt
-##     readOnly: true
-##     configMap:
-##       name: ca-certificates
+extraContainers: []
+## Extra sidecar containers
+## Add additional containers to the PLANKA pod
 ##
-## extraEnv:
-##   - name: NODE_EXTRA_CA_CERTS
-##     value: "/etc/ssl/certs/keycloak-ca.crt"
+## Example extraContainers:
+## extraContainers:
+##   - name: nginx-sidecar
+##     image: nginx:latest
+##     ports:
+##       - containerPort: 8085
+##         name: nginx-http
+##   - name: log-collector
+##     image: busybox:latest
+##     command: ['sh', '-c', 'tail -f /var/log/app.log']
+##     volumeMounts:
+##       - name: planka
+##         mountPath: /var/log
+##         subPath: app-logs
+##

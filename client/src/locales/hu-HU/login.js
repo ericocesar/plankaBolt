@@ -6,7 +6,6 @@ export default {
         'Rendszergazdai bejelentkezés szükséges a példány inicializálásához',
       emailAlreadyInUse: 'Az e-mail cím már használatban van',
       emailOrUsername: 'E-mail vagy felhasználó',
-      iHaveReadAndAgreeToTheseTerms: 'Elolvastam és elfogadom ezeket a feltételeket',
       invalidCredentials: 'Érvénytelen hitelesítő adatok',
       invalidEmailOrUsername: 'Érvénytelen e-mail vagy felhasználó',
       invalidPassword: 'Érvénytelen jelszó',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Működteti a <1>PLANKA</1>',
       serverConnectionFailed: 'A szerverkapcsolat sikertelen',
       unknownError: 'Ismeretlen hiba, próbáld meg később újra',
-      useSingleSignOn: 'Egyszeri bejelentkezés használata',
       usernameAlreadyInUse: 'A felhasználónév már használatban van',
       whoops_title: 'Hoppá!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Vissza',
       goHome: 'Kezdőlapra',
       logIn: 'Belépés',
-      logInWithSso: 'Belépés SSO-val',
     },
   },
 };

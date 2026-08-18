@@ -28,7 +28,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Set up PostgreSQL
@@ -50,7 +50,7 @@ jobs:
         run: |
           npm install
           cd client
-          npm run build
+          INDEX_FORMAT=ejs npm run build
 
       - name: Set up and start server for testing
         env:
@@ -73,7 +73,7 @@ jobs:
 
       - name: Seed database with terms signature
         run: |
-          TERMS_SIGNATURE=$(sha256sum terms/en-US/extended.md | awk '{print $1}')
+          TERMS_SIGNATURE=$(sha256sum terms/_template/en-US.md | awk '{print $1}')
           PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USERNAME -d $POSTGRES_DATABASE -c "UPDATE user_account SET terms_signature = '$TERMS_SIGNATURE';"
         working-directory: ./server
 

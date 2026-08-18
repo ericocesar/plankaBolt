@@ -4,7 +4,9 @@
  */
 
 import { dequal } from 'dequal';
-import React, { useCallback, useMemo } from 'react';
+import omit from 'lodash/omit';
+import React, { useCallback, useMemo, useRef } from 'react';
+import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -25,6 +27,7 @@ const SmtpPane = React.memo(() => {
   const [t] = useTranslation();
 
   const [passwordFieldRef, handlePasswordFieldRef] = useNestedRef('inputRef');
+  const isPasswordTouchedRef = useRef(false);
 
   const defaultData = useMemo(
     () => ({
@@ -67,7 +70,15 @@ const SmtpPane = React.memo(() => {
     [data, isPasswordSet],
   );
 
+  const isModified = useMemo(() => {
+    const cleanDataToCheck = omit(cleanData, 'smtpPassword');
+    const defaultDataToCheck = omit(defaultData, 'smtpPassword');
+
+    return !dequal(cleanDataToCheck, defaultDataToCheck) || isPasswordTouchedRef.current;
+  }, [defaultData, cleanData]);
+
   const handleSubmit = useCallback(() => {
+    isPasswordTouchedRef.current = false;
     dispatch(entryActions.updateConfig(cleanData));
   }, [dispatch, cleanData]);
 
@@ -85,7 +96,13 @@ const SmtpPane = React.memo(() => {
     dispatch(entryActions.testSmtpConfig());
   }, [dispatch]);
 
-  const isModified = !dequal(cleanData, defaultData);
+  const handlePasswordChange = useCallback(
+    (event, { value, ...props }) => {
+      isPasswordTouchedRef.current = value !== '';
+      handleFieldChange(event, { value, ...props });
+    },
+    [handleFieldChange],
+  );
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
@@ -128,7 +145,6 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <Checkbox
-          toggle
           name="smtpSecure"
           checked={data.smtpSecure}
           label={t('common.useSecureConnection')}
@@ -136,11 +152,10 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <Checkbox
-          toggle
           name="smtpTlsRejectUnauthorized"
           checked={data.smtpTlsRejectUnauthorized}
           label={t('common.rejectUnauthorizedTlsCertificates')}
-          className={styles.checkbox}
+          className={classNames(styles.field, styles.checkbox)}
           onChange={handleFieldChange}
         />
         <div className={styles.text}>
@@ -174,7 +189,7 @@ const SmtpPane = React.memo(() => {
           maxLength={256}
           className={styles.field}
           onClear={!data.smtpPassword && isPasswordSet ? handlePasswordClear : undefined}
-          onChange={handleFieldChange}
+          onChange={handlePasswordChange}
         />
         <div className={styles.text}>
           {t('common.defaultFrom')} (
@@ -192,11 +207,10 @@ const SmtpPane = React.memo(() => {
           onChange={handleFieldChange}
         />
         <div className={styles.controls}>
-          <Button className={styles.saveButton} disabled={!isModified} content={t('action.save')} />
+          <Button positive disabled={!isModified} content={t('action.save')} />
           {config.smtpHost && !isModified && (
             <Button
               type="button"
-              className={styles.testButton}
               content={t('action.sendTestEmail')}
               loading={smtpTestState.isLoading}
               disabled={smtpTestState.isLoading}

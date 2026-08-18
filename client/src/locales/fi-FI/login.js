@@ -6,7 +6,6 @@ export default {
         'Järjestelmänvalvojan kirjautuminen vaaditaan instanssin alustamiseksi',
       emailAlreadyInUse: 'Sähköposti on jo käytössä',
       emailOrUsername: 'Sähköposti tai käyttäjänimi',
-      iHaveReadAndAgreeToTheseTerms: 'Olen lukenut ja hyväksyn nämä ehdot',
       invalidCredentials: 'Virheelliset tunnistetiedot',
       invalidEmailOrUsername: 'Virheellinen sähköposti tai käyttäjänimi',
       invalidPassword: 'Virheellinen salasana',
@@ -18,7 +17,6 @@ export default {
       poweredByPlanka: 'Käyttää <1>PLANKAa</1>',
       serverConnectionFailed: 'Yhteys palvelimeen epäonnistui',
       unknownError: 'Tuntematon virhe, yritä myöhemmin uudelleen',
-      useSingleSignOn: 'Käytä kertakirjautumista',
       usernameAlreadyInUse: 'Käyttäjänimi on jo käytössä',
       whoops_title: 'Hups!',
     },
@@ -29,7 +27,6 @@ export default {
       goBack: 'Takaisin',
       goHome: 'Kotiin',
       logIn: 'Kirjaudu sisään',
-      logInWithSso: 'Kirjaudu SSO:lla',
     },
   },
 };
