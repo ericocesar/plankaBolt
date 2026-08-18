@@ -24,6 +24,11 @@ npm start
 docker compose -f docker-compose-dev.yml up --build
 ```
 
+No ambiente local, `npm start` inicializa o banco de dados antes de iniciar o
+servidor: aplica migrations pendentes e executa o seed idempotente. Em uma
+atualização de release, isso evita que o cliente receba `500` por tabelas novas
+ainda não aplicadas.
+
 A interface fica na porta 3000, a API na 1337 e o PostgreSQL do compose usa a porta interna 5432. Copie e ajuste `server/.env.sample` somente para configurações locais; nunca versione segredos.
 
 ## Verificações

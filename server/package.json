@@ -13,7 +13,7 @@
     "postinstall": "patch-package && npm run setup-python",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "setup-python": "node setup-python.js",
-    "start": "nodemon",
+    "start": "npm run db:init && nodemon",
     "start:prod": "cross-env NODE_ENV=production node app.js --prod",
     "swagger:generate": "node generate-swagger.js",
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"

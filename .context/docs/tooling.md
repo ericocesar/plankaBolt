@@ -17,7 +17,7 @@ O projeto requer Node.js 18 ou superior. A raiz coordena os pacotes `client/` e 
 ## Comandos úteis
 
 ```sh
-npm start                 # servidor e cliente
+npm start                 # migrations/seed locais, servidor e cliente
 npm run lint              # lint dos dois pacotes
 npm test                  # testes dos dois pacotes
 npm run client:build      # bundle Vite
