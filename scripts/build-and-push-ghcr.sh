@@ -581,5 +581,5 @@ echo "      Tag: ${TAG_SHA}"
 
 echo ""
 echo "para fazer deploy:"
-echo "pnpm deploy:stack dev"
-echo "pnpm deploy:stack prod"
+echo "pnpm deploy:dev"
+echo "pnpm deploy:prod"

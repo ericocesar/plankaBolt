@@ -35,6 +35,8 @@ const buildInternalConfigData = () => {
     if (Number.isInteger(activeUsersLimit)) {
       data.activeUsersLimit = activeUsersLimit;
     }
+  } else {
+    data.activeUsersLimit = null;
   }
 
   return data;
@@ -86,7 +88,7 @@ exports.seed = async (knex) => {
       .first());
   }
 
-  if (Number.isInteger(activeUsersLimit)) {
+  if (process.env.ACTIVE_USERS_LIMIT && Number.isInteger(activeUsersLimit)) {
     let orderByQuery;
     let orderByQueryValues;
 

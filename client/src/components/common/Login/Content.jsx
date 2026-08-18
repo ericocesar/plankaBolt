@@ -17,7 +17,6 @@ import entryActions from '../../../entry-actions';
 import { useForm, useNestedRef } from '../../../hooks';
 import { isUsername } from '../../../utils/validator';
 import AccessTokenSteps from '../../../constants/AccessTokenSteps';
-import TermsModal from './TermsModal';
 import TotpChallengeModal from './TotpChallengeModal';
 
 import logo from '../../../assets/images/logo.png';
@@ -245,9 +244,9 @@ const Content = React.memo(() => {
             <div className={styles.poweredBy}>
               <p className={styles.poweredByText}>
                 <Trans i18nKey="common.poweredByPlanka">
-                  {'Powered by '}
-                  <a href="https://github.com/plankanban/planka" target="_blank" rel="noreferrer">
-                    PLANKA
+                  {'Desenvolvido por '}
+                  <a href="https://bolt360.com.br" target="_blank" rel="noreferrer">
+                    Bolt 360
                   </a>
                 </Trans>
               </p>
@@ -262,7 +261,6 @@ const Content = React.memo(() => {
           <div className={styles.coverOverlay} />
         </Grid.Column>
       </Grid>
-      {step === AccessTokenSteps.ACCEPT_TERMS && <TermsModal />}
       {step === AccessTokenSteps.VERIFY_TOTP && <TotpChallengeModal />}
     </div>
   );

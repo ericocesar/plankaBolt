@@ -5,12 +5,6 @@
 
 const { AccessTokenSteps, TRUST_DEVICE_COOKIE_NAME } = require('../../../constants');
 
-const Errors = {
-  ADMIN_LOGIN_REQUIRED_TO_INITIALIZE_INSTANCE: {
-    adminLoginRequiredToInitializeInstance: 'Admin login required to initialize instance',
-  },
-};
-
 const PENDING_TOKEN_EXPIRES_IN = 10 * 60;
 
 module.exports = {
@@ -37,8 +31,6 @@ module.exports = {
   },
 
   exits: {
-    adminLoginRequiredToInitializeInstance: {},
-    termsAcceptanceRequired: {},
     totpVerificationRequired: {},
   },
 
@@ -46,50 +38,9 @@ module.exports = {
     const internalConfig = await InternalConfig.qm.getOneMain();
 
     if (!internalConfig.isInitialized) {
-      if (inputs.user.role === User.Roles.ADMIN) {
-        if (inputs.user.termsSignature) {
-          await InternalConfig.qm.updateOneMain({
-            isInitialized: true,
-          });
-        }
-      } else {
-        throw Errors.ADMIN_LOGIN_REQUIRED_TO_INITIALIZE_INSTANCE;
-      }
-    }
-
-    if (!sails.hooks.terms.isSignatureValid(inputs.user.termsSignature)) {
-      const { token: pendingToken, payload: pendingTokenPayload } =
-        sails.helpers.utils.createJwtToken(
-          AccessTokenSteps.ACCEPT_TERMS,
-          undefined,
-          PENDING_TOKEN_EXPIRES_IN,
-        );
-
-      const session = await sails.helpers.sessions.createOne.with({
-        values: {
-          pendingToken,
-          userId: inputs.user.id,
-          remoteAddress: inputs.remoteAddress,
-          userAgent: inputs.request.headers['user-agent'],
-        },
-        withHttpOnlyToken: inputs.withHttpOnlyToken,
+      await InternalConfig.qm.updateOneMain({
+        isInitialized: true,
       });
-
-      if (session.httpOnlyToken && !inputs.request.isSocket) {
-        sails.helpers.utils.setHttpOnlyTokenCookie(
-          session.httpOnlyToken,
-          pendingTokenPayload,
-          inputs.response,
-        );
-      }
-
-      throw {
-        termsAcceptanceRequired: {
-          pendingToken,
-          message: 'Terms acceptance required',
-          step: AccessTokenSteps.ACCEPT_TERMS,
-        },
-      };
     }
 
     if (inputs.user.isTotpEnabled) {
