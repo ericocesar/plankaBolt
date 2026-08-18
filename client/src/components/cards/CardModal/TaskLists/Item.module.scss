@@ -16,7 +16,7 @@
     background: transparent !important;
     border: none !important;
     border-radius: 8px !important;
-    color: #2185d0 !important;
+    color: #f3b229 !important;
     line-height: 28px;
     margin: 0;
     min-height: auto;
@@ -35,8 +35,8 @@
     }
 
     &:hover {
-      background: rgba(33, 133, 208, 0.1) !important;
-      color: #1678c2 !important;
+      background: rgba(243, 178, 41, 0.15) !important;
+      color: #ffe082 !important;
       transform: scale(1.05) !important;
     }
   }
@@ -49,6 +49,7 @@
     line-height: 1.5;
     margin: 0 0 4px;
     padding: 6px 0;
+    font-family: 'Cinzel', serif !important;
   }
 
   .moduleHeaderWithActions {
@@ -66,20 +67,25 @@
   }
 
   .moduleHeaderTitle {
-    color: #2185d0 !important;
+    color: #f3b229 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
     min-width: 0;
     word-wrap: break-word;
   }
 
   .moduleIcon {
-    color: var(--bp-accent, oklch(0.83 0.16 80));
+    color: #f3b229 !important;
     font-size: 17px;
     height: 32px;
-    left: -40px;
+    left: 14px;
     line-height: 32px;
     margin-right: 0;
     position: absolute;
-    top: 2px;
+    top: 14px;
     width: 32px;
     display: flex;
     align-items: center;
@@ -87,16 +93,21 @@
   }
 
   .moduleWrapper {
-    margin: 0 40px 0 40px;
+    margin: 0 0 0 36px;
     position: relative;
   }
 
   .wrapper {
-    border-radius: 3px;
-    margin-bottom: 24px;
+    background: #000000 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 16px 16px 12px 16px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+    position: relative;
   }
 
   .wrapperDragging {
-    background: rgba(247, 246, 247, 0.8);
+    background: #121218 !important;
   }
 }

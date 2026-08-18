@@ -147,6 +147,74 @@
       .ui.dimmer {
         background-color: oklch(0.1 0 0 / 0.6);
       }
+
+      .ui.popup {
+        background: rgba(15, 15, 22, 0.96) !important;
+        border: 1px solid rgba(243, 178, 41, 0.3) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(16px) !important;
+
+        &:before {
+          background: rgba(15, 15, 22, 0.96) !important;
+          border-color: rgba(243, 178, 41, 0.3) !important;
+        }
+
+        > .header,
+        .header {
+          color: #f3b229 !important;
+          font-family: 'Cinzel', serif !important;
+          font-weight: 700 !important;
+          font-size: 0.95rem !important;
+          text-transform: uppercase !important;
+          letter-spacing: 1px !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+          padding-bottom: 8px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .ui.input > input,
+        input[type="text"],
+        input[type="search"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+          background: rgba(0, 0, 0, 0.5) !important;
+          border: 1px solid rgba(243, 178, 41, 0.4) !important;
+          border-radius: 10px !important;
+          color: #ffffff !important;
+          -webkit-text-fill-color: #ffffff !important;
+          caret-color: #f3b229 !important;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.4) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+          }
+
+          &:focus {
+            border-color: #f3b229 !important;
+            box-shadow: 0 0 0 2px rgba(243, 178, 41, 0.25) !important;
+            background: rgba(0, 0, 0, 0.7) !important;
+          }
+        }
+
+        .ui.input .icon,
+        .icon {
+          color: #f3b229 !important;
+        }
+
+        .item,
+        .menu .item,
+        .ui.menu .item {
+          color: #ffffff !important;
+
+          &:hover {
+            background: rgba(243, 178, 41, 0.15) !important;
+            color: #f3b229 !important;
+          }
+        }
+      }
     }
 
     .mentions-input {
