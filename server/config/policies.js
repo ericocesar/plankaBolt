@@ -55,6 +55,8 @@ module.exports.policies = {
   'bootstrap/show': true,
   'terms/show': true,
   'access-tokens/create': true,
+  'password-resets/request': true,
+  'password-resets/reset': true,
   'access-tokens/verify-totp': true,
   'access-tokens/accept-terms': true,
   'access-tokens/revoke-pending-token': true,

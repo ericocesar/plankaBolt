@@ -126,6 +126,8 @@ module.exports.routes = {
   'DELETE /api/webhooks/:id': 'webhooks/delete',
 
   'POST /api/access-tokens': 'access-tokens/create',
+  'POST /api/password-resets/request': 'password-resets/request',
+  'POST /api/password-resets/reset': 'password-resets/reset',
   'POST /api/access-tokens/verify-totp': 'access-tokens/verify-totp',
   'POST /api/access-tokens/accept-terms': 'access-tokens/accept-terms',
   'POST /api/access-tokens/revoke-pending-token': 'access-tokens/revoke-pending-token',
