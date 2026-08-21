@@ -13,6 +13,7 @@ import { useDidUpdate, usePrevious, useToggle } from '../../../lib/hooks';
 import { Input } from '../../../lib/custom-ui';
 
 import selectors from '../../../selectors';
+import actions from '../../../actions';
 import entryActions from '../../../entry-actions';
 import { useForm, useNestedRef } from '../../../hooks';
 import { isUsername } from '../../../utils/validator';
@@ -150,7 +151,7 @@ const Content = React.memo(() => {
   }, [dispatch]);
 
   const handleForgotPassword = useCallback(() => {
-    dispatch(entryActions.openPasswordResetModal());
+    dispatch(actions.openPasswordResetModal());
   }, [dispatch]);
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import { Input } from '../../../lib/custom-ui';
 import { useDidUpdate } from '../../../lib/hooks';
 
 import selectors from '../../../selectors';
+import actions from '../../../actions';
 import entryActions from '../../../entry-actions';
 import { useNestedRef } from '../../../hooks';
 
@@ -74,7 +75,7 @@ const PasswordResetModal = React.memo(() => {
   }, [isPasswordResetModalOpen]);
 
   const handleClose = useCallback(() => {
-    dispatch(entryActions.closePasswordResetModal());
+    dispatch(actions.closePasswordResetModal());
     dispatch(entryActions.clearPasswordResetRequestError());
     dispatch(entryActions.clearPasswordResetError());
   }, [dispatch]);
