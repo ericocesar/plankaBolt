@@ -19,13 +19,14 @@ import styles from './PasswordResetModal.module.scss';
 
 const createMessage = (error) => {
   if (!error) return null;
-  if (error.message === 'SMTP is not configured') {
+  const message = typeof error === 'string' ? error : error.message;
+  if (message === 'SMTP is not configured') {
     return { type: 'warning', content: 'common.smtpNotConfigured' };
   }
-  if (error.message === 'Invalid or expired token') {
+  if (message === 'Invalid or expired token') {
     return { type: 'error', content: 'common.invalidResetToken' };
   }
-  if (error.message === 'Invalid email') {
+  if (message === 'Invalid email') {
     return { type: 'error', content: 'common.invalidEmail' };
   }
   return { type: 'warning', content: 'common.unknownError' };

@@ -51,6 +51,7 @@ export default {
       goBack: 'Go back',
       goHome: 'Go home',
       logIn: 'Log in',
+      sendResetLink: 'Send reset link',
       verify: 'Verify',
     },
   },

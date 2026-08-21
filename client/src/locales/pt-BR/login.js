@@ -43,6 +43,7 @@ export default {
       goBack: 'Voltar',
       goHome: 'Ir para início',
       logIn: 'Entrar',
+      sendResetLink: 'Enviar link de redefinição',
     },
   },
 };

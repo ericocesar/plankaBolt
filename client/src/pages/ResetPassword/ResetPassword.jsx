@@ -23,7 +23,8 @@ const createMessage = (error) => {
   if (!error) {
     return null;
   }
-  switch (error.message) {
+  const message = typeof error === 'string' ? error : error.message;
+  switch (message) {
     case 'Invalid or expired token':
       return {
         type: 'error',
@@ -146,7 +147,7 @@ const ResetPassword = React.memo(() => {
     );
   }
 
-  if (error && error.message === 'Invalid or expired token') {
+  if (error && (typeof error === 'string' ? error : error.message) === 'Invalid or expired token') {
     return (
       <div className={styles.wrapper}>
         <Grid verticalAlign="middle" className={styles.grid}>
