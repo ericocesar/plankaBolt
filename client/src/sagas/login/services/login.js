@@ -42,6 +42,40 @@ export function* clearAuthenticateError() {
   yield put(actions.clearAuthenticateError());
 }
 
+export function* requestPasswordReset(data) {
+  yield put(actions.requestPasswordReset(data));
+
+  try {
+    yield call(api.requestPasswordReset, data);
+  } catch (error) {
+    yield put(actions.requestPasswordReset.failure(error));
+    return;
+  }
+
+  yield put(actions.requestPasswordReset.success());
+}
+
+export function* clearPasswordResetRequestError() {
+  yield put(actions.clearPasswordResetRequestError());
+}
+
+export function* resetPassword(data) {
+  yield put(actions.resetPassword(data));
+
+  try {
+    yield call(api.resetPassword, data);
+  } catch (error) {
+    yield put(actions.resetPassword.failure(error));
+    return;
+  }
+
+  yield put(actions.resetPassword.success());
+}
+
+export function* clearPasswordResetError() {
+  yield put(actions.clearPasswordResetError());
+}
+
 export function* acceptTerms(signature) {
   yield put(actions.acceptTerms(signature));
 
@@ -135,6 +169,10 @@ export default {
   initializeLogin,
   authenticate,
   clearAuthenticateError,
+  requestPasswordReset,
+  clearPasswordResetRequestError,
+  resetPassword,
+  clearPasswordResetError,
   acceptTerms,
   cancelTerms,
   updateTermsLanguage,

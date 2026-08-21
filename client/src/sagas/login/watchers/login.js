@@ -14,6 +14,18 @@ export default function* loginWatchers() {
       services.authenticate(data),
     ),
     takeEvery(EntryActionTypes.AUTHENTICATE_ERROR_CLEAR, () => services.clearAuthenticateError()),
+    takeEvery(EntryActionTypes.PASSWORD_RESET_REQUEST, ({ payload: { data } }) =>
+      services.requestPasswordReset(data),
+    ),
+    takeEvery(EntryActionTypes.PASSWORD_RESET_REQUEST_ERROR_CLEAR, () =>
+      services.clearPasswordResetRequestError(),
+    ),
+    takeEvery(EntryActionTypes.PASSWORD_RESET, ({ payload: { data } }) =>
+      services.resetPassword(data),
+    ),
+    takeEvery(EntryActionTypes.PASSWORD_RESET_ERROR_CLEAR, () =>
+      services.clearPasswordResetError(),
+    ),
     takeEvery(EntryActionTypes.TOTP_VERIFY, ({ payload: { data } }) => services.verifyTotp(data)),
     takeEvery(EntryActionTypes.TOTP_CHALLENGE_CANCEL, () => services.cancelTotpChallenge()),
     takeEvery(EntryActionTypes.TERMS_ACCEPT, ({ payload: { signature } }) =>
