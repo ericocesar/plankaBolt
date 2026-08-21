@@ -27,6 +27,26 @@ const closePasswordResetModal = () => ({
   payload: {},
 });
 
+const requestPasswordReset = (data) => ({
+  type: EntryActionTypes.PASSWORD_RESET_REQUEST,
+  payload: { data },
+});
+
+const clearPasswordResetRequestError = () => ({
+  type: EntryActionTypes.PASSWORD_RESET_REQUEST_ERROR_CLEAR,
+  payload: {},
+});
+
+const resetPassword = (data) => ({
+  type: EntryActionTypes.PASSWORD_RESET,
+  payload: { data },
+});
+
+const clearPasswordResetError = () => ({
+  type: EntryActionTypes.PASSWORD_RESET_ERROR_CLEAR,
+  payload: {},
+});
+
 const acceptTerms = (signature) => ({
   type: EntryActionTypes.TERMS_ACCEPT,
   payload: {
@@ -63,6 +83,10 @@ export default {
   clearAuthenticateError,
   openPasswordResetModal,
   closePasswordResetModal,
+  requestPasswordReset,
+  clearPasswordResetRequestError,
+  resetPassword,
+  clearPasswordResetError,
   acceptTerms,
   cancelTerms,
   updateTermsLanguage,
