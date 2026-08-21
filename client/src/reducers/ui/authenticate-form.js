@@ -15,6 +15,7 @@ const initialState = {
   error: null,
   pendingToken: null,
   step: null,
+  isPasswordResetModalOpen: false,
   termsForm: {
     payload: null,
     isSubmitting: false,
@@ -109,6 +110,16 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: null,
+      };
+    case ActionTypes.OPEN_PASSWORD_RESET_MODAL:
+      return {
+        ...state,
+        isPasswordResetModalOpen: true,
+      };
+    case ActionTypes.CLOSE_PASSWORD_RESET_MODAL:
+      return {
+        ...state,
+        isPasswordResetModalOpen: false,
       };
     case ActionTypes.TERMS_ACCEPT:
       return {
