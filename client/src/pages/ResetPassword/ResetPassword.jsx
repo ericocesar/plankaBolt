@@ -3,7 +3,7 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -104,23 +104,18 @@ const ResetPassword = React.memo(() => {
     dispatch(entryActions.resetPassword({ token, password }));
   }, [dispatch, token, password, passwordConfirm]);
 
-  useEffect(() => {
-    if (isSuccess || isSubmitting || error) {
-      return;
-    }
-    if (password.length > 0 && passwordConfirm.length > 0) {
-      // success detected when isSubmitting flipped false with no error after we had data
-    }
-  }, [isSubmitting, error, password, passwordConfirm, isSuccess]);
+  // Track whether we have a pending submit so we can detect success vs initial render
+  const wasSubmittingRef = useRef(false);
 
   useEffect(() => {
     if (isSubmitting) {
+      wasSubmittingRef.current = true;
       return;
     }
-    if (!error && password.length > 0) {
+    if (wasSubmittingRef.current && !error && !isSuccess) {
       setIsSuccess(true);
     }
-  }, [isSubmitting, error, password]);
+  }, [isSubmitting, error, isSuccess]);
 
   if (!token) {
     return (
