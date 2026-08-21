@@ -17,6 +17,16 @@ const clearAuthenticateError = () => ({
   payload: {},
 });
 
+const openPasswordResetModal = () => ({
+  type: EntryActionTypes.OPEN_PASSWORD_RESET_MODAL,
+  payload: {},
+});
+
+const closePasswordResetModal = () => ({
+  type: EntryActionTypes.CLOSE_PASSWORD_RESET_MODAL,
+  payload: {},
+});
+
 const acceptTerms = (signature) => ({
   type: EntryActionTypes.TERMS_ACCEPT,
   payload: {
@@ -51,6 +61,8 @@ const cancelTotpChallenge = () => ({
 export default {
   authenticate,
   clearAuthenticateError,
+  openPasswordResetModal,
+  closePasswordResetModal,
   acceptTerms,
   cancelTerms,
   updateTermsLanguage,

@@ -39,6 +39,16 @@ const clearAuthenticateError = () => ({
   payload: {},
 });
 
+const openPasswordResetModal = () => ({
+  type: ActionTypes.OPEN_PASSWORD_RESET_MODAL,
+  payload: {},
+});
+
+const closePasswordResetModal = () => ({
+  type: ActionTypes.CLOSE_PASSWORD_RESET_MODAL,
+  payload: {},
+});
+
 const acceptTerms = (signature) => ({
   type: ActionTypes.TERMS_ACCEPT,
   payload: {
@@ -140,6 +150,8 @@ export default {
   initializeLogin,
   authenticate,
   clearAuthenticateError,
+  openPasswordResetModal,
+  closePasswordResetModal,
   acceptTerms,
   cancelTerms,
   updateTermsLanguage,
