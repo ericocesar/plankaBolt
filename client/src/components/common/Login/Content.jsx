@@ -18,6 +18,7 @@ import { useForm, useNestedRef } from '../../../hooks';
 import { isUsername } from '../../../utils/validator';
 import AccessTokenSteps from '../../../constants/AccessTokenSteps';
 import TotpChallengeModal from './TotpChallengeModal';
+import PasswordResetModal from './PasswordResetModal';
 
 import logo from '../../../assets/images/logo.png';
 
@@ -90,6 +91,7 @@ const Content = React.memo(() => {
     isSubmitting,
     error,
     step,
+    isPasswordResetModalOpen,
   } = useSelector(selectors.selectAuthenticateForm);
 
   const dispatch = useDispatch();
@@ -145,6 +147,10 @@ const Content = React.memo(() => {
 
   const handleMessageDismiss = useCallback(() => {
     dispatch(entryActions.clearAuthenticateError());
+  }, [dispatch]);
+
+  const handleForgotPassword = useCallback(() => {
+    dispatch(entryActions.openPasswordResetModal());
   }, [dispatch]);
 
   useEffect(() => {
@@ -230,6 +236,11 @@ const Content = React.memo(() => {
                     onChange={handleFieldChange}
                   />
                 </div>
+                <div className={styles.forgotWrapper}>
+                  <button type="button" onClick={handleForgotPassword}>
+                    {t('common.forgotPassword')}
+                  </button>
+                </div>
                 <Form.Button
                   fluid
                   primary
@@ -262,6 +273,7 @@ const Content = React.memo(() => {
         </Grid.Column>
       </Grid>
       {step === AccessTokenSteps.VERIFY_TOTP && <TotpChallengeModal />}
+      {isPasswordResetModalOpen && <PasswordResetModal />}
     </div>
   );
 });

@@ -3,7 +3,7 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, Message, Modal } from 'semantic-ui-react';
@@ -65,6 +65,13 @@ const PasswordResetModal = React.memo(() => {
       setIsRequestSent(true);
     }
   }, [isRequestSubmitting, requestError]);
+
+  useEffect(() => {
+    if (isPasswordResetModalOpen) {
+      setEmail('');
+      setIsRequestSent(false);
+    }
+  }, [isPasswordResetModalOpen]);
 
   const handleClose = useCallback(() => {
     dispatch(entryActions.closePasswordResetModal());
