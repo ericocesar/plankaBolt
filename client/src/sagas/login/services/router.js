@@ -30,6 +30,8 @@ export function* handleLocationChange() {
   }
 
   switch (pathsMatch.pattern.path) {
+    case Paths.RESET_PASSWORD:
+      return;
     case Paths.ROOT:
     case Paths.PROJECTS:
     case Paths.BOARDS:

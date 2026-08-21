@@ -17,6 +17,7 @@ import Login from './Login';
 import Core from './Core';
 import GhostError from './GhostError';
 import Support, { Embed, EmbedCode } from '../Support';
+import ResetPassword from '../../pages/ResetPassword';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'photoswipe/dist/photoswipe.css';
@@ -33,6 +34,7 @@ function Root({ store, history }) {
           <ToasterProvider toaster={toaster}>
             <Routes>
               <Route path={Paths.LOGIN} element={<Login />} />
+              <Route path={Paths.RESET_PASSWORD} element={<ResetPassword />} />
               <Route path={Paths.ROOT} element={<Core />} />
               <Route path={Paths.PROJECTS} element={<Core />} />
               <Route path={Paths.BOARDS} element={<Core />} />
