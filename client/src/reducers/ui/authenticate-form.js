@@ -16,6 +16,14 @@ const initialState = {
   pendingToken: null,
   step: null,
   isPasswordResetModalOpen: false,
+  passwordResetRequestForm: {
+    isSubmitting: false,
+    error: null,
+  },
+  passwordResetForm: {
+    isSubmitting: false,
+    error: null,
+  },
   termsForm: {
     payload: null,
     isSubmitting: false,
@@ -120,6 +128,76 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         isPasswordResetModalOpen: false,
+      };
+    case ActionTypes.PASSWORD_RESET_REQUEST:
+      return {
+        ...state,
+        passwordResetRequestForm: {
+          ...state.passwordResetRequestForm,
+          isSubmitting: true,
+          error: null,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET_REQUEST__SUCCESS:
+      return {
+        ...state,
+        passwordResetRequestForm: {
+          ...state.passwordResetRequestForm,
+          isSubmitting: false,
+          error: null,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET_REQUEST__FAILURE:
+      return {
+        ...state,
+        passwordResetRequestForm: {
+          ...state.passwordResetRequestForm,
+          isSubmitting: false,
+          error: payload.error,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET_REQUEST_ERROR_CLEAR:
+      return {
+        ...state,
+        passwordResetRequestForm: {
+          ...state.passwordResetRequestForm,
+          error: null,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET:
+      return {
+        ...state,
+        passwordResetForm: {
+          ...state.passwordResetForm,
+          isSubmitting: true,
+          error: null,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET__SUCCESS:
+      return {
+        ...state,
+        passwordResetForm: {
+          ...state.passwordResetForm,
+          isSubmitting: false,
+          error: null,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET__FAILURE:
+      return {
+        ...state,
+        passwordResetForm: {
+          ...state.passwordResetForm,
+          isSubmitting: false,
+          error: payload.error,
+        },
+      };
+    case ActionTypes.PASSWORD_RESET_ERROR_CLEAR:
+      return {
+        ...state,
+        passwordResetForm: {
+          ...state.passwordResetForm,
+          error: null,
+        },
       };
     case ActionTypes.TERMS_ACCEPT:
       return {
