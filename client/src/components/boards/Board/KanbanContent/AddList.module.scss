@@ -18,9 +18,20 @@
     border: none;
     border-radius: 3px;
     box-shadow: 0 1px 0 #ccc;
-    color: #333;
+    color: #fff;
     overflow: hidden;
     width: 100%;
+
+    input {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      caret-color: #fff !important;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+      }
+    }
 
     &:focus {
       border-color: #298fca;

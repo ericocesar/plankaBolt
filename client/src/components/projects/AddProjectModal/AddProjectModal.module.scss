@@ -6,6 +6,28 @@
 :global(#app) {
   .field {
     margin-bottom: 14px;
+
+    input {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      caret-color: #fff !important;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+      }
+    }
+  }
+
+  textarea.field {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    caret-color: #fff !important;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+    }
   }
 
   .selectTypeButton {
