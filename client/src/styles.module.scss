@@ -106,7 +106,9 @@
         background: var(--bp-bg-input);
         border: 1px solid var(--bp-border-subtle);
         border-radius: var(--bp-radius-md);
-        color: #ffffff;
+        color: var(--bp-text-primary);
+        -webkit-text-fill-color: var(--bp-text-primary);
+        caret-color: var(--bp-text-primary);
         padding: 12px 16px;
         transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
 
@@ -118,7 +120,19 @@
 
         &::placeholder {
           color: var(--bp-text-placeholder);
+          -webkit-text-fill-color: var(--bp-text-placeholder);
         }
+
+        &:disabled {
+          color: var(--bp-text-secondary);
+          -webkit-text-fill-color: var(--bp-text-secondary);
+        }
+      }
+
+      .ui.dropdown > .text,
+      .ui.form .ui.dropdown > .text,
+      .ui.form select {
+        color: var(--bp-text-primary);
       }
 
       .ui.modal {
@@ -183,13 +197,13 @@
           background: rgba(0, 0, 0, 0.5) !important;
           border: 1px solid rgba(243, 178, 41, 0.4) !important;
           border-radius: 10px !important;
-          color: #ffffff !important;
-          -webkit-text-fill-color: #ffffff !important;
+          color: var(--bp-text-primary) !important;
+          -webkit-text-fill-color: var(--bp-text-primary) !important;
           caret-color: #f3b229 !important;
 
           &::placeholder {
-            color: rgba(255, 255, 255, 0.4) !important;
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+            color: var(--bp-text-placeholder) !important;
+            -webkit-text-fill-color: var(--bp-text-placeholder) !important;
           }
 
           &:focus {
@@ -333,6 +347,9 @@
       display: none !important;
     }
 
+    // TECH DEBT: .ui.input.error ainda usa paleta clara legada (#fff6f6/#e0b4b4/#9f3a38).
+    // Migrar apenas `color` para var(--bp-error) quebraria o contraste (fundo claro + texto dark).
+    // Redesenhar para dark mode em etapa própria; não alterar nesta refatoração neutra.
     .ui.input.error > input {
       background-color: #fff6f6 !important;
       border-color: #e0b4b4 !important;

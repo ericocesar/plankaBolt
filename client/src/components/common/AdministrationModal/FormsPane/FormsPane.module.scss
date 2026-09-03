@@ -47,19 +47,23 @@
     :global(input) {
       background: rgba(255, 255, 255, 0.05) !important;
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      color: #fff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
       border-radius: 12px !important;
       padding: 10px 15px 10px 35px !important;
       transition: background-color 0.15s ease-out, border-color 0.15s ease-out !important;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.4) !important;
+        color: var(--bp-text-placeholder) !important;
+        -webkit-text-fill-color: var(--bp-text-placeholder) !important;
       }
 
       &:focus {
         background: rgba(255, 255, 255, 0.1) !important;
         border-color: oklch(0.83 0.16 80 / 0.5) !important;
-        color: #fff !important;
+        color: var(--bp-text-primary);
+        -webkit-text-fill-color: var(--bp-text-primary);
       }
     }
 

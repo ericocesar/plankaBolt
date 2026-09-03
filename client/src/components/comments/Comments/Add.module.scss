@@ -24,9 +24,9 @@
       background: transparent !important;
       border: none !important;
       border-radius: 12px !important;
-      color: #fff !important;
-      -webkit-text-fill-color: #ffffff !important;
-      caret-color: #ffffff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
       line-height: 1.4;
       margin: 0 !important;
       padding: 10px 14px !important;
@@ -37,8 +37,8 @@
       }
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.5) !important;
-        -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+        color: var(--bp-text-placeholder) !important;
+        -webkit-text-fill-color: var(--bp-text-placeholder) !important;
       }
     }
 

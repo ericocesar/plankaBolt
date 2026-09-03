@@ -33,9 +33,9 @@
     background: rgba(255, 255, 255, 0.04) !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 12px !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    caret-color: #ffffff !important;
+    color: var(--bp-text-primary);
+    -webkit-text-fill-color: var(--bp-text-primary);
+    caret-color: var(--bp-text-primary);
     display: block;
     line-height: 1.5;
     font-size: 14px;
@@ -51,8 +51,8 @@
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5) !important;
-      -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+      color: var(--bp-text-placeholder) !important;
+      -webkit-text-fill-color: var(--bp-text-placeholder) !important;
     }
 
     :global {

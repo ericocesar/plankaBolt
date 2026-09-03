@@ -9,9 +9,9 @@
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 12px !important;
     box-shadow: none !important;
-    color: #fff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    caret-color: #ffffff !important;
+    color: var(--bp-text-primary);
+    -webkit-text-fill-color: var(--bp-text-primary);
+    caret-color: var(--bp-text-primary);
     font-family: 'Cinzel', serif !important;
     font-weight: bold;
     text-transform: uppercase !important;
@@ -30,8 +30,8 @@
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5) !important;
-      -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+      color: var(--bp-text-placeholder) !important;
+      -webkit-text-fill-color: var(--bp-text-placeholder) !important;
     }
   }
 

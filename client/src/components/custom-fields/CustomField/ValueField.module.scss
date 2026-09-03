@@ -7,18 +7,22 @@
   .field input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff !important;
+    color: var(--bp-text-primary);
+    -webkit-text-fill-color: var(--bp-text-primary);
+    caret-color: var(--bp-text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
 
     &:focus {
       background: rgba(255, 255, 255, 0.1);
       border-color: var(--bp-accent, oklch(0.83 0.16 80));
-      color: #ffffff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--bp-text-placeholder);
+      -webkit-text-fill-color: var(--bp-text-placeholder);
     }
   }
 }

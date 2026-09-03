@@ -154,9 +154,9 @@
   /* Card Title Styling (Targeting textarea in header) */
   :global([class*="headerTitleWrapper"]) {
     :global(textarea) {
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-      caret-color: #ffffff;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
     }
 
     :global(textarea::placeholder) {

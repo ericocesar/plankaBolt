@@ -12,7 +12,9 @@
       background: rgba(0, 0, 0, 0.2) !important;
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
       border-radius: 12px !important;
-      color: #fff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
       padding: 12px 16px !important;
       transition: all 0.2s ease !important;
 
@@ -35,7 +37,7 @@
       align-items: center !important;
 
       :global(.text) {
-        color: #fff !important;
+        color: var(--bp-text-primary);
       }
 
       :global(.menu) {
@@ -57,7 +59,8 @@
       :global(input.search) {
         background: transparent !important;
         border: none !important;
-        color: #fff !important;
+        color: var(--bp-text-primary);
+        -webkit-text-fill-color: var(--bp-text-primary);
         padding: 0 !important;
         margin: 0 !important;
       }

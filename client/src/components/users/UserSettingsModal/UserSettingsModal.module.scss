@@ -137,12 +137,15 @@
       background: rgba(0, 0, 0, 0.4) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 14px !important;
-      color: #ffffff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
       padding: 14px 18px !important;
       transition: all 0.2s ease !important;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.4) !important;
+        color: var(--bp-text-placeholder) !important;
+        -webkit-text-fill-color: var(--bp-text-placeholder) !important;
       }
 
       &:focus {
@@ -157,12 +160,12 @@
       background: rgba(0, 0, 0, 0.4) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 14px !important;
-      color: #ffffff !important;
+      color: var(--bp-text-primary);
       padding: 12px 18px !important;
 
       :global(.text),
       :global(.default.text) {
-        color: #ffffff !important;
+        color: var(--bp-text-primary);
       }
 
       :global(.dropdown.icon) {

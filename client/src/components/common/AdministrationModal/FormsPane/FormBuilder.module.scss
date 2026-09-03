@@ -326,7 +326,9 @@ $bp-radius-sm: 8px;
   :global(.ui.dropdown) {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: white !important;
+    color: $bp-text-primary;
+    -webkit-text-fill-color: $bp-text-primary;
+    caret-color: $bp-text-primary;
     border-radius: $bp-radius-md !important;
     padding: 12px 16px !important;
     font-size: 0.9rem !important;

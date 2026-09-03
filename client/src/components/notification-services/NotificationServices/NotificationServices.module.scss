@@ -49,7 +49,9 @@
       background: rgba(0, 0, 0, 0.4) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       border-radius: 12px 0 0 12px !important;
-      color: #ffffff !important;
+      color: var(--bp-text-primary);
+      -webkit-text-fill-color: var(--bp-text-primary);
+      caret-color: var(--bp-text-primary);
       padding: 10px 15px !important;
       width: 100% !important;
       border-right: none !important;
@@ -76,11 +78,11 @@
       :global(.ui.dropdown) {
         background: transparent !important;
         border: none !important;
-        color: #ffffff !important;
+        color: var(--bp-text-primary);
         padding: 0 !important;
 
         :global(.text) {
-          color: #ffffff !important;
+          color: var(--bp-text-primary);
           font-weight: 600;
           font-size: 0.8rem;
         }
