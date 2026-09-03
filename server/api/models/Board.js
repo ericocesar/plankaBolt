@@ -140,12 +140,12 @@ module.exports = {
     },
     alwaysDisplayCardCreator: {
       type: 'boolean',
-      defaultsTo: false,
+      defaultsTo: true,
       columnName: 'always_display_card_creator',
     },
     displayCardAges: {
       type: 'boolean',
-      defaultsTo: false,
+      defaultsTo: true,
       columnName: 'display_card_ages',
     },
     expandTaskListsByDefault: {
