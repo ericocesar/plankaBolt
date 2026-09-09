@@ -30,6 +30,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'common.invalidCurrentPassword',
       };
+    case 'Not enough rights':
+      return {
+        type: 'warning',
+        content: 'common.defaultAdminPasswordChangeBlocked',
+      };
     default:
       return {
         type: 'warning',

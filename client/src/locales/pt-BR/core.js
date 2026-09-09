@@ -156,6 +156,8 @@ export default {
       dangerZone_title: 'Zona de perigo',
       date: 'Data',
       deactivateUser_title: 'Desativar usuário',
+      defaultAdminPasswordChangeBlocked:
+        'A troca da senha do administrador padrão não é permitida por aqui. Defina DEFAULT_ADMIN_PASSWORD no servidor e reinicie para alterá-la.',
       defaultCardType_title: 'Tipo de cartão padrão',
       defaultFrom: '"De" padrão',
       defaultView_title: 'Visualização padrão',

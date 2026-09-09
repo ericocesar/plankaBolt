@@ -201,6 +201,8 @@ export default {
       proFeatureGuestRoles: '✨ Guest Roles & External Collaboration',
       date: 'Date',
       deactivateUser_title: 'Deactivate User',
+      defaultAdminPasswordChangeBlocked:
+        'Changing the default admin password here is not allowed. Set DEFAULT_ADMIN_PASSWORD on the server and restart to rotate it.',
       defaultCardType_title: 'Default Card Type',
       defaultFrom: 'Default "from"',
       defaultView_title: 'Default View',
