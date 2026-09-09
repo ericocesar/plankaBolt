@@ -81,15 +81,10 @@ module.exports = {
       throw error;
     }
 
-    const fileManager = sails.hooks['file-manager'].getInstance();
     const { uploadedFileId, extension } = coverData;
 
-    const dirPathSegment = `${sails.config.custom.coverImagesPathSegment}/${uploadedFileId}`;
-
-    const coverImageUrl = fileManager.buildUrl(`${dirPathSegment}/original.${extension}`);
-    const coverImageThumbnailUrl = fileManager.buildUrl(
-      `${dirPathSegment}/outside-360.${extension}`,
-    );
+    const coverImageUrl = `${sails.config.custom.baseUrl}/cover-images/${uploadedFileId}/original.${extension}`;
+    const coverImageThumbnailUrl = `${sails.config.custom.baseUrl}/cover-images/${uploadedFileId}/outside-360.${extension}`;
 
     const previousUploadedFileId = project.coverImageUploadedFileId;
     const previousUploadedFile = previousUploadedFileId

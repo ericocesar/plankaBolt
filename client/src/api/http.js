@@ -25,10 +25,23 @@ const http = {};
       credentials: 'include',
     })
       .then((response) =>
-        response.json().then((body) => ({
-          body,
-          isError: response.status !== 200,
-        })),
+        response.text().then((text) => {
+          let body;
+          try {
+            body = text ? JSON.parse(text) : {};
+          } catch {
+            // Non-JSON (e.g. 500 "Internal Server Error" text) – avoid SyntaxError crash in queueRequest
+            body = {
+              message: text || response.statusText || 'Server Error',
+              code: 'E_UNKNOWN',
+            };
+          }
+
+          return {
+            body,
+            isError: response.status !== 200,
+          };
+        }),
       )
       .then(({ body, isError }) => {
         if (isError) {

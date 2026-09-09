@@ -49,6 +49,8 @@ const EditInformation = React.memo(() => {
   const [nameFieldRef, handleNameFieldRef] = useNestedRef('inputRef');
   const coverInputRef = useRef(null);
 
+  const hasCoverImage = !!project.coverImageThumbnailUrl;
+
   const submit = useCallback(() => {
     if (!cleanData.name) {
       nameFieldRef.current.select();
@@ -138,10 +140,14 @@ const EditInformation = React.memo(() => {
           )}
         </div>
         <div className={styles.coverActions}>
-          <Button type="button" onClick={handleCoverUploadClick}>
-            {t('action.uploadCoverImage', {
-              defaultValue: 'Enviar imagem de capa',
-            })}
+          <Button type="button" positive onClick={handleCoverUploadClick}>
+            {hasCoverImage
+              ? t('action.changeCoverImage', {
+                  defaultValue: 'Alterar imagem',
+                })
+              : t('action.uploadCoverImage', {
+                  defaultValue: 'Enviar imagem',
+                })}
           </Button>
           <input
             ref={coverInputRef}

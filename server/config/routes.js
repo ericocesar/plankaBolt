@@ -276,12 +276,7 @@ module.exports.routes = {
   },
 
   'GET /cover-images/*': {
-    fn: staticDirServer('/cover-images', () =>
-      path.join(
-        path.resolve(sails.config.custom.uploadsBasePath),
-        sails.config.custom.coverImagesPathSegment,
-      ),
-    ),
+    fn: protectedStaticDirServer('/cover-images', () => sails.config.custom.coverImagesPathSegment),
     skipAssets: false,
   },
 
