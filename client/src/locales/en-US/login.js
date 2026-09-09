@@ -15,6 +15,7 @@ export default {
       invalidResetToken: 'Invalid or expired reset link.',
       invalidTotpCode: 'Invalid TOTP or recovery code',
       logIn_title: 'Log In',
+      loginUsername: 'Usuário',
       noInternetConnection: 'No internet connection',
       or: 'Or',
       pageNotFound_title: 'Page Not Found',

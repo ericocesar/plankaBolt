@@ -6,7 +6,7 @@
 :global(#app) {
   .cover {
     background-color: #0a0a0f;
-    background-image: url("/back-login.jpg");
+    background-image: url("../../../assets/images/back-login.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -31,36 +31,11 @@
     pointer-events: none;
   }
 
-  .debugLog {
-    border: 1px solid rgba(9, 30, 66, 0.13);
-    border-radius: 3px;
-    color: #333;
-    line-height: 1.4;
-    margin-top: 16px;
-    padding: 8px 12px;
-    width: 100%;
-  }
-
-  .divider {
-    font-weight: normal;
-    color: rgba(255, 255, 255, 0.4) !important;
-  }
-
   .form {
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .formTitle {
-    font-size: 36px;
-    font-weight: 700 !important;
-    font-family: 'Cinzel', serif !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    color: #ffffff !important;
-    margin-bottom: 8px !important;
   }
 
   .formSubtitle {
@@ -69,7 +44,9 @@
     font-family: 'Cinzel', serif !important;
     text-transform: uppercase !important;
     letter-spacing: 2.5px !important;
-    margin-bottom: 40px !important;
+    line-height: 1.35 !important;
+    overflow-wrap: break-word;
+    margin-bottom: 32px !important;
     color: #ffffff !important;
   }
 
@@ -98,23 +75,39 @@
     margin-bottom: 16px;
   }
 
+  .fieldsRow {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .inputWrapper {
+      flex: 1 1 0;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+  }
+
   /* Login Sidebar - Seamless Neural Style */
   .login {
     background: #0a0a0f !important;
     border-right: none !important;
-    backdrop-filter: blur(24px) !important;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     max-width: none;
     width: 100%;
     min-height: 100vh;
-    padding: 60px 40px !important;
-    row-gap: 40px;
+    padding: 48px 40px !important;
+    row-gap: 32px;
     color: #ffffff !important;
     box-shadow: none !important;
     position: relative;
     z-index: 10;
+
+    ::selection {
+      background: rgba(243, 178, 41, 0.35);
+      color: #ffffff;
+    }
 
     :global(.ui.input) {
       width: 100%;
@@ -123,20 +116,48 @@
         background: rgba(0, 0, 0, 0.4) !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
         border-radius: 12px !important;
-        color: var(--bp-text-primary);
-        -webkit-text-fill-color: var(--bp-text-primary);
-        caret-color: var(--bp-text-primary);
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+        caret-color: #f3b229;
         padding: 14px 16px !important;
-        transition: all 0.2s ease !important;
+        transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
 
         &::placeholder {
-          color: rgba(255, 255, 255, 0.3) !important;
+          color: rgba(255, 255, 255, 0.45) !important;
         }
 
         &:focus {
           border-color: #f3b229 !important;
           background: rgba(0, 0, 0, 0.6) !important;
           box-shadow: 0 0 0 2px rgba(243, 178, 41, 0.25) !important;
+        }
+
+        /* Chrome/Safari autofill forces a light background, which makes
+           white text invisible. Keep the dark surface + white text. */
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          -webkit-text-fill-color: #ffffff !important;
+          -webkit-box-shadow: 0 0 0 1000px #131318 inset !important;
+          background-color: #131318 !important;
+          caret-color: #f3b229;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+
+        &:autofill {
+          background: rgba(0, 0, 0, 0.6) !important;
+          color: #ffffff;
+        }
+      }
+
+      &:global(.error) input {
+        border-color: #ff8a80 !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+
+        &:focus {
+          border-color: #ff8a80 !important;
+          box-shadow: 0 0 0 2px rgba(255, 138, 128, 0.25) !important;
         }
       }
     }
@@ -148,7 +169,14 @@
       font-weight: 700 !important;
       letter-spacing: 2px !important;
       padding: 16px !important;
-      transition: all 0.2s ease !important;
+      white-space: normal;
+      line-height: 1.4;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+
+      &:focus-visible {
+        outline: 2px solid #ffe082 !important;
+        outline-offset: 2px;
+      }
     }
 
     :global(.ui.button.primary) {
@@ -164,10 +192,41 @@
         box-shadow: 0 8px 30px rgba(243, 178, 41, 0.5) !important;
       }
     }
+
+    :global(.ui.message) {
+      overflow-wrap: break-word;
+    }
+  }
+
+  .fieldError {
+    color: #ff8a80;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 0;
+  }
+
+  .srOnly {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .initLoader {
+    align-items: center;
+    background: #0a0a0f;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
   }
 
   .logo {
-    max-height: 288px;
+    max-height: 120px;
     max-width: 100%;
     object-fit: contain;
   }
@@ -175,7 +234,7 @@
   .logoWrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
   }
 
   .poweredBy {
@@ -188,10 +247,24 @@
   }
 
   .poweredByText {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: lighter;
     text-align: center;
-    font-size: 12px;
+    font-size: 13px;
+    overflow-wrap: break-word;
+
+    a {
+      color: #f3b229;
+
+      &:hover {
+        color: #ffe082;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #ffe082;
+        outline-offset: 2px;
+      }
+    }
   }
 
   .wrapper {
@@ -199,17 +272,19 @@
   }
 
   .forgotWrapper {
-    text-align: right;
+    text-align: left;
     margin-top: 4px;
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 14px;
 
     button {
       cursor: pointer;
       color: #f3b229;
       background: none;
       border: none;
-      padding: 0;
+      border-radius: 4px;
+      padding: 8px 0;
+      min-height: 44px;
       font-size: inherit;
       font-family: inherit;
       text-decoration: none;
@@ -218,6 +293,128 @@
         color: #ffe082;
         text-decoration: underline;
       }
+
+      &:focus-visible {
+        outline: 2px solid #ffe082;
+        outline-offset: 2px;
+        text-decoration: underline;
+      }
     }
+  }
+
+  @media (max-width: 767px) {
+    .login {
+      padding: 32px 24px !important;
+      row-gap: 24px;
+    }
+
+    .fieldsRow {
+      flex-direction: column;
+    }
+
+    .logo {
+      max-height: 84px;
+    }
+
+    .logoWrapper {
+      margin-bottom: 24px;
+    }
+
+    .formSubtitle {
+      margin-bottom: 24px !important;
+    }
+  }
+}
+
+/* Shared epic treatment for the auth-flow modals (reset, TOTP, terms).
+   Semantic UI portals modals to <body>, outside #app, so this block must
+   stay at top level — never nested inside :global(#app). */
+:global(.epicModal.ui.modal) {
+  background: #14141c !important;
+  border: 1px solid rgba(243, 178, 41, 0.25);
+  border-radius: 16px !important;
+  color: #ffffff;
+
+  > :global(.header) {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f3b229 !important;
+    font-family: 'Cinzel', serif !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    overflow-wrap: break-word;
+  }
+
+  > :global(.content) {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  > :global(.actions) {
+    background: rgba(0, 0, 0, 0.35) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  :global(.ui.input) {
+    width: 100%;
+
+    input {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 12px !important;
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
+      caret-color: #f3b229;
+      padding: 14px 16px !important;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.45) !important;
+      }
+
+      &:focus {
+        border-color: #f3b229 !important;
+        box-shadow: 0 0 0 2px rgba(243, 178, 41, 0.25) !important;
+      }
+
+      /* Same autofill guard as the main form: Chrome/Safari force a light
+         background that would make white text invisible. */
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        -webkit-text-fill-color: #ffffff !important;
+        -webkit-box-shadow: 0 0 0 1000px #1b1b24 inset !important;
+        background-color: #1b1b24 !important;
+        caret-color: #f3b229;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+
+      &:autofill {
+        background: rgba(0, 0, 0, 0.6) !important;
+        color: #ffffff;
+      }
+    }
+  }
+
+  :global(.ui.checkbox) label {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  :global(.ui.positive.button),
+  :global(.ui.primary.button) {
+    background: #f3b229 !important;
+    color: #000000 !important;
+    font-family: 'Cinzel', serif !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+
+    &:hover {
+      background: #ffe082 !important;
+      color: #000000 !important;
+    }
+  }
+
+  :global(.ui.message) {
+    overflow-wrap: break-word;
   }
 }

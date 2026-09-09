@@ -10,10 +10,21 @@ import { Loader } from 'semantic-ui-react';
 import selectors from '../../../selectors';
 import Content from './Content';
 
+import styles from './Content.module.scss';
+
 const Login = React.memo(() => {
   const isInitializing = useSelector(selectors.selectIsInitializing);
 
-  return isInitializing ? <Loader active size="massive" /> : <Content />;
+  if (isInitializing) {
+    return (
+      <div role="status" aria-live="polite" className={styles.initLoader}>
+        <Loader active size="massive" />
+        <span className={styles.srOnly}>Loading…</span>
+      </div>
+    );
+  }
+
+  return <Content />;
 });
 
 export default Login;

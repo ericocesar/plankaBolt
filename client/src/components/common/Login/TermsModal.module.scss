@@ -3,25 +3,26 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-:global(#app) {
-  .cancelButton {
-    margin-left: 0;
-  }
+/* NOTE: no :global(#app) wrapper here — Semantic UI portals modals to
+   <body>, outside #app, so #app-gated rules never match portaled content. */
 
-  .confirmations {
-    border-color: #5aac44;
-    border-width: 2px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    row-gap: 12px;
-  }
+.cancelButton {
+  margin-left: 0;
+}
 
-  .confirmationCheckbox {
-    font-weight: bold;
-  }
+.confirmations {
+  border-color: #f3b229;
+  border-width: 2px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
 
-  .language {
-    margin-bottom: 20px;
-  }
+.confirmationCheckbox {
+  font-weight: bold;
+}
+
+.language {
+  margin-bottom: 20px;
 }

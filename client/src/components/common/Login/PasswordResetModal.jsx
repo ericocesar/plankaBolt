@@ -36,7 +36,7 @@ const PasswordResetModal = React.memo(() => {
   const {
     isPasswordResetModalOpen,
     passwordResetRequestForm: { isSubmitting: isRequestSubmitting, error: requestError },
-    passwordResetForm: { isSubmitting: isResetSubmitting, error: resetError },
+    passwordResetForm: { isSubmitting: isResetSubmitting },
   } = useSelector(selectors.selectAuthenticateForm);
 
   const dispatch = useDispatch();
@@ -47,7 +47,6 @@ const PasswordResetModal = React.memo(() => {
   const [emailFieldRef, handleEmailFieldRef] = useNestedRef('inputRef');
 
   const requestMessage = useMemo(() => createMessage(requestError), [requestError]);
-  const resetMessage = useMemo(() => createMessage(resetError), [resetError]);
 
   const handleEmailChange = useCallback((_, { value }) => {
     setEmail(value);
@@ -81,13 +80,24 @@ const PasswordResetModal = React.memo(() => {
     dispatch(entryActions.clearPasswordResetError());
   }, [dispatch]);
 
+  const handleResend = useCallback(() => {
+    setIsRequestSent(false);
+  }, []);
+
+  useDidUpdate(() => {
+    if (!isRequestSent && emailFieldRef.current) {
+      emailFieldRef.current.focus();
+    }
+  }, [isRequestSent]);
+
   return (
     <Modal
       open={isPasswordResetModalOpen}
       centered
       size="tiny"
+      className="epicModal"
       closeOnDimmerClick={false}
-      closeOnEscape={false}
+      closeOnEscape={!isRequestSubmitting && !isResetSubmitting}
       onClose={handleClose}
     >
       <Modal.Header>{t('common.resetPassword_title')}</Modal.Header>
@@ -100,19 +110,28 @@ const PasswordResetModal = React.memo(() => {
                 {...{
                   [requestMessage.type]: true,
                 }}
+                role="alert"
                 content={t(requestMessage.content)}
               />
             )}
             <Form onSubmit={handleRequestSubmit}>
               <Form.Field>
+                <label htmlFor="password-reset-email" className={styles.fieldLabel}>
+                  {t('common.email')}
+                </label>
                 <Input
                   fluid
                   autoFocus
+                  id="password-reset-email"
                   ref={handleEmailFieldRef}
                   value={email}
+                  type="email"
+                  inputMode="email"
                   maxLength={256}
                   placeholder="email@example.com"
                   autoComplete="email"
+                  required
+                  aria-invalid={!!requestMessage}
                   readOnly={isRequestSubmitting}
                   className={styles.emailInput}
                   onChange={handleEmailChange}
@@ -121,17 +140,7 @@ const PasswordResetModal = React.memo(() => {
             </Form>
           </>
         ) : (
-          <>
-            <p className={styles.intro}>{t('common.resetPasswordEmailSent')}</p>
-            {resetMessage && (
-              <Message
-                {...{
-                  [resetMessage.type]: true,
-                }}
-                content={t(resetMessage.content)}
-              />
-            )}
-          </>
+          <p className={styles.intro}>{t('common.resetPasswordEmailSent')}</p>
         )}
       </Modal.Content>
       <Modal.Actions>
@@ -146,8 +155,16 @@ const PasswordResetModal = React.memo(() => {
             positive
             content={t('action.sendResetLink')}
             loading={isRequestSubmitting}
-            disabled={isRequestSubmitting || !email}
+            disabled={isRequestSubmitting || !email.trim()}
             onClick={handleRequestSubmit}
+          />
+        )}
+        {isRequestSent && (
+          <Button
+            positive
+            content={t('action.sendResetLink')}
+            disabled={isRequestSubmitting}
+            onClick={handleResend}
           />
         )}
       </Modal.Actions>

@@ -95,7 +95,15 @@ const TermsModal = React.memo(() => {
   const isAllConfirmationsAccepted = acceptedConfirmationsSet.size === confirmations.length;
 
   return (
-    <Modal open centered={false}>
+    <Modal
+      open
+      centered
+      className="epicModal"
+      closeOnDimmerClick={false}
+      closeOnEscape={!isSubmitting && !isCancelling}
+      onClose={handleCancelClick}
+    >
+      <Modal.Header>{t('common.termsOfService_title')}</Modal.Header>
       <Modal.Content>
         <Dropdown
           fluid
@@ -116,7 +124,8 @@ const TermsModal = React.memo(() => {
           <Segment size="massive" className={styles.confirmations}>
             {confirmations.map((confirmation, index) => (
               <Checkbox
-                key={confirmation}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${index}`}
                 checked={acceptedConfirmationsSet.has(index)}
                 label={confirmation}
                 className={styles.confirmationCheckbox}

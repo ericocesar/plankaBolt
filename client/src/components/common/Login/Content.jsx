@@ -20,10 +20,17 @@ import { isUsername } from '../../../utils/validator';
 import AccessTokenSteps from '../../../constants/AccessTokenSteps';
 import TotpChallengeModal from './TotpChallengeModal';
 import PasswordResetModal from './PasswordResetModal';
+import TermsModal from './TermsModal';
 
 import logo from '../../../assets/images/logo.png';
 
 import styles from './Content.module.scss';
+
+const FIELD_ERROR_MESSAGES = [
+  'Invalid credentials',
+  'Invalid email or username',
+  'Invalid password',
+];
 
 const createMessage = (error) => {
   if (!error) {
@@ -92,6 +99,7 @@ const Content = React.memo(() => {
     isSubmitting,
     error,
     step,
+    termsForm,
     isPasswordResetModalOpen,
   } = useSelector(selectors.selectAuthenticateForm);
 
@@ -121,7 +129,26 @@ const Content = React.memo(() => {
     return initialData;
   });
 
-  const message = useMemo(() => createMessage(error), [error]);
+  // Field errors render inline on the offending input; only system states
+  // (connectivity, limits, instance setup) use the top banner so failures
+  // don't shove the form down on every mistype.
+  const fieldError = error && FIELD_ERROR_MESSAGES.includes(error.message) ? error : null;
+  const message = useMemo(() => (fieldError ? null : createMessage(error)), [error, fieldError]);
+
+  const emailFieldInvalid =
+    !!fieldError &&
+    (fieldError.message === 'Invalid credentials' ||
+      fieldError.message === 'Invalid email or username');
+  const passwordFieldInvalid =
+    !!fieldError &&
+    (fieldError.message === 'Invalid credentials' || fieldError.message === 'Invalid password');
+  const showEmailErrorText = emailFieldInvalid && fieldError.message !== 'Invalid credentials';
+  const fieldErrorContent = fieldError ? createMessage(fieldError).content : null;
+
+  let emailDescribedBy;
+  if (emailFieldInvalid) {
+    emailDescribedBy = showEmailErrorText ? 'login-emailOrUsername-error' : 'login-password-error';
+  }
   const [focusPasswordFieldState, focusPasswordField] = useToggle();
 
   const [emailOrUsernameFieldRef, handleEmailOrUsernameFieldRef] = useNestedRef('inputRef');
@@ -190,7 +217,7 @@ const Content = React.memo(() => {
           <div className={styles.login}>
             <div className={styles.form}>
               <div className={styles.logoWrapper}>
-                <img src={logo} alt="" className={styles.logo} />
+                <img src={logo} alt="Taskbolt" className={styles.logo} />
               </div>
               <Header
                 as="h2"
@@ -206,36 +233,70 @@ const Content = React.memo(() => {
                     [message.type]: true,
                   }}
                   visible
+                  role="alert"
                   content={t(message.content)}
                   onDismiss={handleMessageDismiss}
                 />
               )}
-              <Form size="large" onSubmit={handleSubmit}>
-                <div className={styles.inputWrapper}>
-                  <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
-                  <Input
-                    fluid
-                    ref={handleEmailOrUsernameFieldRef}
-                    name="emailOrUsername"
-                    value={data.emailOrUsername}
-                    maxLength={256}
-                    readOnly={isSubmitting}
-                    className={styles.input}
-                    onChange={handleFieldChange}
-                  />
-                </div>
-                <div className={styles.inputWrapper}>
-                  <div className={styles.inputLabel}>{t('common.password')}</div>
-                  <Input.Password
-                    fluid
-                    ref={handlePasswordFieldRef}
-                    name="password"
-                    value={data.password}
-                    maxLength={256}
-                    readOnly={isSubmitting}
-                    className={styles.input}
-                    onChange={handleFieldChange}
-                  />
+              <Form size="large" onSubmit={handleSubmit} aria-busy={isSubmitting}>
+                <div className={styles.fieldsRow}>
+                  <div className={styles.inputWrapper}>
+                    <label htmlFor="login-emailOrUsername" className={styles.inputLabel}>
+                      {t('common.loginUsername')}
+                    </label>
+                    <Input
+                      fluid
+                      id="login-emailOrUsername"
+                      ref={handleEmailOrUsernameFieldRef}
+                      name="emailOrUsername"
+                      type="text"
+                      value={data.emailOrUsername}
+                      maxLength={256}
+                      autoComplete="username"
+                      required
+                      readOnly={isSubmitting}
+                      error={emailFieldInvalid}
+                      aria-invalid={emailFieldInvalid}
+                      aria-describedby={emailDescribedBy}
+                      className={styles.input}
+                      onChange={handleFieldChange}
+                    />
+                    {showEmailErrorText && (
+                      <p
+                        id="login-emailOrUsername-error"
+                        role="alert"
+                        className={styles.fieldError}
+                      >
+                        {t(fieldErrorContent)}
+                      </p>
+                    )}
+                  </div>
+                  <div className={styles.inputWrapper}>
+                    <label htmlFor="login-password" className={styles.inputLabel}>
+                      {t('common.password')}
+                    </label>
+                    <Input.Password
+                      fluid
+                      id="login-password"
+                      ref={handlePasswordFieldRef}
+                      name="password"
+                      value={data.password}
+                      maxLength={256}
+                      autoComplete="current-password"
+                      required
+                      readOnly={isSubmitting}
+                      error={passwordFieldInvalid}
+                      aria-invalid={passwordFieldInvalid}
+                      aria-describedby={passwordFieldInvalid ? 'login-password-error' : undefined}
+                      className={styles.input}
+                      onChange={handleFieldChange}
+                    />
+                    {passwordFieldInvalid && (
+                      <p id="login-password-error" role="alert" className={styles.fieldError}>
+                        {t(fieldErrorContent)}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className={styles.forgotWrapper}>
                   <button type="button" onClick={handleForgotPassword}>
@@ -245,8 +306,6 @@ const Content = React.memo(() => {
                 <Form.Button
                   fluid
                   primary
-                  icon="right arrow"
-                  labelPosition="right"
                   content={t('action.logIn')}
                   loading={isSubmitting}
                   disabled={isSubmitting}
@@ -256,7 +315,7 @@ const Content = React.memo(() => {
             <div className={styles.poweredBy}>
               <p className={styles.poweredByText}>
                 <Trans i18nKey="common.poweredByPlanka">
-                  {'Desenvolvido por '}
+                  {'Powered by '}
                   <a href="https://bolt360.com.br" target="_blank" rel="noreferrer">
                     Bolt 360
                   </a>
@@ -274,6 +333,7 @@ const Content = React.memo(() => {
         </Grid.Column>
       </Grid>
       {step === AccessTokenSteps.VERIFY_TOTP && <TotpChallengeModal />}
+      {step === AccessTokenSteps.ACCEPT_TERMS && termsForm && termsForm.payload && <TermsModal />}
       {isPasswordResetModalOpen && <PasswordResetModal />}
     </div>
   );

@@ -3,16 +3,28 @@
  * Licensed under the Fair Use License: https://github.com/plankanban/planka/blob/master/LICENSE.md
  */
 
-:global(#app) {
-  .intro {
-    color: #444444;
-    margin-bottom: 16px;
-  }
+/* NOTE: no :global(#app) wrapper here — Semantic UI portals modals to
+   <body>, outside #app, so #app-gated rules never match portaled content. */
 
-  .codeInput {
-    font-family: 'JetBrains Mono', 'Menlo', 'Courier New', monospace;
-    font-size: 18px;
-    letter-spacing: 2px;
-    text-align: center;
-  }
+.intro {
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 16px;
+}
+
+.fieldLabel {
+  color: #f3b229;
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.codeInput {
+  font-family: 'JetBrains Mono', 'Menlo', 'Courier New', monospace;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-align: center;
 }

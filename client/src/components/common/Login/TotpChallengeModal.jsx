@@ -15,7 +15,7 @@ import { useNestedRef } from '../../../hooks';
 
 import styles from './TotpChallengeModal.module.scss';
 
-const sanitizeCode = (value) => value.replace(/\s+/g, '').toLowerCase();
+const sanitizeCode = (value) => value.replace(/\s+/g, '');
 
 const createMessage = (error) => {
   if (!error) return null;
@@ -64,7 +64,15 @@ const TotpChallengeModal = React.memo(() => {
   }, []);
 
   return (
-    <Modal open centered size="tiny" closeOnDimmerClick={false} closeOnEscape={false}>
+    <Modal
+      open
+      centered
+      size="tiny"
+      className="epicModal"
+      closeOnDimmerClick={false}
+      closeOnEscape={!isSubmitting && !isCancelling}
+      onClose={handleCancelClick}
+    >
       <Modal.Header>{t('common.twoFactorRequired_title')}</Modal.Header>
       <Modal.Content>
         <p className={styles.intro}>{t('common.enterTotpOrRecoveryCode')}</p>
@@ -73,19 +81,27 @@ const TotpChallengeModal = React.memo(() => {
             {...{
               [message.type]: true,
             }}
+            role="alert"
             content={t(message.content)}
           />
         )}
         <Form onSubmit={handleSubmit}>
           <Form.Field>
+            <label htmlFor="totp-code" className={styles.fieldLabel}>
+              {t('common.twoFactorRequired_title')}
+            </label>
             <Input
               fluid
               autoFocus
+              id="totp-code"
               ref={handleCodeFieldRef}
               value={code}
               maxLength={16}
               placeholder="000000 / xxxxx-xxxxx"
               autoComplete="one-time-code"
+              inputMode="text"
+              required
+              aria-invalid={!!message}
               readOnly={isSubmitting}
               className={styles.codeInput}
               onChange={handleCodeChange}
