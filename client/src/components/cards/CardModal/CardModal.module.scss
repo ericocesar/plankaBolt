@@ -19,7 +19,7 @@
   :global(.content),
   :global(.ui.modal .content) {
     background: transparent !important;
-    padding: 1.5rem !important;
+    padding: 0.75rem !important;
     flex: 1 !important;
     overflow: hidden !important;
     display: flex !important;
@@ -200,11 +200,11 @@
 }
 
 .wrapper {
-  width: 880px;
+  width: 1144px;
 }
 
 .wrapperStory {
-  width: 980px;
+  width: 1274px;
 }
 
 /* Previous Card Button (Left Arrow) */

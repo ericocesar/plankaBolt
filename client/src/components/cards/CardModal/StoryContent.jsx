@@ -274,7 +274,7 @@ const StoryContent = React.memo(() => {
   return (
     <Grid className={styles.wrapper}>
       <Grid.Row className={styles.headerPadding}>
-        <Grid.Column width={16} className={styles.headerPadding}>
+        <Grid.Column width={12} className={styles.headerPadding}>
           <div className={styles.headerWrapper}>
             <Icon
               name={CardTypeIcons[CardTypes.STORY]}
@@ -287,6 +287,31 @@ const StoryContent = React.memo(() => {
                 <div className={styles.headerTitle}>{card.name}</div>
               )}
             </div>
+          </div>
+        </Grid.Column>
+        <Grid.Column width={4} className={styles.headerMetaPadding}>
+          <div className={styles.headerMeta}>
+            <span className={styles.headerMetaItem}>
+              <Icon name="clock outline" size="small" className={styles.listIcon} />
+              <span className={styles.hidable}>
+                {format(new Date(card.createdAt), 'dd/MM/yyyy HH:mm')}
+              </span>
+            </span>
+            {canUseLists ? (
+              <ListsPopup currentId={list.id} onSelect={handleListSelect}>
+                <button type="button" className={styles.listButton}>
+                  <span className={classNames(styles.list, styles.listHoverable)}>
+                    <Icon name="columns" size="small" className={styles.listIcon} />
+                    <span className={styles.hidable}>{list.name || t(`common.${list.type}`)}</span>
+                  </span>
+                </button>
+              </ListsPopup>
+            ) : (
+              <span className={styles.list}>
+                <Icon name="columns" size="small" className={styles.listIcon} />
+                <span className={styles.hidable}>{list.name || t(`common.${list.type}`)}</span>
+              </span>
+            )}
           </div>
         </Grid.Column>
       </Grid.Row>
@@ -438,37 +463,6 @@ const StoryContent = React.memo(() => {
         </Grid.Column>
         <Grid.Column width={4} className={styles.sidebarPadding}>
           <div className={styles.sticky}>
-            <div className={styles.actions}>
-              <div className={classNames(styles.attachments, styles.attachmentsList)}>
-                <div className={classNames(styles.text, styles.textList)}>
-                  {t('common.createdAt')}
-                </div>
-                <span className={styles.list}>
-                  <Icon name="clock outline" size="small" className={styles.listIcon} />
-                  <span className={styles.hidable}>
-                    {format(new Date(card.createdAt), 'dd/MM/yyyy HH:mm')}
-                  </span>
-                </span>
-                <div className={classNames(styles.text, styles.textList)}>{t('common.list')}</div>
-                {canUseLists ? (
-                  <ListsPopup currentId={list.id} onSelect={handleListSelect}>
-                    <button type="button" className={styles.listButton}>
-                      <span className={classNames(styles.list, styles.listHoverable)}>
-                        <Icon name="columns" size="small" className={styles.listIcon} />
-                        <span className={styles.hidable}>
-                          {list.name || t(`common.${list.type}`)}
-                        </span>
-                      </span>
-                    </button>
-                  </ListsPopup>
-                ) : (
-                  <span className={styles.list}>
-                    <Icon name="columns" size="small" className={styles.listIcon} />
-                    <span className={styles.hidable}>{list.name || t(`common.${list.type}`)}</span>
-                  </span>
-                )}
-              </div>
-            </div>
             {(canUseMembers || canUseLabels || canAddAttachment || canAddCustomFieldGroup) && (
               <div className={styles.actions}>
                 <span className={styles.actionsTitle}>{t('action.addToCard')}</span>

@@ -30,7 +30,7 @@
     background: rgba(180, 190, 210, 0.08);
     border-radius: 12px;
     padding: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 7px;
 
     @media only screen and (width < 768px) {
       flex: 1;
@@ -92,10 +92,10 @@
   }
 
   .contentPadding {
-    padding: 8px 24px 0 16px;
+    padding: 4px 12px 0 8px;
 
     @media only screen and (width < 768px) {
-      padding-right: 16px;
+      padding-right: 8px;
       width: 100% !important;
     }
   }
@@ -190,13 +190,48 @@
   }
 
   .headerTitleWrapper {
+    flex: 1;
+    max-width: 100%;
     margin: 4px 0;
     padding: 6px 0 0;
   }
 
   .headerWrapper {
-    margin: 12px 48px 12px 56px;
+    display: flex;
+    align-items: center;
+    margin: 6px 0 6px 56px;
     position: relative;
+  }
+
+  .headerMetaPadding {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    padding: 4px 8px 4px 4px !important;
+  }
+
+  .headerMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+    background: rgba(180, 190, 210, 0.08);
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .headerMetaItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff !important;
+    line-height: 20px;
+    padding: 6px 12px;
   }
 
   .hidable {
@@ -292,10 +327,10 @@
   }
 
   .sidebarPadding {
-    padding: 8px 16px 8px 8px;
+    padding: 4px 8px 4px 4px;
 
     @media only screen and (width < 768px) {
-      padding-left: 16px;
+      padding-left: 8px;
       width: 100% !important;
     }
   }
@@ -328,7 +363,7 @@
   .wrapper {
     background: rgba(180, 190, 210, 0.08) !important;
     border-radius: 12px;
-    padding: 16px;
+    padding: 8px;
     margin: 0;
   }
 }

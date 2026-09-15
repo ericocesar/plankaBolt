@@ -54,7 +54,6 @@ const Item = React.memo(({ id, index }) => {
             className={classNames(styles.wrapper, styles.wrapperDragging)}
           >
             <div className={styles.moduleWrapper}>
-              <Icon name="check square outline" className={styles.moduleIcon} />
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
               <div {...dragHandleProps}>
                 <div
@@ -64,6 +63,7 @@ const Item = React.memo(({ id, index }) => {
                     taskList.hideCompletedTasks && canEdit && styles.both,
                   )}
                 >
+                  <Icon name="check square outline" className={styles.moduleIcon} />
                   {taskList.isPersisted && withActions && (
                     <div className={classNames(styles.actions)}>
                       {taskList.hideCompletedTasks && (
